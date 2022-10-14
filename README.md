@@ -29,3 +29,5 @@ Students are able to apply to only one program, and they must meet some conditio
 - Board members as a 3rd type of user? 
 - Automatic pre-approval form/learning agreement/course transfer form generation
 - Keyword detection in messaging
+- Information about the programs will be gathered in one place for easy access
+- The course transfer document needs to be physically signed by the Dean, this process might be done digitally with encryption to ensure authenticity
