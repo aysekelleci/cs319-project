@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import ErasmusUser, Student, Coordinator, BoardMember
+
+admin.site.register(Student)
+admin.site.register(Coordinator)
+admin.site.register(BoardMember)
