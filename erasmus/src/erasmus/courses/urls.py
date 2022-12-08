@@ -8,5 +8,6 @@ from . import views
 from django.urls import path, include
 
 urlpatterns = [
-    path('accounts/profile/', views.HomeView.as_view())
+    path('accounts/profile/', views.HomeView.as_view(),  name="profile"),
+    path('courses/', views.CourseView.as_view(), name="courses")
 ]

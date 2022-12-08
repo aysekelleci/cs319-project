@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{user.username}}</title>
+</head>
+<body>
+
+<h1>erasmus erasmus {{user.username}}</h1>
+
+    <a href = "{% url 'login' %}"> Login page </a>
+    {%if not courses %}
+        <h3> No Courses Yet... </h3>
+
+    {% else %}
+    {% for course in courses %}
+    <div class="cart-row">
+
+        <div style="flex:2"><p> Course Name: {{course.course_name}} </p></div>
+        <div style="flex:1"><p> Course Code: {{course.course_codes}}</p></div>
+        <div style="flex:1">
+        <p class="Link"> Course Credit {{course.course_credit}} </p>
+        </div>
+        <div style="flex:1"><p>-------------------------------------------------</p></div>
+
+    </div>
+    {%endfor%}
+    {%endif%}
+
+<img src="https://i.pinimg.com/236x/3d/a3/8c/3da38c149cf1da6823f0d7258accb637.jpg" alt="NOMMMMMMMMMMMMMMMMMMMM" width="50" height="50">
+
+</body>
+</html>
