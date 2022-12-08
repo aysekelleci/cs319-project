@@ -43,7 +43,7 @@ class BoardMember(models.Model):
 class UserCourse(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses')
     user = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_user')
-    grade = models.IntegerField()
+    grade = models.IntegerField(blank=True)
     takenInsteadOf = models.CharField(max_length=20)
 
     def __str__(self):
