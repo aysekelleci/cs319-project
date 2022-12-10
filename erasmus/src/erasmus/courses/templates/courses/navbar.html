@@ -1,0 +1,42 @@
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Bilkent University Erasmus Application System</title>
+
+	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="sidebar">
+        {% block sidebar %}
+        <h2>Bilkent University Erasmus Application System</h2>
+        <ul>
+            <li><a href="../../../../../../../Website/home.html"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i>Notifications</a></li>
+            <li><a href="./courses.html"><i class="fas fa-book"></i>Add Courses</a></li>
+            <li><a href="#"><i class="fas fa-project-diagram"></i>Files</a></li>
+            <li><a href="#"><i class="fas fa-address-book"></i>Messages</a></li>
+            <li><a href="#"><i class="fas fa-map-pin"></i>Forum</a></li>
+			<li><a href="#"><i class="fas fa-comment-alt"></i>FAQ</a></li>
+			<li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
+            <li><a href="#"><i class="fas fa-times"></i>Log Out</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+    <div class="main_content">
+        {% block main_content %} {% endblock %}
+    </div>
+</div>
+
+</body>
+</html>
+{% endblock content %}

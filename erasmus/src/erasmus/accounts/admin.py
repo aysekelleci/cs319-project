@@ -10,7 +10,7 @@ class ErasmusUserAdmin(admin.ModelAdmin):
 admin.site.register(Student)
 admin.site.register(Coordinator)
 admin.site.register(BoardMember)
-admin.site.register(ErasmusUser, ErasmusUserAdmin)
+admin.site.register(ErasmusUser)
 
 admin.site.register(UserCourse)
 admin.site.register(ToDo)

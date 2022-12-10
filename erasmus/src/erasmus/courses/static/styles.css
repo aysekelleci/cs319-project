@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+body{
+   background-color: #f3f5f9;
+}
+
+.wrapper{
+  display: flex;
+  position: relative;
+}
+
+.wrapper .sidebar{
+  width: 200px;
+  height: 100%;
+  background: #4b4276;
+  padding: 30px 0px;
+  position: fixed;
+}
+
+.wrapper .sidebar h2{
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 15px;
+}
+
+.wrapper .sidebar ul li{
+  padding: 15px;
+  border-bottom: 1px solid #bdb8d7;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}    
+
+.wrapper .sidebar ul li a{
+  color: #bdb8d7;
+  display: block;
+}
+
+.wrapper .sidebar ul li a .fas{
+  width: 25px;
+}
+
+.wrapper .sidebar ul li:hover{
+  background-color: #594f8d;
+}
+    
+.wrapper .sidebar ul li:hover a{
+  color: #fff;
+}
+
+.wrapper .main_content{
+  width: 100%;
+  margin-left: 200px;
+}
+
+.wrapper .main_content .header {
+  font-size: 40px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 40px;
+  background: #fff;
+  color: #717171;
+  border-bottom: 1px solid #e0e4e8;
+}
+.wrapper .main_content .courses_taken h2 {
+  border-bottom: 1px solid #bdb8d7;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.wrapper .main_content .courses_taken{
+  margin: 20px;
+  color: #717171;
+  line-height: 25px;
+}
+
+.wrapper .main_content .list{
+  display: flex;
+  margin: 20px;
+  color: #717171;
+  line-height: 25px;
+}
+
+thead, tbody {
+  display: block;
+}
+
+
+tbody {
+    height: 300px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+
+table, th {
+  border: 1px solid #bdb8d7;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+td {
+  border-bottom: 1px solid #bdb8d7;
+  border-collapse: collapse;
+  padding: 10px;
+  text-align: center;
+}
+
+td {
+
+}
+
+.wrapper .main_content .courses_taken div{
+  display: block;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+button{
+  padding: 10px;
+  font-size: 15px;
+  color: #717171;
+}
+
+.wrapper .main_content .add_course .buttons {
+  display: block;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.wrapper .main_content .add_course{
+  margin: 20px;
+  color: #717171;
+  line-height: 25px;
+
+}
+
+.wrapper .main_content .add_course h2{
+  border-bottom: 1px solid #bdb8d7;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+input[type=url], input[type=text], select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit], select {
+  width: 10%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
