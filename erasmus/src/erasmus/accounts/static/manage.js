@@ -1,6 +1,4 @@
 function myFunction() {
-
-console.log("works");
   // Declare variables
   var input, filter, table, row, courseName, courseID, i, courseTxtValue, idTxtValue;
   input = document.getElementById("myInput");
@@ -23,3 +21,51 @@ console.log("works");
     }
   }
 }
+
+let toggle1 = button => {
+            let tableElement = document.getElementById("course_table");
+            let takenCoursesTableElement = document.getElementById("taken_courses_table_merge");
+            let formElement = document.getElementById("myform");
+
+            let hidden = tableElement.getAttribute("hidden");
+            formElement.setAttribute("hidden", "hidden");
+            takenCoursesTableElement.setAttribute("hidden", "hidden");
+
+            if (hidden) {
+                tableElement.removeAttribute("hidden");
+            } /*else {
+               tableElement.setAttribute("hidden", "hidden");
+              }*/
+        }
+
+        let toggle2 = button => {
+            let tableElement = document.getElementById("course_table");
+            let takenCoursesTableElement = document.getElementById("taken_courses_table_merge");
+            let formElement = document.getElementById("myform");
+
+            let hidden = formElement.getAttribute("hidden");
+            tableElement.setAttribute("hidden", "hidden");
+            takenCoursesTableElement.setAttribute("hidden", "hidden");
+
+            if (hidden) {
+                formElement.removeAttribute("hidden");
+            } /*else {
+               formElement.setAttribute("hidden", "hidden");
+               }*/
+        }
+
+        let toggle3 = button => {
+            let tableElement = document.getElementById("course_table");
+            let takenCoursesTableElement = document.getElementById("taken_courses_table_merge");
+            let formElement = document.getElementById("myform");
+
+            let hidden = takenCoursesTableElement.getAttribute("hidden");
+            tableElement.setAttribute("hidden", "hidden");
+            formElement.setAttribute("hidden", "hidden");
+
+            if (hidden) {
+                takenCoursesTableElement.removeAttribute("hidden");
+            } /*else {
+             formElement.setAttribute("hidden", "hidden");
+            }*/
+        }

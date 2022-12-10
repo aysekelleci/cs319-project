@@ -123,6 +123,11 @@ body{
   display: block;
 }
 
+.wrapper .sidebar ul li a{
+  color: #9899ac;
+  display: block;
+}
+
 .wrapper .sidebar ul li a .fas{
   width: 25px;
 }

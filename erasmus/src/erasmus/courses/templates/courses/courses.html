@@ -1,4 +1,5 @@
 {% extends 'accounts/navbar.html' %}
+{% load crispy_forms_tags %}
 
 
 {% block main_content %}
@@ -39,6 +40,7 @@
     </div>
 </div>
 <div class="add_course">
+
     <h2>Add Course</h2>
     <div class="buttons">
         <button type="button" onclick="toggle1(this);">Add Previously Added Course</button>
@@ -74,7 +76,9 @@
         </table>
     </div>
 
+
     <form hidden="hidden" id="myform" action="/action_page.php">
+
         <label for="cname">Course Name:</label><br>
         <input type="text" id="cname" name="cname"><br>
 
@@ -119,60 +123,6 @@
             </tbody>
         </table>
     </div>
-
-    <script>
-        let toggle1 = button => {
-            let tableElement = document.getElementById("course_table");
-            let takenCoursesTableElement = document.getElementById("taken_courses_table_merge");
-            let formElement = document.getElementById("myform");
-
-            let hidden = tableElement.getAttribute("hidden");
-            formElement.setAttribute("hidden", "hidden");
-            takenCoursesTableElement.setAttribute("hidden", "hidden");
-
-            if (hidden) {
-                tableElement.removeAttribute("hidden");
-            } /*else {
-               tableElement.setAttribute("hidden", "hidden");
-              }*/
-        }
-    </script>
-
-    <script>
-        let toggle2 = button => {
-            let tableElement = document.getElementById("course_table");
-            let takenCoursesTableElement = document.getElementById("taken_courses_table_merge");
-            let formElement = document.getElementById("myform");
-
-            let hidden = formElement.getAttribute("hidden");
-            tableElement.setAttribute("hidden", "hidden");
-            takenCoursesTableElement.setAttribute("hidden", "hidden");
-
-            if (hidden) {
-                formElement.removeAttribute("hidden");
-            } /*else {
-               formElement.setAttribute("hidden", "hidden");
-               }*/
-        }
-    </script>
-
-    <script>
-        let toggle3 = button => {
-            let tableElement = document.getElementById("course_table");
-            let takenCoursesTableElement = document.getElementById("taken_courses_table_merge");
-            let formElement = document.getElementById("myform");
-
-            let hidden = takenCoursesTableElement.getAttribute("hidden");
-            tableElement.setAttribute("hidden", "hidden");
-            formElement.setAttribute("hidden", "hidden");
-
-            if (hidden) {
-                takenCoursesTableElement.removeAttribute("hidden");
-            } /*else {
-             formElement.setAttribute("hidden", "hidden");
-            }*/
-        }
-    </script>
 </div>
 </div>
 </div>
