@@ -3,9 +3,10 @@ from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from .models import Course
-from accounts.models import UserCourse, Student, ErasmusUser
+from accounts.models import UserCourse, Student, ErasmusUser, Coordinator
 from django.contrib import messages
 
+from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from courses.forms import CourseForm
@@ -83,21 +84,6 @@ class DeleteCourseView(View):
             return redirect("/courses") # ?
 
 
-class AddUnapprovedCourse(LoginRequiredMixin, View): # ? Form required
-
-    def get(self, request):
-        username = request.user.username
-
-        new_course = None
-
-        course_form = CourseForm()
-
-        return render(request,
-                      'courses/add_unapproved_course.html',
-                      {'new_course': new_course,
-                       'course_form': course_form,
-                       'username': username})
-
 class StarToDo(View): # ! changed the name from flag to star
     '''
     is_starred : boolean, whether the todo should be starred
@@ -120,6 +106,7 @@ class StarToDo(View): # ! changed the name from flag to star
         todo.is_starred = is_starred
         todo.save() # update the todo object
 
+
 class UpdateToDoState(View):
 
     def get(self, request, todo_id, is_done):
@@ -139,6 +126,7 @@ class UpdateToDoState(View):
 
         todo.is_done = is_done
         todo.save()  # update the todo object
+
 
 class SearchToDo(View):
 

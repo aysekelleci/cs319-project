@@ -7,6 +7,11 @@
 
 <h1> add unapproved course </h1>
 
+{% if new_product %}
+    <!--success message-->
+
+      <h2> Your product has been added.</h2>
+{% endif %}
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{course_form|crispy}}
@@ -14,5 +19,6 @@
 
 
 <img src="https://i.pinimg.com/236x/3d/a3/8c/3da38c149cf1da6823f0d7258accb637.jpg" alt="NOMMMMMMMMMMMMMMMMMMMM" width="50" height="50">
+
 
 </body>

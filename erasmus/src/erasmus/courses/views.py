@@ -3,7 +3,7 @@ from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from .models import Course
-from accounts.models import UserCourse, Student, ErasmusUser
+from accounts.models import UserCourse, Student, ErasmusUser, Coordinator
 from django.contrib import messages
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,9 +20,19 @@ class HomeView(View):
 class CourseView(View):
     def get(self, request):
         user = request.user
+        erasmus_user = ErasmusUser.objects.get(user=user)
+        if Student.objects.get(user=erasmus_user):
+            user_type = "Student"
+
+        elif Coordinator.objects.get(user=erasmus_user):
+            user_type = "Coordinator"
+
+        else:
+            user_type = "Board Member"
+
         courses = Course.objects.all()
 
-        context = {'user': user, 'courses': courses}
+        context = {'user': user, 'courses': courses, "user_type": user_type}
         return render(request, 'courses/courses.html', context)
 
 
@@ -72,6 +82,30 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
         new_course = None
 
         course_form = CourseForm()
+
+        return render(request,
+                      'courses/add_unapproved_course.html',
+                      {'new_course': new_course,
+                       'course_form': course_form,
+                       'username': username})
+
+    def post(self, request):
+        print("4556789098765434567")
+        username = request.user.username
+        new_course = None
+
+        course_form = CourseForm(data=request.POST)
+        if course_form.is_valid():
+            # Create Comment object but don't save to database yet
+            new_course = course_form.save(commit=False)
+
+            # Save the comment to the database
+            new_course.save()
+
+        else:
+            messages.info(request, "Comment Form is not valid")
+            print("-------------------------------------------------------------------------------")
+            return redirect("/courses")
 
         return render(request,
                       'courses/add_unapproved_course.html',
