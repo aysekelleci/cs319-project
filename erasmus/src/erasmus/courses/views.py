@@ -21,12 +21,10 @@ class CourseView(View):
     def get(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.get(user=user)
-        if Student.objects.get(user=erasmus_user):
-            user_type = "Student"
-
-        elif Coordinator.objects.get(user=erasmus_user):
+        if Coordinator.objects.filter(user=erasmus_user).first():
             user_type = "Coordinator"
-
+        elif Student.objects.filter(user=erasmus_user).first():
+            user_type = "Student"
         else:
             user_type = "Board Member"
 
