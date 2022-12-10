@@ -3,7 +3,7 @@ from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from .models import Course
-from accounts.models import UserCourse, Student, ErasmusUser, Coordinator
+from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, BoardMember
 from django.contrib import messages
 
 from django.http import HttpResponseRedirect

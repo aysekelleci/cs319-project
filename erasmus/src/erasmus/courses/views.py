@@ -102,7 +102,6 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
 
         else:
             messages.info(request, "Comment Form is not valid")
-            print("-------------------------------------------------------------------------------")
             return redirect("/courses")
 
         return render(request,

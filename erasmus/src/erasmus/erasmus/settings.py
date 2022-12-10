@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'erasmus',
     'courses',
     'accounts',
+    'communication',
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
