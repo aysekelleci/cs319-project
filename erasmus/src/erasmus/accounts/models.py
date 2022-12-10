@@ -49,6 +49,30 @@ class UserCourse(models.Model):
     def __str__(self):
         return '{}'.format(self.course.course_codes + self.course.course_name)
 
+class ToDo(models.Model):
+    header = models.CharField(max_length=100)
+    body = models.CharField(max_length=400)
+    link = models.CharField(max_length=200)
+    is_starred = models.BooleanField(default=False)
+    is_done = models.BooleanField(default=False)
+    due_date = models.CharField(max_length=50)
+
+    def __str__(self):
+        return '{}'.format(self.header)
+
+
+class University(models.Model):
+    university_name = models.CharField(max_length=100)
+    country = models.CharField(max_length=50)
+    # TODO courses ==> course object should have University (?)
+    lowest_grade = models.CharField(max_length=20)
+    highest_grade = models.CharField(max_length=20)
+    passing_grade = models.CharField(max_length=20)
+    inverted_scale = models.BooleanField(default=False)
+    department = models.CharField(max_length=200) # supposed to be a list of strings
+
+    def __str__(self):
+        return '{}'.format(self.header)
 
 
 

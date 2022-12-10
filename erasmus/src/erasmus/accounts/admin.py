@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ErasmusUser, Student, Coordinator, BoardMember, UserCourse
+from .models import *
 
 
 class ErasmusUserAdmin(admin.ModelAdmin):
@@ -13,4 +13,6 @@ admin.site.register(BoardMember)
 admin.site.register(ErasmusUser, ErasmusUserAdmin)
 
 admin.site.register(UserCourse)
+admin.site.register(ToDo)
+admin.site.register(University)
 
