@@ -33,12 +33,63 @@ body{
   margin-left: 60px;
 }
 
+.wrapper .upperbar .upperbar_content .profile{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  color: #9899ac;
+  margin-right: 40px;
+  margin-left: auto;
+  margin-bottom: 30px;
+}
+
+.wrapper .upperbar .upperbar_content .profile .profile_text{
+  text-align: right;
+}
+
+.wrapper .upperbar .upperbar_content .profile .profile_settings{
+  text-align: center;
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  top: 100%;
+  right: 0;
+  display: none;
+  background-color: 282733;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.wrapper .upperbar .upperbar_content .profile li a{
+  color: #9899ac;
+  display: block;
+  padding: 15px;
+}
+
+.wrapper .upperbar .upperbar_content .profile:hover .profile_settings {
+    display: block;
+}
+
 .wrapper .upperbar .upperbar_content h2{
   z-index: 999;
   color: #fff;
   text-transform: uppercase;
   margin-bottom: 30px;
   padding: 30px 60px;
+}
+
+.wrapper .upperbar .upperbar_content .profile ul li{
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.wrapper .upperbar .upperbar_content .profile ul li:hover *{
+  background-color: #db1430;
+  color: #fff;
+}
+
+.wrapper .upperbar .upperbar_content .profile li a .fas{
+  width: 25px;
 }
 
 .wrapper .sidebar{
@@ -65,7 +116,7 @@ body{
   padding: 15px;
   border-bottom: 1px solid rgba(0,0,0,0.05);
   border-top: 1px solid rgba(255,255,255,0.05);
-}    
+}
 
 .wrapper .sidebar ul li a{
   color: #9899ac;
@@ -122,6 +173,16 @@ body{
   margin: 20px;
   color: #717171;
   line-height: 25px;
+}
+
+input {
+  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
 }
 
 thead, tbody {
