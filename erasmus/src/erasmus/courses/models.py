@@ -17,4 +17,17 @@ class Course(models.Model):
         return '{}'.format(self.course_codes + ": " + self.course_name)
 
 
+class Document(models.Model):
+    document_name = models.CharField(max_length=50)
+    # file = models.FileField(upload_to='specs')
+    document = models.FileField(upload_to='documents/')
+    date = models.DateTimeField(auto_now_add=True)
+    #user = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_user')
+    #student
+    #signers
+    #size
+    #type
+    #date
+
+
 

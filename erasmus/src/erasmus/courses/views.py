@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
-from .models import Course
+from .models import Course, Document
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator
 from django.contrib import messages
 
@@ -109,6 +109,16 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
                       {'new_course': new_course,
                        'course_form': course_form,
                        'username': username})
+
+
+class DocumentView(View):
+    def get(self, request):
+        documents = Document.objects.all()
+        user = request.user
+
+        context = {'documents': documents}
+        return render(request, 'courses/documents.html', context)
+
 
 
 

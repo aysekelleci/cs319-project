@@ -12,5 +12,6 @@ urlpatterns = [
     path('courses/', views.CourseView.as_view(), name="courses"),
     path('add-to-courses/<int:course_id>', views.AddCourseView.as_view(), name="add-course"),
     path('remove-from-courses/<int:course_id>', views.DeleteCourseView.as_view(), name="remove-course"),
-    path('add-unapproved-course/', views.AddUnapprovedCourse.as_view(), name="add-unapproved-course")
+    path('add-unapproved-course/', views.AddUnapprovedCourse.as_view(), name="add-unapproved-course"),
+    path('documents/', views.DocumentView.as_view(), name="documents"),
 ]

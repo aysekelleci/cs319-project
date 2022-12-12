@@ -21,6 +21,6 @@ def get_user_type(request):
             else:
                 user_type = "Board Member"
 
-    return {'user_ty': user_type}
+    return {'user_type': user_type}
 
 

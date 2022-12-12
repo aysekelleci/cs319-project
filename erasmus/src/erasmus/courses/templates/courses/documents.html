@@ -1,0 +1,9 @@
+            {% for document in documents %}
+            <tr>
+                <td style="width:65px" id="count"></td>
+                <td style="width:350px">NAME: {{document.document_name}}</td>
+                <td style="width:200px">FILE: {{document.document}}</td>
+                <td style="width:150px">DATE: {{document.date}}</td>
+
+            </tr>
+            {%endfor%}
