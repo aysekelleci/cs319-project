@@ -22,8 +22,14 @@
         <ul>
             <li><a href="../../accounts/profile/"><i class="fas fa-home"></i>Home</a></li>
             <li><a href="#"><i class="fas fa-bell"></i>Notifications</a></li>
+            {% if user_ty == "Student" %}
+            <li><a href="../../courses"><i class="fas fa-book"></i>Add Courses</a></li>
+            {% elif user_ty == "Coordinator" or user_ty == "BoardMember" %}
+            <li><a href="../../courses"><i class="fas fa-address-card"></i>Student List</a></li>
+            {% else %}
             <li><a href="../../courses"><i class="fas fa-book"></i>Add Courses</a></li>
             <li><a href="../../courses"><i class="fas fa-address-card"></i>Student List</a></li>
+            {%endif%}
             <li><a href="ssss"><i class="fas fa-project-diagram"></i>Files</a></li>
             <li><a href="#"><i class="fas fa-address-book"></i>Messages</a></li>
             <li><a href="#"><i class="fas fa-map-pin"></i>Forum</a></li>
