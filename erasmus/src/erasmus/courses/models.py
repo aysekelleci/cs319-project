@@ -19,15 +19,15 @@ class Course(models.Model):
 
 class Document(models.Model):
     document_name = models.CharField(max_length=50)
-    # file = models.FileField(upload_to='specs')
     document = models.FileField(upload_to='documents/')
     date = models.DateTimeField(auto_now_add=True)
-    #user = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_user')
-    #student
+    # is_signed = models.BooleanField(default=False)
+    # user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='student_user')
+
     #signers
     #size
     #type
-    #date
+
 
 
 

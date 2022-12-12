@@ -88,7 +88,6 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
                        'username': username})
 
     def post(self, request):
-        print("4556789098765434567")
         username = request.user.username
         new_course = None
 
@@ -102,7 +101,7 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
 
         else:
             messages.info(request, "Comment Form is not valid")
-            return redirect("/courses")
+            return redirect("/faq")
 
         return render(request,
                       'courses/add_unapproved_course.html',
