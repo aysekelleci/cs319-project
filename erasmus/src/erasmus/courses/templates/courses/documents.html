@@ -2,27 +2,28 @@
 {% block main_content %}
 <div class="header">Files</div>
 <div class="page_content">
-    <div style="overflow-y:auto;" id="course_table">
+    <div id="course_table">
             <input type="text" id="myInput" onkeyup="myFunction()" style="width:100%" placeholder="Search for courses..">
             <table id="course_list_table" style="width:100%">
                 <thead>
                 <tr>
                     <th style="width:65px" id="count">Count</th>
-                    <th style="width:350px">Name</th>
-                    <th style="width:200px">File</th>
-                    <th style="width:150px">Date</th>
-                    <th style="width:370px">Operations</th>
+                    <th style="width:250px">Name</th>
+                    <th style="width:300px">File</th>
+                    <th style="width:250px">Date</th>
+                    <th style="width:370px" colspan="2">Operations</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for document in documents %}
                 <tr>
                     <td style="width:65px" id="count"></td>
-                    <td style="width:350px">{{document.document_name}}</td>
-                    <td style="width:200px">{{document.document}}</td>
-                    <td style="width:150px">{{document.date}}</td>
-                    <td style="width:370px"><button href="#" type="button">Download</button></td>
-                    <td style="width:370px"><button href="#" type="button">Delete</button></td>
+                    <td style="width:250px">{{document.document_name}}</td>
+                    <td style="width:300px">{{document.document}}</td>
+                    <td style="width:250px">{{document.date}}</td>
+                    <td style="width:370px;"> <button href="#" type="button">View</button> <button href="#" type="button">Download</button> <button href="#" type="button">Delete</button></td>
+
+
                 </tr>
                 {%endfor%}
                 </tbody>
