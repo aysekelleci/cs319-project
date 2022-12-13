@@ -18,41 +18,26 @@
 section
 {
     float: left;
-    display: block;
-    width: 200px;
-    height: 370px;
+    
     background: rgb(246, 245, 255);
-    border-style: outset;
-    position: relative;
-    margin-left: 20px;
 }
 .mainBox
 {
     margin-top: 3px;
     margin-left: 10px;
-    display: block;
-    width: 1060px;
-    height: 470px;
+
     background: rgb(246, 245, 255);
-    border-style: outset;
 
     display: grid; 
-    grid-template-rows: 80px 200px;
-}
-.remove
-{
-    width: fit-content;
-}
-.flag
-{
-    width: fit-content;
+    grid-template-rows: 60px 180px;
 }
 .status
 {
-    display: grid;
-    grid-template-columns: 150px 100px;
+    display: grid; 
+    grid-template-columns: 14% 65% 50%;
 
-    margin-left: 30%;
+    width: 100%;
+
     margin-top: 1%;
 }
 .statusLabel
@@ -65,28 +50,30 @@ section
     margin-top: 5px;
     display: block;
     border-style: outset;
-    width: 300px;
-    height: 50px;
+    width: max-content;
+    height: 40px;
+
     align-items: center;
     justify-content: center;
     display: flex;
-    background-color: rgb(230, 234, 255);
+    background-color: rgb(254, 255, 245);
 }
 .toDoandDone
 {
+    width: 100%;
     margin-top: 10px;
     margin-left: 0%;
     display: grid; 
     grid-template-columns: 1fr 1fr; 
-    width: 700px;
+
     height: 200px;
     border: 0ch;
 }
 .toDo
 {   
     display: block;
-    border-color: brown;
-    border-radius: 20px;
+    border: solid;
+    border-color: 1px solid rgba(0,0,0,0.05);
     width: 500px;
     height: 280px;
     overflow-x: auto;
@@ -94,16 +81,14 @@ section
 }
 .toDoLabel
 {
-    margin-left: 250;
+    margin-left: 40%;
     margin-top: 20;
 }
 .done
 {
-    margin-left: 20px;
     display: block;
-    border-color: brown;
-    border-style: outset;
-    border-radius: 20px;
+    border: solid;
+    border-color: 1px solid rgba(0,0,0,0.05);
     width: 500px;
     height: 280px;
     overflow-x: auto;
@@ -112,21 +97,17 @@ section
 .doneList
 {
     margin-left: 3%;
-    margin-top: 3%;
 }
 .doneLabel
 {
-    margin-left: 250;
+    margin-left: 40%;
     margin-top: 20;
 }
 .addToDo
 {
-    margin-left: 420px;
+    margin-left: 75%;
     margin-top: 10px;
     width: fit-content;
-    border-radius: 20px;
-    color: #03535e;
-    background-color: rgb(212, 220, 255);
 }
 .addToDo:hover
 {
@@ -192,13 +173,18 @@ section
 }
     </style>
 
-<section class = "mainBox">
+<div class = "mainBox">
 
     <div class = "status">
         <h1 class = "statusLabel"> Status:</h1>
         <div class = "statusBox">
-            <p> Status Will be shown here</p>
+            <p> Status Will be shown here </p>
         </div>
+        <div>
+            <button>Delete</button>
+            <button>Flag</button>
+        </div>
+        
     </div>
 
     <section class = "toDoandDone">
@@ -214,33 +200,42 @@ section
             </div>
         </section>
 
-        <div class = "done">
-            <form class = "doneList" action = "/action_page.php">
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="checkbox" id = "done" name = " done" value = "done">
-                <label for="vehicle1"> Done this</label><br>
-                <input type="submit" value="Submit">
-              </form>
-        </div>
+        <section class = "done">
+            <div class = "doneList">
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+                <input type = "checkbox">
+                <label for = "t"> Done this</label><br>
+
+                {% for course in courses %}
+                    <p> {{course.course_name}}</p>
+                {%endfor%}
+            </div>
+        </section>
 
         <button class = "addToDo" onclick = "openForm()">Add To Do</button>
 
@@ -267,5 +262,5 @@ section
         </script>
 
     </section> 
-</section>
+</div>
 {% endblock %}
