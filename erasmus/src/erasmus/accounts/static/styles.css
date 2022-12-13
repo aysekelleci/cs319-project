@@ -56,7 +56,7 @@ body{
   top: 100%;
   right: 0;
   display: none;
-  background-color: 282733;
+  background-color: #282733;
   border: 1px solid rgba(0,0,0,0.05);
 }
 
@@ -136,7 +136,7 @@ body{
   background-color: #db1430;
   color: #fff;
 }
-    
+
 .navbar_wrapper .sidebar ul li:hover a{
   color: #fff;
 }
@@ -171,9 +171,13 @@ tbody {
 }
 
 table, th {
-  border: 1px solid #646c9a;
-  border-collapse: collapse;
+  border-collapse: seperate;
   padding: 10px;
+}
+
+th {
+  border-bottom: 1px solid #646c9a;
+  background-color: #130d3834;
 }
 
 td {
@@ -181,15 +185,22 @@ td {
   border-collapse: collapse;
   padding: 10px;
   text-align: center;
+  background-color: #130d3834;
+
+}
+
+tr:hover {
+  background-color: #fff;
 }
 
 button{
   padding: 10px;
   font-size: 15px;
   color: #717171;
+  cursor: pointer;
 }
 
-input[type=submit], select {
+input[type=submit] {
   width: 10%;
   background-color: #4CAF50;
   color: white;
@@ -200,8 +211,8 @@ input[type=submit], select {
   cursor: pointer;
 }
 
-input[type=url], input[type=text], select {
-  width: 50%;
+input[type=url], input[type=text] {
+  width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -231,13 +242,6 @@ input[type=url], input[type=text], select {
   margin-top: 25px;
 }
 
-.navbar_wrapper .main_content .add_course .buttons {
-  display: block;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-
 .navbar_wrapper .main_content div{
   margin: 10px;
   color: #717171;
@@ -246,9 +250,14 @@ input[type=url], input[type=text], select {
 }
 
 .navbar_wrapper .main_content div h2{
-  border-bottom: 1px solid #bdb8d7;
   border-bottom: 1px solid rgba(0,0,0,0.05);
   border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.navbar_wrapper .main_content .add_course .buttons {
+  display: block;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .navbar_wrapper .main_content .courses_taken div{
@@ -257,3 +266,6 @@ input[type=url], input[type=text], select {
   margin-bottom: 20px;
 }
 
+.navbar_wrapper .main_content .add_course form {
+  width: 50%;
+}

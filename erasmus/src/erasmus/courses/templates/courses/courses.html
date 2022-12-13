@@ -1,13 +1,12 @@
 {% extends 'accounts/navbar.html' %}
 {% load crispy_forms_tags %}
 
-
 {% block main_content %}
 <div class="header">Add Courses</div>
 <div class="page_content">
     <div class="courses_taken">
         <h2>Current Courses Taken</h2>
-        <div id= "course_div" style="overflow-y:auto;">
+        <div id= "course_div">
             <table id="taken_courses_table" style="width:100%">
                 <thead>
                 <tr>
@@ -48,7 +47,7 @@
             <button type="button" onclick="toggle3(this);">Merge Courses</button>
         </div>
 
-        <div hidden="hidden" style="overflow-y:auto;" id="course_table">
+        <div hidden="hidden" id="course_table">
             <input type="text" id="myInput" onkeyup="myFunction()" style="width:100%" placeholder="Search for courses..">
             <table id="course_list_table" style="width:100%">
                 <thead>
@@ -76,7 +75,6 @@
             </table>
         </div>
 
-
         <form hidden="hidden" id="myform" action="/action_page.php">
 
             <label for="cname">Course Name:</label><br>
@@ -94,10 +92,10 @@
             <label for="link">Course Syllabus Link:</label><br>
             <input type="url" id="link" name="link"><br><br>
 
-            <input type="submit" value="Submit">
+            <input style="width:20%" type="submit" value="Submit">
         </form>
 
-        <div style="overflow-y:auto;">
+        <div>
             <table hidden="hidden" id="taken_courses_table_merge" style="width:100%">
                 <thead>
                 <tr>
