@@ -1,32 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Design by foolishdeveloper.com -->
+    <title>Glassmorphism login Form Tutorial in html css</title>
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
 
-{% load static %}
+    <!--Stylesheet-->
+    <style media="screen">
+      *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body
+{
+    background: url( ../../static/bilkent_back.jpg) no-repeat;
+    background-size: cover;
+}
+.headingBilkent
+{
+    margin-left: 20%;
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+}
+.label
+{
+    margin-top: 20px;
+    color: rgb(255, 251, 239);
+}
 
-{% block stylesheet %}
-  <!--<link rel="stylesheet" href="{% static 'css/accounts.css' %}"> -->
-{% endblock %}
+.background{
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
 
-{% block content %}
-  <div class="container">
-    <h1 class="text-center logo my-4">
+form{
+    height: 410px;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.169);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
 
-    </h1>
-    <div class="row justify-content-center">
-      <div class="col-lg-4 col-md-6 col-sm-8">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Log in</h3>
-            <form method="post" novalidate>
-              {% csrf_token %}
-              {% include 'accounts/form.html' %}
-              <button type="submit" class="btn btn-primary btn-block">Log in</button>
-            </form>
-          </div>
+    margin-top: 45px;
 
-        </div>
-        <div class="text-center py-2">
+}
+form *{
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
 
-        </div>
-      </div>
+label{
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+::placeholder{
+    color: #e5e5e5;
+}
+button{
+    margin-top: 50px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    </style>
+    
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
     </div>
-  </div>
-{% endblock content %}
+
+    <div class = "headingBilkent">
+        <img src = "../../static/bilkent_amblem.png" alt = "Bilkent Logo" width = "90" height = "90">
+        <h1 class = "label"> Bilkent University Erasmus Application System</h1>
+    </div>
+
+    <form method="post" novalidate>
+        <h3>Login</h3>
+
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button type = "submit" class = "btn btn-primary btn-block">Log In</button>
+    </form>
+</body>
+</html>
