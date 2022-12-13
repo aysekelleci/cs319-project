@@ -5,125 +5,124 @@
 {% block main_content %}
 <div class="header">Add Courses</div>
 <div class="page_content">
-<div class="courses_taken">
-    <h2>Current Courses Taken</h2>
-    <div id= "course_div" style="overflow-y:auto;">
-        <table id="taken_courses_table" style="width:100%">
-            <thead>
-            <tr>
-                <th style="width:65px">Count</th>
-                <th style="width:350px">Course Name</th>
-                <th style="width:200px">Course ID</th>
-                <th style="width:150px">ECTS Credits</th>
-                <th style="width:370px">Taken Instead Of</th>
-                <th style="width:370px">Remove</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for course in courses %}
-            <tr>
-                <td style="width:65px" id="count"></td>
-                <td style="width:350px">{{course.course_name}}</td>
-                <td style="width:200px">{{course.course_codes}}</td>
-                <td style="width:150px">{{course.course_credit}}</td>
-                <td style="width:370px">Germany</td>
-                <td style="width:370px"><button type="button">Remove</button></td>
-            </tr>
-            {%endfor%}
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>ECTS Total:</th>
-            </tr>
-            </tfoot>
-        </table>
+    <div class="courses_taken">
+        <h2>Current Courses Taken</h2>
+        <div id= "course_div" style="overflow-y:auto;">
+            <table id="taken_courses_table" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width:65px">Count</th>
+                    <th style="width:350px">Course Name</th>
+                    <th style="width:200px">Course ID</th>
+                    <th style="width:150px">ECTS Credits</th>
+                    <th style="width:370px">Taken Instead Of</th>
+                    <th style="width:370px">Remove</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td style="width:65px" id="count"></td>
+                    <td style="width:350px">{{course.course_name}}</td>
+                    <td style="width:200px">{{course.course_codes}}</td>
+                    <td style="width:150px">{{course.course_credit}}</td>
+                    <td style="width:370px">Germany</td>
+                    <td style="width:370px"><button type="button">Remove</button></td>
+                </tr>
+                {%endfor%}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>ECTS Total:</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
-</div>
-<div class="add_course">
+    <div class="add_course">
 
-    <h2>Add Course</h2>
-    <div class="buttons">
-        <button type="button" onclick="toggle1(this);">Add Previously Added Course</button>
-        <button type="button" onclick="toggle2(this);">Add New Course</button>
-        <button type="button" onclick="toggle3(this);">Merge Courses</button>
+        <h2>Add Course</h2>
+        <div class="buttons">
+            <button type="button" onclick="toggle1(this);">Add Previously Added Course</button>
+            <button type="button" onclick="toggle2(this);">Add New Course</button>
+            <button type="button" onclick="toggle3(this);">Merge Courses</button>
+        </div>
+
+        <div hidden="hidden" style="overflow-y:auto;" id="course_table">
+            <input type="text" id="myInput" onkeyup="myFunction()" style="width:100%" placeholder="Search for courses..">
+            <table id="course_list_table" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width:65px" id="count">Count</th>
+                    <th style="width:350px">Course Name</th>
+                    <th style="width:200px">Course ID</th>
+                    <th style="width:150px">ECTS Credits</th>
+                    <th style="width:370px">Can Be Taken Instead Of</th>
+                    <th style="width:370px">Add</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td style="width:65px" id="count"></td>
+                    <td style="width:350px">{{course.course_name}}</td>
+                    <td style="width:200px">{{course.course_codes}}</td>
+                    <td style="width:150px">{{course.course_credit}}</td>
+                    <td style="width:370px">{{course.takenInsteadOf}}</td>
+                    <td style="width:370px"><button href="/add-to-courses/{{course.pk}}" type="button">Add</button></td>
+                </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
+
+
+        <form hidden="hidden" id="myform" action="/action_page.php">
+
+            <label for="cname">Course Name:</label><br>
+            <input type="text" id="cname" name="cname"><br>
+
+            <label for="cid">Course ID:</label><br>
+            <input type="text" id="cid" name="cid"><br>
+
+            <label for="ects">ECTS Credits:</label><br>
+            <input type="text" id="ects" name="ects"><br>
+
+            <label for="instead">Taken Instead Of:</label><br>
+            <input type="text" id="instead" name="instead"><br>
+
+            <label for="link">Course Syllabus Link:</label><br>
+            <input type="url" id="link" name="link"><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+
+        <div style="overflow-y:auto;">
+            <table hidden="hidden" id="taken_courses_table_merge" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width:65px">Count</th>
+                    <th style="width:350px">Course Name</th>
+                    <th style="width:200px">Course ID</th>
+                    <th style="width:150px">ECTS Credits</th>
+                    <th style="width:370px">Can Be Taken Instead Of</th>
+                    <th style="width:370px">Merge Selection</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in user.course %}
+                <tr>
+                    <td style="width:65px" id="count">1</td>
+                    <td style="width:350px">{{course.course_name}}</td>
+                    <td style="width:200px">{{course.course_codes}}</td>
+                    <td style="width:150px">{{course.course_credit}}</td>
+                    <td style="width:370px">{{course.takenInsteadOf}}</td>
+                    <td style="width:370px"><button type="button">Select</button></td>
+                </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <div hidden="hidden" style="overflow-y:auto;" id="course_table">
-        <input type="text" id="myInput" onkeyup="myFunction()" style="width:100%" placeholder="Search for courses..">
-        <table id="course_list_table" style="width:100%">
-            <thead>
-            <tr>
-                <th style="width:65px" id="count">Count</th>
-                <th style="width:350px">Course Name</th>
-                <th style="width:200px">Course ID</th>
-                <th style="width:150px">ECTS Credits</th>
-                <th style="width:370px">Can Be Taken Instead Of</th>
-                <th style="width:370px">Add</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for course in courses %}
-            <tr>
-                <td style="width:65px" id="count"></td>
-                <td style="width:350px">{{course.course_name}}</td>
-                <td style="width:200px">{{course.course_codes}}</td>
-                <td style="width:150px">{{course.course_credit}}</td>
-                <td style="width:370px">{{course.takenInsteadOf}}</td>
-                <td style="width:370px"><button href="/add-to-courses/{{course.pk}}" type="button">Add</button></td>
-            </tr>
-            {%endfor%}
-            </tbody>
-        </table>
-    </div>
-
-
-    <form hidden="hidden" id="myform" action="/action_page.php">
-
-        <label for="cname">Course Name:</label><br>
-        <input type="text" id="cname" name="cname"><br>
-
-        <label for="cid">Course ID:</label><br>
-        <input type="text" id="cid" name="cid"><br>
-
-        <label for="ects">ECTS Credits:</label><br>
-        <input type="text" id="ects" name="ects"><br>
-
-        <label for="instead">Taken Instead Of:</label><br>
-        <input type="text" id="instead" name="instead"><br>
-
-        <label for="link">Course Syllabus Link:</label><br>
-        <input type="url" id="link" name="link"><br><br>
-
-        <input type="submit" value="Submit">
-    </form>
-
-    <div style="overflow-y:auto;">
-        <table hidden="hidden" id="taken_courses_table_merge" style="width:100%">
-            <thead>
-            <tr>
-                <th style="width:65px">Count</th>
-                <th style="width:350px">Course Name</th>
-                <th style="width:200px">Course ID</th>
-                <th style="width:150px">ECTS Credits</th>
-                <th style="width:370px">Can Be Taken Instead Of</th>
-                <th style="width:370px">Merge Selection</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for course in user.course %}
-            <tr>
-                <td style="width:65px" id="count">1</td>
-                <td style="width:350px">{{course.course_name}}</td>
-                <td style="width:200px">{{course.course_codes}}</td>
-                <td style="width:150px">{{course.course_credit}}</td>
-                <td style="width:370px">{{course.takenInsteadOf}}</td>
-                <td style="width:370px"><button type="button">Select</button></td>
-            </tr>
-            {%endfor%}
-            </tbody>
-        </table>
-    </div>
-</div>
-</div>
 </div>
 {% endblock %}
