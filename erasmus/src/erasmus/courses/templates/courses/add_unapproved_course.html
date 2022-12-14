@@ -1,24 +1,21 @@
+{% extends 'accounts/navbar.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-<head>
-<title> </title>
-</head>
-<body>
 
-<h1> add unapproved course </h1>
+{% block main_content %}
+<div class="header">Add New Course</div>
+<div class="page_content">
 
-{% if new_product %}
-    <!--success message-->
+    {% if new_product %}
+        <!--success message-->
+        <h2> Your product has been added.</h2>
+    {% endif %}
 
-      <h2> Your product has been added.</h2>
-{% endif %}
-<form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{course_form|crispy}}
-        <button class="btn btn-primary my-4" type="submit">Submit</button>
+    <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{course_form|crispy}}
+            <button class="btn btn-primary my-4" type="submit">Submit</button>
+    </form>
 
-
-<img src="https://i.pinimg.com/236x/3d/a3/8c/3da38c149cf1da6823f0d7258accb637.jpg" alt="NOMMMMMMMMMMMMMMMMMMMM" width="50" height="50">
-
-
-</body>
+</div>
+{% endblock %}
