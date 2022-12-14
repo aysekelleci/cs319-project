@@ -269,7 +269,7 @@ input[type=url], input[type=text] {
   width: 50%;
 }
 
-.navbar_wrapper .main_content .page_content li {
-  display: list-item;
+.navbar_wrapper .main_content .page_content ol li {
+  list-style: decimal;
   list-style-position: inside;
 }
