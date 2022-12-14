@@ -10,7 +10,7 @@
 }
 
 body{
-   background-color: #f3f5f9;
+  background-color: #f3f5f9;
 }
 
 .navbar_wrapper{
@@ -142,13 +142,13 @@ body{
 }
 
 input {
-  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
-  background-position: 10px 12px; /* Position the search icon */
-  background-repeat: no-repeat; /* Do not repeat the icon image */
-  font-size: 16px; /* Increase font-size */
-  padding: 12px 20px 12px 40px; /* Add some padding */
-  border: 1px solid #ddd; /* Add a grey border */
-  margin-bottom: 12px; /* Add some space below the input */
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px; /
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
 }
 
 thead, tbody {
@@ -165,9 +165,9 @@ td[id="count"]::before {
 }
 
 tbody {
-    height: 300px;       /* Just for the demo          */
-    overflow-y: auto;    /* Trigger vertical scroll    */
-    overflow-x: hidden;  /* Hide the horizontal scroll */
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 table, th {
@@ -246,7 +246,6 @@ input[type=url], input[type=text] {
   margin: 10px;
   color: #717171;
   line-height: 25px;
-
 }
 
 .navbar_wrapper .main_content div h2{
@@ -268,4 +267,9 @@ input[type=url], input[type=text] {
 
 .navbar_wrapper .main_content .add_course form {
   width: 50%;
+}
+
+.navbar_wrapper .main_content .page_content li {
+  display: list-item;
+  list-style-position: inside;
 }

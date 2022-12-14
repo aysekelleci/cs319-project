@@ -1,8 +1,17 @@
-<!--
+{% extends 'accounts/navbar.html' %}
 
-
-
--->
-
-
-<h1> FAQ PAGE</h1>
+{% block main_content %}
+<div class="header">Frequently Asked Questions</div>
+<div class="page_content">
+    <ol class="faq">
+    <li style="display: list-item">
+        <h3>Item one</h3>
+        <p>An explanation of the item.</p>
+    </li>
+    <li style="display: list-item">
+        <h3>Item two</h3>
+        <p>An explanation of the item.</p>
+    </li>
+</ol>
+</div>
+{% endblock %}
