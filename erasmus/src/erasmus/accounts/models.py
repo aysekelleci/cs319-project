@@ -52,10 +52,11 @@ class UserCourse(models.Model):
 class ToDo(models.Model):
     header = models.CharField(max_length=100)
     body = models.CharField(max_length=400)
-    link = models.CharField(max_length=200)
-    is_starred = models.BooleanField(default=False)
+    link = models.CharField(max_length=200, blank=True)
+    is_flagged = models.BooleanField(default=False)
     is_done = models.BooleanField(default=False)
     due_date = models.CharField(max_length=50)
+    user = models.ForeignKey(ErasmusUser, on_delete=models.CASCADE, related_name='erasmus_user')
 
     def __str__(self):
         return '{}'.format(self.header)

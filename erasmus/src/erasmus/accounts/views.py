@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from courses.forms import CourseForm
+from accounts.forms import ToDoForm
 
 from django.db.models import Q
 
@@ -30,10 +30,9 @@ class ToDo(View):
 
 
 class AddToDoView(View):
-    def get(self, request, todo_id):
-        todo = get_object_or_404(ToDo, pk=todo_id)  # Check whether given todo object exists
+    def get(self, request):
         user = request.user
-        erasmus_user = ErasmusUser.objects.get(user=user)
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
         # get which user wants to add an approved course ?
         if Student.objects.filter(name=erasmus_user.name).exists():
             todo_user = Student.objects.get_object_or_404(user=erasmus_user)
@@ -44,22 +43,33 @@ class AddToDoView(View):
         else:
             todo_user = None
 
-        # check whether todo item already added
-        try:
-            todo_item = ToDo.objects.get(user=todo_user,course=todo)
-        except:
-            todo_item = None
+        username = request.user.username
 
-        if todo_item is not None:
-            messages.info(request, "This todo already added to the todo list.")
-            return redirect("/courses") # ?
-        else:
-            ToDo.objects.create(user=todo_user, course=todo)
-            messages.info(request, "Todo added to your todo list.")
-            return redirect("/courses") # ?
+        new_todo = None
 
+        todo_form = ToDoForm()
 
-class DeleteCourseView(View):
+        return render(request,
+                      'accounts/add_todo.html',
+                      {'new_todo': new_todo,
+                       'todo_form': todo_form,
+                       'username': username})
+    def post(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            todo_form = ToDoForm(data=request.POST)
+            new_todo = None
+
+            if todo_form.is_valid():
+                new_todo.user = erasmus_user
+                new_todo = todo_form.save(commit=False)
+                new_todo.save()
+
+        context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
+        return render(request, 'accounts/todo.html', context)
+
+class DeleteToDoView(View):
     def get(self, request, todo_id):
         user = request.user
         erasmus_user = ErasmusUser.objects.get(user=user)
@@ -84,11 +94,30 @@ class DeleteCourseView(View):
             return redirect("/courses") # ?
 
 
+<<<<<<< Updated upstream
 class StarToDo(View): # ! changed the name from flag to star
+=======
+class AddUnapprovedCourse(LoginRequiredMixin, View): # ? Form required
+
+    def get(self, request):
+        username = request.user.username
+
+        new_course = None
+
+        course_form = CourseForm()
+
+        return render(request,
+                      'courses/add_unapproved_course.html',
+                      {'new_course': new_course,
+                       'course_form': course_form,
+                       'username': username})
+
+class FlagToDo(View):
+>>>>>>> Stashed changes
     '''
-    is_starred : boolean, whether the todo should be starred
+    is_flagged : boolean, whether the todo should be starred
     '''
-    def get(self, request, todo_id, is_starred):
+    def get(self, request, todo_id, is_flagged):
         user = request.user
         erasmus_user = ErasmusUser.objects.get(user=user)
         # get which user wants to add an approved course
@@ -103,7 +132,7 @@ class StarToDo(View): # ! changed the name from flag to star
             todo_user = None
         todo = get_object_or_404(ToDo, pk=todo_id)  # ? what if this gives an error
 
-        todo.is_starred = is_starred
+        todo.is_flagged = is_flagged
         todo.save() # update the todo object
 
 
@@ -129,23 +158,14 @@ class UpdateToDoState(View):
 
 
 class SearchToDo(View):
-
-    def get(self, request, query):
-        user = request.user
-        erasmus_user = ErasmusUser.objects.get(user=user)
-        # get which user wants to add an approved course
-        if Student.objects.filter(name=erasmus_user.name).exists():
-            todo_user = Student.objects.get_object_or_404(user=erasmus_user)
-        elif Coordinator.objects.filter(name=erasmus_user.name).exists():
-            todo_user = Coordinator.objects.get_object_or_404(user=erasmus_user)
-        elif BoardMember.objects.filter(name=erasmus_user.name).exists():
-            todo_user = BoardMember.objects.get_object_or_404(user=erasmus_user)
-        else:
-            todo_user = None
+    def post(self, request):
+        searched = request.POST.get('searched', False)
 
         # search for the query in the todo's header and body
-        todo = ToDo.objects.get(Q(header__contains=query) | Q(body__contains=query))
+        todo = ToDo.objects.filter(Q(header__contains=searched) | Q(body__contains=searched))
 
-        if todo is not None:
-            return todo # ? how do we return
+        return render(request, 'accounts/todo_search.html', {'searched': searched, "todo": todo})
+
+    def get(self, request):
+        return render(request, 'accounts/todo_search.html')
 
