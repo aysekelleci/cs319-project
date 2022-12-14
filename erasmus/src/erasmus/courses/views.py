@@ -133,6 +133,59 @@ class DocumentView(View):
         return render(request, 'courses/documents.html', context)
 
 
+class GetWaitingCoursesView(LoginRequiredMixin, View):
+    def get(self, request):
+        unapproved_courses = Course.objects.filter(approved=False)
+
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        if coordinator is None:
+            redirect('accounts/profile')
+
+        else:
+            context = {'coordinator': coordinator, 'unapproved_courses': unapproved_courses}
+            return render(request, 'courses/waiting_courses.html', context)
+
+
+class ApproveCoursesView(LoginRequiredMixin, View):
+    def get(self, request, course_id):
+        unapproved_courses = Course.objects.filter(approved=False)
+
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        if coordinator is None:
+            redirect('accounts/profile')
+
+        else:
+            course = Course.objects.get_or_404(pk=course_id)
+            if course is not None:
+                course.approved = True
+
+        redirect('waiting-courses')
+
+
+class RejectCourseView(LoginRequiredMixin, View):
+    def get(self, request, course_id):
+        unapproved_courses = Course.objects.filter(approved=False)
+
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        if coordinator is None:
+            redirect('accounts/profile')
+
+        else:
+            course = Course.objects.get_or_404(pk=course_id)
+            if course is not None:
+                # todo add the course to rejected course then delete it
+                # course.delete()
+                x = 5
+
+        redirect('waiting-courses')
+
+
+
+
+
 
 
 

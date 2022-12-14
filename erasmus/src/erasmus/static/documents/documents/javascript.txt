@@ -1,0 +1,17 @@
+outerLoop:
+for (let i = 1; i <8; i++) {
+    innerLoop:
+    for(let j =0; j<10; j++) {
+        if (i === 3)
+            continue outerLoop; //skips one iteration for outerLoop
+        if(i === 5)
+            break outerLoop;  //terminates outer loop
+        if( j === 5 ) //when j becomes 5 it terminates inner loop
+            break;     
+        if( j === 1 ) 
+            continue; //skips one iteration for inner loop
+
+        console.log("For iteration " + i + " j is: " + j);
+    }
+    console.log("Iteration " + i + " is completed \n");
+}
