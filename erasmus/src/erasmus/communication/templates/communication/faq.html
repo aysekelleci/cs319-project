@@ -1,7 +1,14 @@
 {% extends 'accounts/navbar.html' %}
 
 {% block main_content %}
-<div class="header">Frequently Asked Questions</div>
+<div class="header">
+    Frequently Asked Questions
+
+    {% if not user_type == "Student" %}
+    <button type="button" style="margin-left: 60px;" onclick="location.href = '../../add-question'">Adjust FAQs</button>
+    {% endif %}
+</div>
+
 <div class="page_content">
     <ol class="faq">
         <li style="font-weight: bold">What is the student exchange program?</li>

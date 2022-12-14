@@ -123,11 +123,6 @@ body{
   display: block;
 }
 
-.navbar_wrapper .sidebar ul li a{
-  color: #9899ac;
-  display: block;
-}
-
 .navbar_wrapper .sidebar ul li a .fas{
   width: 25px;
 }
@@ -228,10 +223,12 @@ input[type=url], input[type=text] {
 }
 
 .navbar_wrapper .main_content .header {
+  margin: 0;
+  padding: 0;
   font-size: 40px;
   text-transform: uppercase;
   text-align: center;
-  padding: 40px;
+  padding: 50px;
   background: #fff;
   color: #717171;
   border-bottom: 1px solid #e0e4e8;
