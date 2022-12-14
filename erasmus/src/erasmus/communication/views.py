@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 # Create your views here.
 
 
-class FAQView(View):
+class FAQView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         username = request.user.username

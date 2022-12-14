@@ -12,7 +12,7 @@ from courses.forms import CourseForm
 
 
 # Create your views here.
-class HomeView(View):
+class HomeView(LoginRequiredMixin,View):
     def get(self, request):
         user = request.user
         todo = ToDo.objects.all()
@@ -31,7 +31,7 @@ class HomeView(View):
         return render(request, 'courses/home.html', context)
 
 
-class CourseView(View):
+class CourseView(LoginRequiredMixin,View):
     def get(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.get(user=user)
@@ -48,7 +48,7 @@ class CourseView(View):
         return render(request, 'courses/courses.html', context)
 
 
-class AddCourseView(View):
+class AddCourseView(LoginRequiredMixin,View):
     def get(self, request, course_id):
         course = get_object_or_404(Course, pk=course_id)  # Check whether given course object exists
         user = request.user
@@ -69,7 +69,7 @@ class AddCourseView(View):
             return redirect("/courses")
 
 
-class DeleteCourseView(View):
+class DeleteCourseView(LoginRequiredMixin,View):
     def get(self, request, course_id):
         user = request.user
         erasmus_user = ErasmusUser.objects.get(user=user)
@@ -102,8 +102,10 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
                        'username': username})
 
     def post(self, request):
-        username = request.user.username
-        new_course = None
+        user = request.user
+        username = user.username
+        erasmus_user = ErasmusUser.objects.get(user=user)
+        student = Student.objects.filter(user=erasmus_user).first()
 
         course_form = CourseForm(data=request.POST)
         if course_form.is_valid():
@@ -112,6 +114,11 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
 
             # Save the comment to the database
             new_course.save()
+
+            # add a todo item for the coordinator to evaluate the unapproved course
+            coordinator_todo = ToDo(header = f"Evaluate new unapproved course of {erasmus_user.name}", user = student.coordinator.user,
+                                    link = "waiting-courses/")
+            coordinator_todo.save()
 
         else:
             messages.info(request, "Comment Form is not valid")
@@ -124,7 +131,7 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
                        'username': username})
 
 
-class DocumentView(View):
+class DocumentView(LoginRequiredMixin,View):
     def get(self, request):
         documents = Document.objects.all()
         user = request.user

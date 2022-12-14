@@ -15,7 +15,7 @@ from django.db.models import Q
 
 
 
-class AddToDoView(View):
+class AddToDoView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         todo_user = getUser(user)
@@ -47,7 +47,7 @@ class AddToDoView(View):
         context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
         return render(request, 'accounts/add_todo.html', context)
 
-class DeleteToDoView(View):
+class DeleteToDoView(LoginRequiredMixin,View):
     def get(self, request, todo_id):
         user = request.user
         todo_user = getUser(user)
@@ -63,7 +63,7 @@ class DeleteToDoView(View):
             return redirect("accounts/profile")
 
 
-class FlagToDo(View):
+class FlagToDo(LoginRequiredMixin,View):
 
     '''
     is_flagged : boolean, whether the todo should be flagged
@@ -76,7 +76,7 @@ class FlagToDo(View):
         todo.save() # update the todo object
         return redirect("accounts/profile")
 
-class UpdateToDoState(View):
+class UpdateToDoState(LoginRequiredMixin,View):
 
     def get(self, request, todo_id, is_done):
         user = request.user
@@ -87,7 +87,7 @@ class UpdateToDoState(View):
         return redirect("/accounts/profile")
 
 
-class SearchToDo(View):
+class SearchToDo(LoginRequiredMixin,View):
     def post(self, request):
         searched = request.POST.get('searched', False)
 
