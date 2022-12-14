@@ -178,7 +178,9 @@ section
     <div class = "status">
         <h1 class = "statusLabel"> Status:</h1>
         <div class = "statusBox">
-            <p> Status Will be shown here </p>
+            {% if user_type == "Student" %}
+                <p> {{user.status}} </p>
+            {%endif%}
         </div>
         <div>
             <button>Delete</button>
@@ -194,8 +196,11 @@ section
 
         <section class = "toDo">
             <div class = "toDoList">
-            {% for course in courses %}
-                <p> {{course.course_name}}</p>
+            {% for toDo in todo %}
+
+                <p> {{toDo.header}}</p>
+                <li><a href='/todo-state/{{toDo.pk}}/1/'><i class="fas fa-times"></i>Mark as done</a></li>
+
             {%endfor%}
             </div>
         </section>

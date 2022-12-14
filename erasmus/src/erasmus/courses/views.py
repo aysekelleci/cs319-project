@@ -3,7 +3,7 @@ from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from .models import Course, Document
-from accounts.models import UserCourse, Student, ErasmusUser, Coordinator
+from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
 from django.contrib import messages
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -14,7 +14,21 @@ from courses.forms import CourseForm
 # Create your views here.
 class HomeView(View):
     def get(self, request):
-        return render(request, 'courses/home.html')
+        user = request.user
+        todo = ToDo.objects.all()
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+
+        if Student.objects.filter(user=erasmus_user).exists():
+            todo_user = Student.objects.filter(user=erasmus_user).first()
+        elif Coordinator.objects.filter(user=erasmus_user).exists():
+            todo_user = Coordinator.objects.filter(user=erasmus_user).first()
+        elif BoardMember.objects.filter(user=erasmus_user).exists():
+            todo_user = BoardMember.objects.filter(user=erasmus_user).first()
+        else:
+            todo_user = None
+
+        context = {'user': todo_user, 'todo': todo}
+        return render(request, 'courses/home.html', context)
 
 
 class CourseView(View):
