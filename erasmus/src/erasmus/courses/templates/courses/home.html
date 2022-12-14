@@ -188,7 +188,7 @@ section
 
         <section class = "toDo">
             <div class = "toDoList">
-                <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for To Do">
+                <input type="text" id="filter_input" style="width:100%" placeholder="Search for To Do">
                 <label>Add a todo to your db to display</label><br>
                 {% for toDo in todo %}
 
@@ -205,7 +205,7 @@ section
 
         <section class = "done">
             <div class = "doneList">
-                <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for Done">
+                <input type="text" id="filter_input" style="width:100%" placeholder="Search for Done">
                 {% for toDo in todo %}
 
                 <input type = "checkbox">
