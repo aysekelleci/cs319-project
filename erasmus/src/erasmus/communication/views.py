@@ -32,7 +32,7 @@ class AddQuestion(LoginRequiredMixin, View):
         if erasmus_user is not None:
             coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         else:
-            coordinator= None
+            coordinator = None
 
         new_question = None
 
@@ -66,6 +66,7 @@ class AddQuestion(LoginRequiredMixin, View):
         context = {'coordinator': coordinator, 'question_form': question_form, 'new_question': new_question}
         messages.info(request, "Question is added")
         return render(request, 'communication/faq.html', context)
+
 
 
 
