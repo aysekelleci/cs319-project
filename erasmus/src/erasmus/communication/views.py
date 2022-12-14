@@ -54,8 +54,9 @@ class AddQuestion(LoginRequiredMixin, View):
         new_question = None
 
         if question_form.is_valid():
-            new_question.user = coordinator
             new_question = question_form.save(commit=False)
+            new_question.user = coordinator
+
             # Save the question to the database
             new_question.save()
 
