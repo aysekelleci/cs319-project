@@ -270,3 +270,11 @@ input[type=url], input[type=text] {
   list-style: decimal;
   list-style-position: inside;
 }
+
+.navbar_wrapper .main_content .page_content .faq_buttons {
+  display: block;
+  padding: 5px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  text-align: center;
+}
