@@ -18,15 +18,11 @@
 section
 {
     float: left;
-    
-    background: rgb(246, 245, 255);
 }
 .mainBox
 {
     margin-top: 3px;
     margin-left: 10px;
-
-    background: rgb(246, 245, 255);
 
     display: grid; 
     grid-template-rows: 60px 180px;
@@ -168,12 +164,13 @@ section
 <div class = "mainBox">
 
     <div class = "status">
+        {% if user_type == "Student" %}
         <h1 class = "statusLabel"> Status:</h1>
         <div class = "statusBox">
-            {% if user_type == "Student" %}
-                <p> {{user.status}} </p>
-            {%endif%}
+            <p> {{user.status}} </p>
         </div>
+        {%endif%}
+        
         <div>
             <button>Delete</button>
             <button>Flag</button>
