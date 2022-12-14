@@ -1,9 +1,9 @@
-function myFunction() {
+function filter() {
   // Declare variables
   var input, filter, table, row, courseName, courseID, i, courseTxtValue, idTxtValue;
-  input = document.getElementById("myInput");
+  input = document.getElementById("filter_input");
   filter = input.value.toUpperCase();
-  table = document.getElementById("course_list_table");
+  table = document.getElementById("filtered_list");
   row = table.getElementsByTagName("tr");
 
   // Loop through all table rows, and hide those who don't match the search query
