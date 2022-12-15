@@ -43,9 +43,11 @@ class CourseView(LoginRequiredMixin,View):
         else:
             user_type = "Board Member"
 
-        courses = Course.objects.filter(user=student)
+        user_courses = Course.objects.filter(user=student)
+        courses = Course.objects.all()
 
-        context = {'user': user, 'courses': courses, "user_type": user_type, 'student': student}
+        context = {'user': user, 'courses': courses, "user_type": user_type, 'student': student,
+                   'user_courses': user_courses}
         return render(request, 'courses/courses.html', context)
 
 
