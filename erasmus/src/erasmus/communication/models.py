@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-from accounts.models import Coordinator
+from accounts.models import Coordinator, ErasmusUser
 
 
 # Singleton object for FAQ
@@ -21,7 +21,7 @@ class Notification(models.Model):
     link = models.CharField(max_length=200, blank=True)
     is_flagged = models.BooleanField(default=False)
     date = models.DateTimeField(blank=True, null=True)
-    user = models.ForeignKey(ErasmusUser, on_delete=models.CASCADE, related_name='erasmus_user', default = 1)
+    user = models.ForeignKey(ErasmusUser, on_delete=models.CASCADE, related_name='notification_user', default = 1)
     def __str__(self):
         return '{}'.format(self.header)
 
