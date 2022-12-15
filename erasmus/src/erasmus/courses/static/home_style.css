@@ -1,15 +1,11 @@
 section
 {
     float: left;
-
-    background: rgb(246, 245, 255);
 }
 .mainBox
 {
     margin-top: 3px;
     margin-left: 10px;
-
-    background: rgb(246, 245, 255);
 
     display: grid;
     grid-template-rows: 60px 180px;
@@ -92,11 +88,6 @@ section
     margin-top: 10px;
     width: fit-content;
 }
-.addToDo:hover
-{
-    background-color: #3d445c; /* Green */
-    color: white;
-}
 /* The popup form - hidden by default */
 .form-popup {
   display: none;
@@ -112,7 +103,7 @@ section
 {
   max-width: 300px;
   padding: 10px;
-  background-color: rgb(212, 220, 255);
+  background-color: rgb(17, 0, 39);
   border-style:ridge;
 }
 
@@ -122,19 +113,15 @@ section
   padding: 15px;
   margin: 5px 0 22px 0;
   border: none;
-  background: #f1f1f1;
 }
 
 /* When the inputs get focus, do something */
 .form-container input[type=text]:focus, .form-container input[type=password]:focus {
-  background-color: #ddd;
   outline: none;
 }
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #067c8b;
-  color: white;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
@@ -146,7 +133,8 @@ section
 /* Add a red background color to the cancel button */
 .form-container .cancel
 {
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(228, 12, 12);
+  color: #f1f1f1;
 }
 
 /* Add some hover effects to buttons */

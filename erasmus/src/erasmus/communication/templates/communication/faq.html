@@ -4,12 +4,12 @@
 <div class="header">Frequently Asked Questions</div>
 
 <div class="page_content">
+    {% if not user_type == "Student" %}
     <div class="faq_buttons">
-        {% if not user_type == "Student" %}
         <button type="button" onclick="location.href = '../../add-question'">Add a New FAQ</button>
         <button type="button" onclick="location.href = '#'">Adjust FAQs</button>
-        {% endif %}
     </div>
+    {% endif %}
     <ol class="faq">
         {% for q in questions %}
         <li style="font-weight: bold">{{q.question}}</li>
