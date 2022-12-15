@@ -196,14 +196,6 @@ class UploadDocumentView(LoginRequiredMixin, View):
 
 
 
-
-
-
-
-
-
-
-
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
         unapproved_courses = Course.objects.filter(approved=False)
@@ -289,20 +281,20 @@ class CreateDocumentView(LoginRequiredMixin, View):
 
         # fixme: this should create different forms
         # read the template pre-approval form and its tables
-        document = docx.api.Document('static/pre_approval_form.docx')
+        document = docx.api.Document('courses/static/pre_approval_form.docx')
         student_info_table = document.tables[0]
         host_uni_table = document.tables[1]
         courses_table = document.tables[2]
         coordinator_table = document.tables[3]
 
         student_info_table.cell(0, 1).text = erasmus_user.name.split()[:-1]     # name
-        student_info_table.cell(0, 3).text = erasmus_user.bilkent_id            # bilkent id number
+        student_info_table.cell(0, 3).text = str(erasmus_user.bilkent_id)            # bilkent id number
         student_info_table.cell(1, 1).text = erasmus_user.name.split()[-1]      # surname
         student_info_table.cell(1, 3).text = erasmus_user.department            # department
 
         host_uni_table.cell(0, 1).text = student.university.university_name     # host university name
         host_uni_table.cell(0, 3).text = student.academic_year                  # academic year
-        host_uni_table.cell(1, 1).text = student.semester                       # semester
+        host_uni_table.cell(1, 3).text = student.semester                       # semester
 
         courses = UserCourse.objects.filter(user=student)
 
@@ -311,15 +303,16 @@ class CreateDocumentView(LoginRequiredMixin, View):
             bilkent_equivalent = course.bilkent_equivalent
             courses_table.cell(2+i, 1).text = course.course_codes               # course code
             courses_table.cell(2 + i, 2).text = course.course_name              # course name
-            courses_table.cell(2 + i, 3).text = course.course_credit            # course credit
-            if bilkent_equivalent.course_type == MUST_COURSE:       # bilkent course name
-                courses_table.cell(2 + i, 4).text = bilkent_equivalent.course_codes + " " +\
-                                                    bilkent_equivalent.course_type
-            elif bilkent_equivalent.course_type == ELECTIVE_COURSE:
-                courses_table.cell(2 + i, 4).text = bilkent_equivalent.elective_group_name
-            courses_table.cell(2 + i, 5).text = bilkent_equivalent.course_credit        # bilkent course credit
-            if bilkent_equivalent.course_type == ELECTIVE_COURSE:                  # bilkent elective course code
-                courses_table.cell(2 + i, 6).text = bilkent_equivalent.course_codes
+            courses_table.cell(2 + i, 3).text = str(course.course_credit)            # course credit
+            if bilkent_equivalent is not None:
+                if bilkent_equivalent.course_type == MUST_COURSE:       # bilkent course name
+                    courses_table.cell(2 + i, 4).text = bilkent_equivalent.course_codes + " " +\
+                                                        bilkent_equivalent.course_name
+                elif bilkent_equivalent.course_type == ELECTIVE_COURSE:
+                    courses_table.cell(2 + i, 4).text = bilkent_equivalent.elective_group_name
+                courses_table.cell(2 + i, 5).text = str(bilkent_equivalent.course_credit)        # bilkent course credit
+                if bilkent_equivalent.course_type == ELECTIVE_COURSE:                  # bilkent elective course code
+                    courses_table.cell(2 + i, 6).text = bilkent_equivalent.course_codes
 
         coordinator_table.cell(1, 1).text = student.coordinator.user.name       # coordinator name
 
@@ -331,12 +324,12 @@ class CreateDocumentView(LoginRequiredMixin, View):
 
         with open(document_name, 'rb') as f:
             new_pre_approval = Document(document_name="Pre-Approval Form " + erasmus_user.name,
-                                        date=datetime.now(), is_signed=False, user=Student,
+                                        date=datetime.now(), is_signed=False, user=student,
                                         document_type=PREAPPROVAL_FORM)
             new_pre_approval.document = File(f, name=os.path.basename(f.name))
             new_pre_approval.save()
 
-        return redirect("add_unapproved_course")
+        return redirect("/courses")
 
 
 
