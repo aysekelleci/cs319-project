@@ -9,14 +9,3 @@ class Migration(migrations.Migration):
         ('courses', '0002_remove_course_grade'),
     ]
 
-    operations = [
-        migrations.CreateModel(
-            name='Document',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('document_name', models.CharField(max_length=50)),
-                ('document', models.FileField(upload_to='documents/')),
-                ('date', models.DateTimeField(auto_now_add=True)),
-            ],
-        ),
-    ]

@@ -1,7 +1,12 @@
 from django.db import models
 # Create your models here.
 
-
+TYPE_CHOICES = (
+    ("Leaning Agreement", "Learning Agreement"),
+    ("Preapproval Form", "PreApproval Form"),
+    ("Course Transfer Form", "Course Transfer Form"),
+    ("Other", "Other"),
+)
 class University(models.Model):
     university_name = models.CharField(max_length=100)
     country = models.CharField(max_length=50)
@@ -36,21 +41,13 @@ class Course(models.Model):
         return '{}'.format(self.course_codes + ": " + self.course_name)
 
 
-TYPE_CHOICES = (
-    ("Leaning Agreement", "Learning Agreement"),
-    ("Preapproval Form", "PreApproval Form"),
-    ("Course Transfer Form", "Course Transfer Form"),
-    ("Other", "Other"),
-)
-
-
 class Document(models.Model):
     document_name = models.CharField(max_length=50)
     document = models.FileField(upload_to='documents/')
     date = models.DateTimeField(auto_now_add=True)
     is_signed = models.BooleanField(default=False)
-    user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='document', default=4)
-    document_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='1')
+    user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='documents_user', default=1)
+    document_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default=4)
     #signers
     #size
     #type
