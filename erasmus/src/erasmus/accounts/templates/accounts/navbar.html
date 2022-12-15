@@ -21,7 +21,7 @@
         {% block sidebar %}
         <ul>
             <li id="1-holder"><a id="1" href="../../accounts/profile/" onclick="clicked(this)"><i class="fas fa-home"></i>Home</a></li>
-            <li id="2-holder"><a id="2" href="../../notification"" onclick="clicked(this)"><i class="fas fa-bell"></i>Notifications</a></li>
+            <li id="2-holder"><a id="2" href="../../notification" onclick="clicked(this)"><i class="fas fa-bell"></i>Notifications</a></li>
 
             {% if not user_type == "Coordinator" and not user_type == "BoardMember" %}
             <li id="3-holder"><a id="3" href="../../courses" onclick="clicked(this)"><i class="fas fa-book"></i>Add Courses</a></li>
