@@ -8,7 +8,7 @@ from django.contrib import messages
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from courses.forms import CourseForm
+from courses.forms import CourseForm, DocumentForm
 
 
 # Create your views here.
@@ -39,12 +39,13 @@ class CourseView(LoginRequiredMixin,View):
             user_type = "Coordinator"
         elif Student.objects.filter(user=erasmus_user).first():
             user_type = "Student"
+            student = Student.objects.filter(user=erasmus_user).first()
         else:
             user_type = "Board Member"
 
         courses = Course.objects.all()
 
-        context = {'user': user, 'courses': courses, "user_type": user_type}
+        context = {'user': user, 'courses': courses, "user_type": user_type, 'student': student}
         return render(request, 'courses/courses.html', context)
 
 
@@ -131,13 +132,65 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
                        'username': username})
 
 
-class DocumentView(LoginRequiredMixin,View):
+class DocumentView(LoginRequiredMixin, View):
     def get(self, request):
         documents = Document.objects.all()
         user = request.user
 
         context = {'documents': documents}
         return render(request, 'courses/documents.html', context)
+
+
+class UploadDocumentView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        student = None
+        document_form = DocumentForm()
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+        if student is None:
+            redirect("/login")
+
+        context = {'student': student, 'document_form': document_form}
+        return render(request, 'courses/upload-documents.html', context)
+
+    def post(self, request):
+        student = None
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        document_form = DocumentForm()
+        new_document = None
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+        if student is None:
+            redirect("/login")
+
+            document_form = DocumentForm(data=request.POST)
+
+            if document_form.is_valid():
+                new_document = document_form.save(commit=False)
+                new_document.user = student
+
+                # Save the document to the database
+                new_document.save()
+
+            else:
+                messages.info(request, "Comment form is not valid")
+                return redirect("/courses")
+
+        context = {'student': student, 'document_form': document_form, 'new_document': new_document}
+        return render(request, 'courses/upload-documents.html', context)
+
+
+
+
+
+
+
+
+
+
 
 
 class GetWaitingCoursesView(LoginRequiredMixin, View):

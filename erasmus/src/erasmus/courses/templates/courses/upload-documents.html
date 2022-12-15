@@ -1,19 +1,21 @@
+
 {% extends 'accounts/navbar.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
 
 {% block main_content %}
-<div class="header">Add New Course</div>
+<div class="header">Add New Document</div>
 <div class="page_content">
 
-    {% if new_course %}
+        {% if new_document %}
         <!--success message-->
-        <h2> Your course has been added.</h2>
+        <h2> Your document has been added.</h2>
     {% endif %}
+
 
     <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{course_form|crispy}}
+            {{document_form|crispy}}
             <button class="btn btn-primary my-4" type="submit">Submit</button>
     </form>
 
