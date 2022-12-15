@@ -43,7 +43,7 @@ class CourseView(LoginRequiredMixin,View):
         else:
             user_type = "Board Member"
 
-        user_courses = Course.objects.filter(user=student)
+        user_courses = UserCourse.objects.filter(user=student)
         courses = Course.objects.all()
 
         context = {'user': user, 'courses': courses, "user_type": user_type, 'student': student,
