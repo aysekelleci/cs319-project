@@ -72,7 +72,7 @@ class NotificationView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        notifications = Notification.objects.filter(user=user)
+        notifications = Notification.objects.filter(user=erasmus_user)
         context = {'user': erasmus_user, 'notifications': notifications}
         return render(request, 'communication/faq.html', context)
 
