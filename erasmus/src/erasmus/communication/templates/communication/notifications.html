@@ -2,36 +2,82 @@
 {% block main_content %}
 <div class="header">Notifications</div>
 <div class="page_content">
+    <style>
+        
+        
+        /* When the checkbox is checked, add a blue background */
+        .input:checked ~ .checkbox {
+          background-color: #f32121;
+        }
+        
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkbox:after {
+          content: "";
+          position: absolute;
+          display: none;
+        }
+        
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+          display: block;
+        }
+        
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+          left: 9px;
+          top: 5px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 3px 3px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+        }
+        </style>
+        
     <div id="notif_table">
             <table id="filtered_list" style="width:100%">
                 <tr>
-                    <td style="width:100%">A Notificaiton</td>
                     <td>
-                        <button href="#" type="button">Link</button>
+                        <input type="checkbox">
                     </td>
-                    <td>flagged</td>
-                </tr>
-                <tr>
-                    <td style="width:100%">A Notificaiton</td>
-                    <td>
-                        <button href="#" type="button">Link</button>
-                    </td>
-                    <td>flagged</td>
-                </tr>
-                <tr>
                     <td style="width:100%">A Notificaiton</td>
                     <td>
                         <button href="#" type="button">Link</button>
                     </td>
                 </tr>
                 <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
                     <td style="width:100%">A Notificaiton</td>
                     <td>
                         <button href="#" type="button">Link</button>
                     </td>
-                    <td>flagged</td>
                 </tr>
                 <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                    <td style="width:100%">A Notificaiton</td>
+                    <td>
+                        <button href="#" type="button">Link</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                    <td style="width:100%">A Notificaiton</td>
+                    <td>
+                        <button href="#" type="button">Link</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
                     <td style="width:100%">A Notificaiton</td>
                     <td>
                         <button href="#" type="button">Link</button>
