@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from courses.models import Course
+from courses.models import Course, University
 
 
 class ErasmusUser(models.Model):
@@ -13,6 +13,7 @@ class ErasmusUser(models.Model):
     email = models.CharField(max_length=100)
     bilkent_id = models.IntegerField()
     phone = models.IntegerField()
+    department = models.CharField(max_length=100, default="Computer Engineering")
 
     def __str__(self):
         return '{}'.format(self.user.username)
@@ -28,8 +29,10 @@ class Student(models.Model):
     score = models.FloatField()
     status = models.CharField(max_length=100, blank=True)
     coordinator = models.ForeignKey(Coordinator, blank=True, on_delete=models.SET_NULL, null=True)
+    university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True, blank=True)
     is_erasmus_done = models.BooleanField(default=False)
-
+    academic_year = models.CharField(max_length=20, default="")
+    semester = models.CharField(max_length=20, default="")
     def __str__(self):
         return '{}'.format(self.user.user.username)
 
@@ -44,7 +47,7 @@ class BoardMember(models.Model):
 class UserCourse(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses')
     user = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_user')
-    grade = models.IntegerField(blank=True)
+    grade = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.course.course_codes + self.course.course_name)

@@ -1,14 +1,16 @@
+import docx
 from django.shortcuts import render
 from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
-from .models import Course, Document, MergedCourse
+from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
 from django.contrib import messages
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from courses.forms import CourseForm, DocumentForm
+from datetime import datetime
 
 
 # Create your views here.
@@ -44,10 +46,17 @@ class CourseView(LoginRequiredMixin,View):
             user_type = "Board Member"
 
         user_courses = UserCourse.objects.filter(user=student)
-        courses = Course.objects.all()
+
+        courses = None
+
+        # get preapproved courses for the university the student will be attending
+        if Student.objects.filter(user=erasmus_user).first():
+            student = Student.objects.filter(user=erasmus_user).first()
+            courses = Course.objects.filter(university=student.university,approved=True)
 
         context = {'user': user, 'courses': courses, "user_type": user_type, 'student': student,
                    'user_courses': user_courses}
+
         return render(request, 'courses/courses.html', context)
 
 
@@ -198,7 +207,7 @@ class UploadDocumentView(LoginRequiredMixin, View):
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
         unapproved_courses = Course.objects.filter(approved=False)
-
+        user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
@@ -212,7 +221,7 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
 class ApproveCoursesView(LoginRequiredMixin, View):
     def get(self, request, course_id):
         unapproved_courses = Course.objects.filter(approved=False)
-
+        user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
@@ -229,7 +238,7 @@ class ApproveCoursesView(LoginRequiredMixin, View):
 class RejectCourseView(LoginRequiredMixin, View):
     def get(self, request, course_id):
         unapproved_courses = Course.objects.filter(approved=False)
-
+        user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
@@ -271,6 +280,63 @@ class MergeCourseView(LoginRequiredMixin, View):
         else:
             messages.info(request, "You need to choose at least two courses to merge.")
             return redirect("add_unapproved_course")
+
+class CreateDocumentView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        student = Student.objects.filter(user=erasmus_user).first()
+
+        # fixme: this should create different forms
+        # read the template pre-approval form and its tables
+        document = docx.api.Document('static/pre_approval_form.docx')
+        student_info_table = document.tables[0]
+        host_uni_table = document.tables[1]
+        courses_table = document.tables[2]
+        coordinator_table = document.tables[3]
+
+        student_info_table.cell(0, 1).text = erasmus_user.name.split()[:-1]     # name
+        student_info_table.cell(0, 3).text = erasmus_user.bilkent_id            # bilkent id number
+        student_info_table.cell(1, 1).text = erasmus_user.name.split()[-1]      # surname
+        student_info_table.cell(1, 3).text = erasmus_user.department            # department
+
+        host_uni_table.cell(0, 1).text = student.university.university_name     # host university name
+        host_uni_table.cell(0, 3).text = student.academic_year                  # academic year
+        host_uni_table.cell(1, 1).text = student.semester                       # semester
+
+        courses = UserCourse.objects.filter(user=student)
+
+        for i, user_course in enumerate(courses):
+            course = user_course.course
+            bilkent_equivalent = course.bilkent_equivalent
+            courses_table.cell(2+i, 1).text = course.course_codes               # course code
+            courses_table.cell(2 + i, 2).text = course.course_name              # course name
+            courses_table.cell(2 + i, 3).text = course.course_credit            # course credit
+            if bilkent_equivalent.course_type == MUST_COURSE:       # bilkent course name
+                courses_table.cell(2 + i, 4).text = bilkent_equivalent.course_codes + " " +\
+                                                    bilkent_equivalent.course_type
+            elif bilkent_equivalent.course_type == ELECTIVE_COURSE:
+                courses_table.cell(2 + i, 4).text = bilkent_equivalent.elective_group_name
+            courses_table.cell(2 + i, 5).text = bilkent_equivalent.course_credit        # bilkent course credit
+            if bilkent_equivalent.course_type == ELECTIVE_COURSE:                  # bilkent elective course code
+                courses_table.cell(2 + i, 6).text = bilkent_equivalent.course_codes
+
+        coordinator_table.cell(1, 1).text = student.coordinator.user.name       # coordinator name
+
+        document_name = STATIC_DOCUMENTS_FOLDER + 'pre_approval_form' + datetime.now().strftime("%d-%m-%Y-%H-%M-%S") + ".docx"
+        document.save(document_name)
+
+        import os
+        from django.core.files import File
+
+        with open(document_name, 'rb') as f:
+            new_pre_approval = Document(document_name="Pre-Approval Form " + erasmus_user.name,
+                                        date=datetime.now(), is_signed=False, user=Student,
+                                        document_type=PREAPPROVAL_FORM)
+            new_pre_approval.document = File(f, name=os.path.basename(f.name))
+            new_pre_approval.save()
+
+        return redirect("add_unapproved_course")
 
 
 

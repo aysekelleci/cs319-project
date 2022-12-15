@@ -23,6 +23,6 @@ urlpatterns = [
          '<int:course_id7>/<int:course_id8>/<int:course_id9>/<int:course_id10>',
          views.MergeCourseView.as_view(), name="merge-courses"),
     path('upload-documents/', views.UploadDocumentView.as_view(), name="upload-documents"),
+    path('create-document/', views.CreateDocumentView.as_view(), name="create-document"),
     path('', include('communication.urls')),
-
 ]
