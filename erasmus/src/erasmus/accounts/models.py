@@ -44,7 +44,7 @@ class BoardMember(models.Model):
 class UserCourse(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses')
     user = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_user')
-    grade = models.IntegerField(blank=True)
+    grade = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.course.course_codes + self.course.course_name)

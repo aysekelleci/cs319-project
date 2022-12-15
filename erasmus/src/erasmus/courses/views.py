@@ -51,7 +51,7 @@ class CourseView(LoginRequiredMixin,View):
         return render(request, 'courses/courses.html', context)
 
 
-class AddCourseView(LoginRequiredMixin,View):
+class AddCourseView(LoginRequiredMixin, View):
     def get(self, request, course_id):
         course = get_object_or_404(Course, pk=course_id)  # Check whether given course object exists
         user = request.user
@@ -76,7 +76,7 @@ class DeleteCourseView(LoginRequiredMixin,View):
     def get(self, request, course_id):
         user = request.user
         erasmus_user = ErasmusUser.objects.get(user=user)
-        student = Student.objects.get_object_or_404(user=erasmus_user)  # get which student wants to add approved course
+        student = Student.objects.get(user=erasmus_user)  # get which student wants to add approved course
         course = get_object_or_404(Course, pk=course_id)
 
         try:

@@ -51,7 +51,7 @@
             <button type="button" onclick="toggleButtons(this, 3)" id="3">Merge Courses</button>
         </div>
 
-        <div hidden="hidden" id="toggle-element-1">
+        <td hidden="hidden" id="toggle-element-1">
             <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for courses..">
             <table id="filtered_list" style="width:100%">
                 <thead>
@@ -76,7 +76,9 @@
                     <td style="width:5%">{{course.course_credit}}</td>
                     <td style="width:25%">{{course.bilkent_equivalent}}</td>
                     <td style="width:5%">{{course.bilkent_equivalent.course_credit}}</td>
-                    <td style="width:25%"><button type="button" href="../../add-to-courses/{{course.pk}}">Add</button></td>
+                    <td style="width:25%"><button type="button" href="/add-to-courses/{{course.pk}}/">Add</button></td>
+                <td style="flex:1"><a class="btn btn-outline-success" href="/add-to-courses/{{course.pk}}">View</a></td>
+
                 </tr>
                 {% endif %}
                 {%endfor%}
