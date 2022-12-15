@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 
@@ -14,6 +13,8 @@ class University(models.Model):
 
     def __str__(self):
         return '{}'.format(self.university_name)
+
+
 class MergedCourse(models.Model):
     course_type = models.CharField(max_length=30)
     bilkent_equivalent = models.ForeignKey("Course", on_delete=models.SET_NULL, blank=True,
@@ -35,14 +36,21 @@ class Course(models.Model):
         return '{}'.format(self.course_codes + ": " + self.course_name)
 
 
+TYPE_CHOICES = (
+    ("Leaning Agreement", "Learning Agreement"),
+    ("Preapproval Form", "PreApproval Form"),
+    ("Course Transfer Form", "Course Transfer Form"),
+    ("Other", "Other"),
+)
+
 
 class Document(models.Model):
     document_name = models.CharField(max_length=50)
     document = models.FileField(upload_to='documents/')
     date = models.DateTimeField(auto_now_add=True)
-    # is_signed = models.BooleanField(default=False)
-    # user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='student_user')
-
+    is_signed = models.BooleanField(default=False)
+    user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='document', default=4)
+    document_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='1')
     #signers
     #size
     #type
