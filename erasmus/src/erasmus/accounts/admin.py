@@ -14,5 +14,5 @@ admin.site.register(ErasmusUser)
 
 admin.site.register(UserCourse)
 admin.site.register(ToDo)
-admin.site.register(University)
+
 

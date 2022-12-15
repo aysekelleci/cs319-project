@@ -19,6 +19,8 @@ urlpatterns = [
     path('waiting-courses/', views.GetWaitingCoursesView.as_view(), name="waiting-courses"),
     path('approve-course/<int:course_id>', views.ApproveCoursesView.as_view(), name="approve-courses"),
     path('reject-course/<int:course_id>', views.RejectCourseView.as_view(), name="reject-courses"),
+    path('merge-course/<int:course_id>/<int:course_id>/<int:course_id>/<int:course_id>/<int:course_id>/<int:course_id>/<int:course_id>/<int:course_id>/<int:course_id>/<int:course_id>',
+         views.RejectCourseView.as_view(), name="reject-courses"),
     path('', include('communication.urls')),
 
 ]

@@ -1,22 +1,39 @@
 from django.db import models
+
 # Create your models here.
 
+
+class University(models.Model):
+    university_name = models.CharField(max_length=100)
+    country = models.CharField(max_length=50)
+    lowest_grade = models.CharField(max_length=20)
+    highest_grade = models.CharField(max_length=20)
+    passing_grade = models.CharField(max_length=20)
+    inverted_scale = models.BooleanField(default=False)
+    department = models.CharField(max_length=200) # fixme supposed to be a list of strings
+
+    def __str__(self):
+        return '{}'.format(self.university_name)
+class MergedCourse(models.Model):
+    course_type = models.CharField(max_length=30)
+    bilkent_equivalent = models.ForeignKey("Course", on_delete=models.SET_NULL, blank=True,
+                                           null=True)
 
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
     course_codes = models.CharField(max_length=20)
     course_credit = models.FloatField()
-    #university = models.ForeignKey(Category, related_name='category', on_delete=models.CASCADE,  default=DEFAULT_CATEGORY_ID)
-    #bilkent_equivalent = models.ForeignKey(Course)
+    university = models.ForeignKey(University, on_delete=models.CASCADE, null=True )
+    bilkent_equivalent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
     approved = models.BooleanField(default=False)
-    courseType = models.CharField(max_length=30)
+    course_type = models.CharField(max_length=30)
     course_coordinator_name = models.CharField(blank=True, max_length=100)
+    merged_course = models.ForeignKey(MergedCourse, on_delete=models.SET_NULL, blank=True, null=True)
+    is_merged = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}'.format(self.course_codes + ": " + self.course_name)
-    # foreign key olarak MergedCourse
-    # is_merged boolean
-    # MergedCourse içinde coursetype, bilkentequivalent
+
 
 
 class Document(models.Model):

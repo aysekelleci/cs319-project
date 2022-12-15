@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
-from .models import Course, Document
+from .models import Course, Document, MergedCourse
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
 from django.contrib import messages
 
@@ -116,13 +116,13 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
             new_course.save()
 
             # add a todo item for the coordinator to evaluate the unapproved course
-            coordinator_todo = ToDo(header = f"Evaluate new unapproved course of {erasmus_user.name}", user = student.coordinator.user,
-                                    link = "waiting-courses/")
+            coordinator_todo = ToDo(header=f"Evaluate new unapproved course of {erasmus_user.name}", user=student.coordinator.user,
+                                    link="waiting-courses/")
             coordinator_todo.save()
 
         else:
-            messages.info(request, "Comment Form is not valid")
-            return redirect("/faq")
+            messages.info(request, "Course Form is not valid")
+            return redirect("add_unapproved_course")
 
         return render(request,
                       'courses/add_unapproved_course.html',
@@ -189,6 +189,33 @@ class RejectCourseView(LoginRequiredMixin, View):
 
         redirect('waiting-courses')
 
+class MergeCourseView(LoginRequiredMixin, View):
+    def get(self, request, course_type, bilkent_eq_id, course_id1, course_id2, course_id3, course_id4, course_id5,
+            course_id6, course_id7, course_id8, course_id9, course_id10):
+
+        if not Course.objects.filter(pk=course_id1).exists() and not Course.objects.filter(pk=course_id2).exists():
+            # get the bilkent equivalent course
+            bilkent_equivalent = Course.objects.filter(pk=bilkent_eq_id).first()
+
+            # create a "parent" merged course instance
+            merged_course = MergedCourse(course_type=course_type, bilkent_equivalent=bilkent_equivalent)
+            merged_course.save()
+
+            course_ids = [course_id1, course_id2, course_id3, course_id4, course_id5, course_id6, course_id7, course_id8,
+                          course_id9, course_id10]
+
+            # merge up to 10 courses by designating their parent course as the created MergedCourse instance
+            for course_id in course_ids:
+                course = Course.objects.filter(pk=course_id).first()
+                if course is not None:
+                    course.is_merged = True
+                    course.merged_course = merged_course
+                    course.save()
+
+            return redirect("add_unapproved_course")
+        else:
+            messages.info(request, "You need to choose at least two courses to merge.")
+            return redirect("add_unapproved_course")
 
 
 
