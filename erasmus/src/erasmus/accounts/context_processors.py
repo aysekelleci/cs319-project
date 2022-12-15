@@ -4,6 +4,7 @@ from .models import ErasmusUser, Student, Coordinator, BoardMember
 
 def get_user_type(request):
     user_type = None
+    email = None
     if request is None:
         return user_type
 
@@ -13,7 +14,9 @@ def get_user_type(request):
     user = request.user
     if user.is_authenticated:
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
+
         if erasmus_user is not None:
+            email = erasmus_user.email
             if Coordinator.objects.filter(user=erasmus_user).first():
                 user_type = "Coordinator"
             elif Student.objects.filter(user=erasmus_user).first():
@@ -21,6 +24,6 @@ def get_user_type(request):
             else:
                 user_type = "Board Member"
 
-    return {'user_type': user_type}
+    return {'user_type': user_type, 'email': email}
 
 

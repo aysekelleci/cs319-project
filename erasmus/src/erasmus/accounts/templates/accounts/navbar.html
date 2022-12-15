@@ -9,7 +9,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Bilkent University Erasmus Application System</title>
+	<title>Bilkent University Erasmus Application System </title>
 
 	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <script src="../../static/manage.js"></script>
@@ -42,12 +42,12 @@
         <div class="upperbar_content">
             <img src="../../static/bilkent_amblem.png" width="80" height="80" alt="Bilkent Amblem">
 
-            <h2>Bilkent University Erasmus Application System</h2>
+            <h2>Bilkent University Erasmus Application System </h2>
 
             <div class="profile">
                 <div class="profile_text">
-                    <p>{{user.username}}</p>
-                    <p>{{user.email}}</p>
+                    <p>{{request.user.username}} </p>
+                    <p>{{email}}</p>
                 </div>
                 <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
                 <ul class="profile_settings">
