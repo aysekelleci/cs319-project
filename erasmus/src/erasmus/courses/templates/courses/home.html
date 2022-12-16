@@ -19,12 +19,6 @@
             <p> {{user.status}} </p>
         </div>
         {%endif%}
-        
-        <div>
-            <button>Delete</button>
-            <button>Flag</button>
-        </div>
-        
     </div>
 
     <section class = "toDoandDone">
@@ -33,35 +27,54 @@
         <h1 class = "doneLabel"> Done</h1>
 
         <section class = "toDo">
-            <div class = "toDoList">
-                <input type="text" id="filter_input" style="width:100%" placeholder="Search for To Do">
-                <label>Add a todo to your db to display</label><br>
-                {% for toDo in todo %}
-
-                <input type = "checkbox">
-                <label> {{toDo.header}}</label>
-                <label><a href='/todo-state/{{toDo.pk}}/1/'><i class="fas fa-times"></i>Mark as done</a></label><br>
-                <label> Explanation: {{toDo.body}}</label><br>
-                <label> Due Date: {{toDo.due_date}}</label><br>
-                <br>
-
-                {%endfor%}
-            </div>
+            <div id="notif_table">
+                <input type="text" id="filter_input" onkeyup="filterToDo()" style="width:100%" placeholder="Search for To Do">
+                <table id="filtered_list" style="width:100%">
+                    <tbody>
+                    {% for toDo in todo %}
+                    <tr>
+                        <td style="width:100%">
+                            <a href=#>{{toDo.header}}</a><br>
+                            Explanation: {{toDo.body}}<br>
+                            Due Date: {{toDo.due_date}}<br>
+                        </td>
+                        <td>
+                            <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
+                        </td>
+                        <td>
+                            <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
+                        </td>
+                        <td>
+                            <a href='/todo-state/{{toDo.pk}}/1/'><i class="	fa fa-check fa-xs"></i></a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                </table>
         </section>
 
         <section class = "done">
-            <div class = "doneList">
-                <input type="text" id="filter_input" style="width:100%" placeholder="Search for Done">
-                {% for toDo in todo %}
-
-                <input type = "checkbox">
-                <label> {{toDo.header}}</label><br>
-                <label> Explanation: {{toDo.body}}</label><br>
-                <label> Due Date: {{toDo.due_date}}</label><br>
-                <br>
-
-                {% endfor %}
-            </div>
+            <div id="done_table">
+                <input type="text" id="filter_input" onkeyup="filterToDo()" style="width:100%" placeholder="Search for Done">
+                <table id="filtered_list" style="width:100%">
+                    <tbody>
+                        {% for toDo in todo %}
+                        <tr>
+                            <td style="width:100%">
+                                <a href = #>{{toDo.header}}</a><br>
+                                Explanation: {{toDo.body}}<br>
+                                Due Date: {{toDo.due_date}}<br>
+                            </td>
+                            <td>
+                                <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
+                            </td>
+                            <td>
+                                <a href='/todo-state/{{toDo.pk}}/1/'><i class="	fa fa-times fa-xs"></i></a>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
         </section>
 
         <button class = "addToDo" onclick = "openForm()">Add To Do</button>
