@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
-from .models import Course, ToDo
-from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, BoardMember
+from courses.models import Course, Document
+from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, BoardMember, ToDo
 from django.contrib import messages
 
 from django.http import HttpResponseRedirect
@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from accounts.forms import ToDoForm
 
 from django.db.models import Q
+
 
 
 
@@ -87,6 +88,51 @@ class UpdateToDoState(LoginRequiredMixin,View):
         return redirect("/accounts/profile")
 
 
+class ProfileView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+            courses = UserCourse.objects.filter(user=student)
+            documents = Document.objects.filter(user=student)
+            context = {'student': student, 'courses': courses, 'documents':documents}
+            return render(request, 'accounts/profile.html', context)
+
+        return redirect("/login")
+
+
+class StudentProfilesView(LoginRequiredMixin, View):
+    def get(self, request, student_id):
+        student = get_object_or_404(Student, pk=student_id)
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        visitor = None
+        if erasmus_user is not None:
+            visitor = Student.objects.filter(user=erasmus_user).first()
+            if visitor is not None:
+                context = {'visitor': visitor, 'student': student}
+                return render(request, 'accounts/student_profile.html', context)
+
+        visitor = Coordinator.objects.filter(user=erasmus_user).first()
+        # if visitor is Coordinator, add students courses, files
+        documents = Document.objects.filter(user=student)
+        courses = UserCourse.objects.filter(user=student)
+        context = {'documents': documents, 'courses': courses, 'visitor': visitor, 'student': student}
+        return render(request, 'accounts/student_profile.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 class SearchToDo(LoginRequiredMixin,View):
     def post(self, request):
         searched = request.POST.get('searched', False)
@@ -112,6 +158,11 @@ def getUser(user):
         todo_user = None
 
     return todo_user
+    
+"""
+
+
+
 
 
 

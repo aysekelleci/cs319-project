@@ -19,16 +19,18 @@ class ErasmusUser(models.Model):
         return '{}'.format(self.user.username)
 
 class Coordinator(models.Model):
-    user = models.OneToOneField(ErasmusUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(ErasmusUser, on_delete=models.CASCADE, related_name='coordinator')
     def __str__(self):
         return '{}'.format(self.user.user.username)
 
+
 class Student(models.Model):
-    user = models.OneToOneField(ErasmusUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(ErasmusUser, on_delete=models.CASCADE, related_name='student')
     gpa = models.FloatField()
     score = models.FloatField()
     status = models.CharField(max_length=100, blank=True)
-    coordinator = models.ForeignKey(Coordinator, blank=True, on_delete=models.SET_NULL, null=True)
+    coordinator = models.ForeignKey(Coordinator, blank=True, on_delete=models.SET_NULL, null=True,
+                                    related_name='students')
     university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True, blank=True)
     is_erasmus_done = models.BooleanField(default=False)
     academic_year = models.CharField(max_length=20, default="")
@@ -59,7 +61,7 @@ class ToDo(models.Model):
     is_flagged = models.BooleanField(default=False)
     is_done = models.BooleanField(default=False)
     due_date = models.DateTimeField(blank=True, null=True)
-    user = models.ForeignKey(ErasmusUser, on_delete=models.CASCADE, related_name='erasmus_user', default = 1)
+    user = models.ForeignKey(ErasmusUser, on_delete=models.CASCADE, related_name='todos', default=1)
 
     def __str__(self):
         return '{}'.format(self.header)
