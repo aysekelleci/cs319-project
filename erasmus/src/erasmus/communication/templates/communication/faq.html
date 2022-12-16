@@ -12,10 +12,12 @@
     {% endif %}
     <ol class="faq">
         {% for q in questions %}
-        <div>
+        {% if not user_type == "Student" %}
+        <div class="faq-operation-buttons">
             <button type="button" class="far fa-edit" onclick="location.href = '#'"></button>
             <button type="button" class="far fa-trash-alt" onclick="location.href = '#'"></button>
         </div>
+        {% endif %}
         <li style="font-weight: bold">{{q.question}}</li>
         <p>{{q.answer}}</p><br>
         {% endfor %}

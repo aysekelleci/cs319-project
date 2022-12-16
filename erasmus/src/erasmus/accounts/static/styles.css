@@ -267,3 +267,13 @@ input[type=url], input[type=text] {
   border-bottom: 1px solid rgba(0,0,0,0.05);
   text-align: center;
 }
+
+.navbar_wrapper .main_content .page_content ol .faq-operation-buttons {
+  display: none;
+  margin: -40px -5px;
+  position: absolute;
+}
+
+.navbar_wrapper .main_content .page_content ol:hover .faq-operation-buttons {
+    display: block;
+}

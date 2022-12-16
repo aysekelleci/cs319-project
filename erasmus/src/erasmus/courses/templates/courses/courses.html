@@ -79,6 +79,7 @@
                 </thead>
                 <tbody>
                 {% for course in courses %}
+                {% if not course.university.university_name == "Bilkent University"%}
                 <tr>
                     <td id="count"></td>
                     <td>{{course.course_codes}}</td>
@@ -90,6 +91,7 @@
                     <!--<td style="width:25%"><button type="button" href="/add-to-courses/{{course.pk}}/">Add</button></td>-->
                     <td><a class="btn btn-outline-success" href="/add-to-courses/{{course.pk}}">Add</a></td>
                 </tr>
+                {% endif %}
                 {%endfor%}
                 </tbody>
             </table>
