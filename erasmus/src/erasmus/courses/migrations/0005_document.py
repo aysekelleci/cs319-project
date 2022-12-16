@@ -17,10 +17,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('document_name', models.CharField(max_length=50)),
-                ('document', models.FileField(upload_to='documents/')),
+                ('document', models.FileField(upload_to='static/documents/documents/')),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('is_signed', models.BooleanField(default=False)),
-                ('document_type', models.CharField(choices=[('Leaning Agreement', 'Learning Agreement'), ('Preapproval Form', 'PreApproval Form'), ('Course Transfer Form', 'Course Transfer Form'), ('Other', 'Other')], default=4, max_length=20)),
+                ('document_type', models.CharField(choices=[('Learning Agreement', 'Learning Agreement'), ('Preapproval Form', 'PreApproval Form'), ('Course Transfer Form', 'Course Transfer Form'), ('Other', 'Other')], default=4, max_length=20)),
                 ('user', models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='documents_user', to='accounts.student')),
             ],
         ),
