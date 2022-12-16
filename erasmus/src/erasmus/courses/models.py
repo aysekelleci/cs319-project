@@ -12,8 +12,10 @@ OTHER_DOCUMENT = "Other"
 STATIC_DOCUMENTS_FOLDER = "static/documents/documents/"
 
 COURSE_TYPE_CHOICES = (
-    (MUST_COURSE,MUST_COURSE), (ELECTIVE_COURSE,ELECTIVE_COURSE)
+    (MUST_COURSE, MUST_COURSE), (ELECTIVE_COURSE, ELECTIVE_COURSE)
 )
+
+
 class University(models.Model):
     university_name = models.CharField(max_length=100)
     country = models.CharField(max_length=50)
@@ -32,6 +34,7 @@ class MergedCourse(models.Model):
     bilkent_equivalent = models.ForeignKey("Course", on_delete=models.SET_NULL, blank=True,
                                            null=True)
 
+
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
     course_codes = models.CharField(max_length=20)
@@ -49,14 +52,12 @@ class Course(models.Model):
         return '{}'.format(self.course_codes + ": " + self.course_name)
 
 
-
 DOCUMENT_TYPE_CHOICES = (
     (LEARNING_AGREEMENT, LEARNING_AGREEMENT),
     (PREAPPROVAL_FORM, PREAPPROVAL_FORM),
     (COURSE_TRANSFER_FORM, COURSE_TRANSFER_FORM),
     (OTHER_DOCUMENT, OTHER_DOCUMENT),
 )
-
 
 
 class Document(models.Model):

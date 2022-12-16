@@ -95,7 +95,7 @@ class DeleteCourseView(LoginRequiredMixin,View):
         if course_item is not None:
             course_item.delete()
             messages.info(request, "This item removed from course list.")
-            return redirect("/courses")
+        return redirect("/courses")
 
 
 class AddUnapprovedCourse(LoginRequiredMixin, View):
@@ -170,14 +170,13 @@ class UploadDocumentView(LoginRequiredMixin, View):
         student = None
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        document_form = DocumentForm()
-        new_document = None
         if erasmus_user is not None:
             student = Student.objects.filter(user=erasmus_user).first()
         if student is None:
             redirect("/login")
 
-            document_form = DocumentForm(data=request.POST)
+        else:
+            document_form = DocumentForm(request.POST, request.FILES)
 
             if document_form.is_valid():
                 new_document = document_form.save(commit=False)
@@ -190,8 +189,9 @@ class UploadDocumentView(LoginRequiredMixin, View):
                 messages.info(request, "Comment form is not valid")
                 return redirect("/courses")
 
-        context = {'student': student, 'document_form': document_form, 'new_document': new_document}
-        return render(request, 'courses/upload-documents.html', context)
+            messages.info(request, "Document is added")
+            context = {'student': student, 'document_form': document_form, 'new_document': new_document}
+            return render(request, 'courses/upload-documents.html', context)
 
 
 

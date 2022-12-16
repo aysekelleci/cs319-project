@@ -26,3 +26,5 @@ urlpatterns = [
     path('create-document/', views.CreateDocumentView.as_view(), name="create-document"),
     path('', include('communication.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
