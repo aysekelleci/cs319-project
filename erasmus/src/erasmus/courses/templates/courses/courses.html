@@ -7,36 +7,40 @@
     <div class="courses_taken">
         <h2>Current Courses Taken</h2>
         <div id= "course_div">
-            <table id="taken_courses_table" style="table-layout:fixed;">
+            <table class="sortable" id="taken_courses_table" style="table-layout:fixed; width: 100%">
                 <thead>
                 <tr>
-                    <th style="width:5%">Count</th>
-                    <th style="width:15%">Course Code</th>
+                    <th style="width:6%">Count</th>
+                    <th style="width:10%">Course Code</th>
                     <th style="width:20%">Course Name</th>
-                    <th style="width:5%">Credits</th>
-                    <th style="width:25%">Course Code and Name for a Required Course,
+                    <th style="width:7%">Credits</th>
+                    <th style="width:20%">Course Code and Name for a Required Course,
                     Elective Group Name for an Elective Requirement
                     </th>
-                    <th style="width:5%">Credits</th>
-                    <th style="width:25%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
+                    <th style="width:7%">Credits</th>
+                    <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
+                    <th style="width:10%">Operation</th>
                 </tr>
                 </thead>
                 <tbody>
-                <h1>{{student}}</h1>
                 {% for course in user_courses %}
-                    <td style="width:5%" id="count"></td>
-                    <td style="width:15%">{{course.course.course_codes}}</td>
-                    <td style="width:20%">{{course.course.course_name}}</td>
-                    <td style="width:5%">{{course.course.course_credit}}</td>
-                    <td style="width:25%">{{course.course.bilkent_equivalent}}</td>
-                    <td style="width:5%">{{course.course.bilkent_equivalent.course_credit}}</td>
-                    <td style="width:25%"><button type="button">Remove</button></td>
+                <tr>
+                    <td id="count"></td>
+                    <td>{{course.course.course_codes}}</td>
+                    <td>{{course.course.course_name}}</td>
+                    <td>{{course.course.course_credit}}</td>
+                    <td>{{course.course.bilkent_equivalent}}</td>
+                    <td>{{course.course.bilkent_equivalent.course_credit}}</td>
+                    <td>NULL</td>
+                    <!--<td style="width:25%"><button type="button">Remove</button></td>-->
+                    <td><a class="btn btn-outline-success" href="/remove-from-courses/{{course.course.pk}}">Remove</a></td>
                 </tr>
                 {%endfor%}
                 </tbody>
                 <tfoot>
                 <tr>
                     <th>ECTS Total:</th>
+                    <th id="sum"></th>
                 </tr>
                 </tfoot>
             </table>
@@ -46,92 +50,53 @@
 
         <h2>Add Course</h2>
         <div class="buttons">
-            <button type="button" onclick="toggleButtons(this, 3)" id="1">Add Previously Added Course</button>
-            <button type="button" onclick="location.href = '../../add-unapproved-course/'" id="2">Add New Course</button>
-            <!-- <button type="button" onclick="toggleButtons(this, 3)" id="3">Merge Courses</button> -->
+
+            <!--<button type="button" onclick="toggleButtons(this, 2)" id="1">Add Previously Added Course</button>-->
+            <button type="button" onclick="location.href = '../../add-unapproved-course/'">Add New Course</button>
+            <button type="button" onclick="toggleButtons(this, 2)" id="2">Merge Courses</button>
             <button type="button" onclick="location.href = '../../create-document/'" id="3">Create Document</button>
         </div>
 
-        <td hidden="hidden" id="toggle-element-1">
+
+        <td>
             <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for courses..">
-            <table id="filtered_list" style="width:100%">
+            <div style="height:300px;overflow:auto;">
+
+            <table class="sortable" id="filtered_list" style="width:100%;">
                 <thead>
                 <tr>
-                    <th style="width:5%">Count</th>
-                    <th style="width:15%">Course Code</th>
+                    <th style="width:6%">Count</th>
+                    <th style="width:10%">Course Code</th>
                     <th style="width:20%">Course Name</th>
-                    <th style="width:5%">Credits</th>
-                    <th style="width:25%">Course Code and Name for a Required Course,
+                    <th style="width:7%">Credits</th>
+                    <th style="width:20%">Course Code and Name for a Required Course,
                     Elective Group Name for an Elective Requirement
                     </th>
-                    <th style="width:5%">Credits</th>
+                    <th style="width:7%">Credits</th>
+                    <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
+                    <th style="width:10%">Operation</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for course in courses %}
-                {% if not course.university.university_name == "Bilkent University"%}
                 <tr>
-                    <td style="width:5%" id="count"></td>
-                    <td style="width:15%">{{course.course_codes}}</td>
-                    <td style="width:20%">{{course.course_name}}</td>
-                    <td style="width:5%">{{course.course_credit}}</td>
-                    <td style="width:25%">{{course.bilkent_equivalent}}</td>
-                    <td style="width:5%">{{course.bilkent_equivalent.course_credit}}</td>
-                    <td style="width:25%"><button type="button" href="/add-to-courses/{{course.pk}}/">Add</button></td>
-                <td style="flex:1"><a class="btn btn-outline-success" href="/add-to-courses/{{course.pk}}">View</a></td>
-
+                    <td id="count"></td>
+                    <td>{{course.course_codes}}</td>
+                    <td>{{course.course_name}}</td>
+                    <td>{{course.course_credit}}</td>
+                    <td>{{course.bilkent_equivalent}}</td>
+                    <td>{{course.bilkent_equivalent.course_credit}}</td>
+                    <td>NULL</td>
+                    <!--<td style="width:25%"><button type="button" href="/add-to-courses/{{course.pk}}/">Add</button></td>-->
+                    <td><a class="btn btn-outline-success" href="/add-to-courses/{{course.pk}}">Add</a></td>
                 </tr>
-                {% endif %}
                 {%endfor%}
                 </tbody>
             </table>
+
         </div>
-
-        <form hidden="hidden" id="toggle-element-2" action="/action_page.php">
-            <label for="cname">Course Name:</label><br>
-            <input type="text" id="cname" name="cname"><br>
-
-            <label for="cid">Course ID:</label><br>
-            <input type="text" id="cid" name="cid"><br>
-
-            <label for="ects">ECTS Credits:</label><br>
-            <input type="text" id="ects" name="ects"><br>
-
-            <label for="instead">Taken Instead Of:</label><br>
-            <input type="text" id="instead" name="instead"><br>
-
-            <label for="link">Course Syllabus Link:</label><br>
-            <input type="url" id="link" name="link"><br><br>
-
-            <input style="width:20%" type="submit" value="Submit">
-        </form>
-
-        <table hidden="hidden" id="toggle-element-3" style="width:100%">
-                <thead>
-                <tr>
-                    <th style="width:5%">Count</th>
-                    <th style="width:15%">Course Code</th>
-                    <th style="width:20%">Course Name</th>
-                    <th style="width:5%">Credits</th>
-                    <th style="width:25%">Course Code and Name for a Required Course,
-                    Elective Group Name for an Elective Requirement
-                    </th>
-                    <th style="width:5%">Credits</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for course in user.course %}
-                <tr>
-                    <td style="width:5%" id="count"></td>
-                    <td style="width:15%">{{course.course_codes}}</td>
-                    <td style="width:20%">{{course.course_name}}</td>
-                    <td style="width:5%">{{course.course_credit}}</td>
-                    <td style="width:25%">{{course.bilkent_equivalent}}</td>
-                    <td style="width:5%">{{course.bilkent_equivalent.course_credit}}</td>
-                </tr>
-                {%endfor%}
-                </tbody>
-            </table>
+            </td>
     </div>
 </div>
 {% endblock %}
+

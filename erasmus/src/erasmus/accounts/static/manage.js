@@ -12,7 +12,7 @@ window.onload = function init() {
     button.style.backgroundColor = "#db1430";
     text.style.color = "#fff";
 
-    localStorage.clickedButton = "0";
+    //localStorage.clickedButton = "0";
 }
 
 function filterTable() {
