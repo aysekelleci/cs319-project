@@ -259,6 +259,7 @@ input[type=url], input[type=text] {
 .navbar_wrapper .main_content .page_content ol li {
   list-style: decimal;
   list-style-position: inside;
+
 }
 
 .navbar_wrapper .main_content .page_content .faq_buttons {
@@ -270,7 +271,7 @@ input[type=url], input[type=text] {
 
 .navbar_wrapper .main_content .page_content ol .faq-operation-buttons {
   display: none;
-  margin: -40px -5px;
+  margin: -45px 0;
   position: absolute;
 }
 
