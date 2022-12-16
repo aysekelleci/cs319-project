@@ -12,6 +12,10 @@
     {% endif %}
     <ol class="faq">
         {% for q in questions %}
+        <div>
+            <button type="button" class="far fa-edit" onclick="location.href = '#'"></button>
+            <button type="button" class="far fa-trash-alt" onclick="location.href = '#'"></button>
+        </div>
         <li style="font-weight: bold">{{q.question}}</li>
         <p>{{q.answer}}</p><br>
         {% endfor %}

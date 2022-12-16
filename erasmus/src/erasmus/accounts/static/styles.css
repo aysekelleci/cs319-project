@@ -146,24 +146,15 @@ input {
   margin-bottom: 12px;
 }
 
-thead, tbody {
-  display: block;
+td[id="count"]::before {
+  counter-increment: section;
+  content: counter(section);
 }
 
 thead {
   counter-reset: section;
 }
 
-td[id="count"]::before {
-  counter-increment: section;
-  content: counter(section);
-}
-
-tbody {
-    height: 300px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
 
 table, th {
   border-collapse: seperate;
@@ -181,7 +172,6 @@ td {
   padding: 10px;
   text-align: center;
   background-color: #130d3834;
-
 }
 
 tr:hover {
@@ -274,7 +264,6 @@ input[type=url], input[type=text] {
 .navbar_wrapper .main_content .page_content .faq_buttons {
   display: block;
   padding: 5px;
-  margin-bottom: 20px;
   border-bottom: 1px solid rgba(0,0,0,0.05);
   text-align: center;
 }
