@@ -55,7 +55,7 @@ section
     border: solid;
     border-color: 1px solid rgba(0,0,0,0.05);
     width: 90%;
-    height: 400px;
+    height: 100%;
     overflow-x: auto;
     overflow-y: auto;
 }
