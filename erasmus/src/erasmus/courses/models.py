@@ -47,6 +47,7 @@ class Course(models.Model):
     course_coordinator_name = models.CharField(blank=True, max_length=100)
     merged_course = models.ForeignKey(MergedCourse, on_delete=models.SET_NULL, blank=True, null=True)
     is_merged = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}'.format(self.course_codes + ": " + self.course_name)

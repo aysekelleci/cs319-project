@@ -53,12 +53,12 @@ class AddCourseView(LoginRequiredMixin, View):
         except:
             course_item = None
         if course_item is not None:
-            messages.info(request, "This course already added to course list.")
+            messages.error(request, "This course already added to course list.")
             return redirect("/courses")
 
         else:
             course = UserCourse.objects.create(user=student, course=course)
-            messages.info(request, "This course was added to your course list.")
+            messages.success(request, "This course was added to your course list.")
             return redirect("/courses")
 
 
@@ -176,7 +176,6 @@ class UploadDocumentView(LoginRequiredMixin, View):
 
 
 
-
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
         unapproved_courses = Course.objects.filter(approved=False)
@@ -184,7 +183,7 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
-            redirect('accounts/profile')
+            redirect("accounts/profile")
 
         else:
             context = {'coordinator': coordinator, 'unapproved_courses': unapproved_courses}
@@ -198,14 +197,14 @@ class ApproveCoursesView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
-            redirect('accounts/profile')
+            redirect("accounts/profile")
 
         else:
             course = Course.objects.get_or_404(pk=course_id)
             if course is not None:
                 course.approved = True
 
-        redirect('waiting-courses')
+        redirect("waiting-courses/")
 
 
 class RejectCourseView(LoginRequiredMixin, View):
@@ -220,9 +219,7 @@ class RejectCourseView(LoginRequiredMixin, View):
         else:
             course = Course.objects.get_or_404(pk=course_id)
             if course is not None:
-                # todo add the course to rejected course then delete it
-                # course.delete()
-                x = 5
+                course.is_rejected = True
 
         redirect('waiting-courses')
 
