@@ -4,7 +4,10 @@ Django==4.0.6
 django-widget-tweaks==1.4.12
 filelock==3.7.1
 platformdirs==2.5.2
+<<<<<<< HEAD
+=======
 
+>>>>>>> cb7d4402539e921182a24417164b737ceff2df2b
 six==1.16.0
 sqlparse==0.4.2
 tzdata==2022.1

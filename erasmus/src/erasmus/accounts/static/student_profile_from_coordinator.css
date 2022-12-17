@@ -1,0 +1,75 @@
+.viewed-student-info{
+  width: 98%;
+  height: 450px;
+}
+.photo-mail{
+  display: flex;
+}
+#data-table{
+  width: 750px;
+  background-color: #130d3834;
+
+}
+.photo-mail{
+  width: 98.5%;
+}
+#user-name{
+  width: 100%;
+  padding-top: 50px;
+  text-align: center;
+  font-size:xx-large;
+}
+#mail-icon{
+  background-color: inherit;
+  padding-right: 0px;
+  margin-right: 0px;
+  margin: 0px 0px 0px auto;
+}
+#mail-button{
+  background-color: inherit;
+  border: none;
+}
+#mail-icon:hover{
+  background-color: #db1430;
+}
+#data-page{
+  display: flex;
+}
+#data-table{
+  width: 750px;
+  height:350px;
+}
+#user-info-table{
+  width: 750px;
+}
+#user-info-table td{
+  width: 375px;
+}
+#user-info-table tr{
+  height: 65px;
+}
+.courses-button{
+  width: 250px;
+  height: 150px;
+  position: absolute;
+  bottom: 20;
+  right: 20;
+}
+#button-part1{
+  position: absolute;
+ bottom: 100;
+  right: 40;
+  border: none;
+  cursor: pointer;
+border: solid 3px rgba(0, 0, 0, 0.58);
+}
+#button-part2{
+  position: absolute;
+  bottom: 40;
+  right: 47;
+  border: none;
+  cursor: pointer;
+  border: solid 3px rgba(0, 0, 0, 0.58);
+
+}
+

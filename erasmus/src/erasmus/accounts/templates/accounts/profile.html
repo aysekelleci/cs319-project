@@ -1,4 +1,66 @@
-<h1>PROFILE PAGE </h1>
+{% extends 'accounts/navbar.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+{% endblock %}
+
+{% block main_content %}
+
+<div class="main_content">
+    <div class= "main" >
+        <div class="heading">
+            <h1 class="title">Your Page </h1>
+        </div>
+        <hr>
+        
+        <div class="user-info">
+           
+            <table class="user-info-table">
+                <tbody style="height: auto" class="profile_view">
+                <tr>
+                    <td>Name</td>
+                    <td>{{student.user.name}}</td>
+                </tr>
+                <tr>
+                    <td>E-mail: </td>
+                    <td>{{student.user.email}}</td>
+                </tr>
+                <tr>
+                    <td>Phone: </td>
+                    <td>{{student.user.phone}}</td>
+                </tr>
+                <tr>
+                    <td>Id: </td>
+                    <td>{{student.user.bilkent_id}}</td>
+                </tr>
+                <tr>
+                    <td>Department </td>
+                    <td>{{student.user.department}}</td>
+                </tr>
+                <tr>
+                    <td> Semester</td>
+                    <td>{{student.user.semester}}</td>
+                </tr>
+                <tr>
+                    <td>Coordinator</td>
+                    <td>{{student.user.coordinator}}</td>
+                </tr>
+                <tr>
+                    <td>Status </td>
+                    <td>{{student.user.status}}</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
 
 
-<h3> {{user.username}} </h3>
+    </div>
+
+
+
+</div>
+
+<h3>  </h3>
+{% endblock %}
