@@ -1,4 +1,4 @@
-from .models import Question, Notification
+from .models import Question, Notification,  Post, Response
 from django.views import View
 from accounts.models import ErasmusUser, Coordinator
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
 
-from .model import Post, Response
 # Create your views here.
 
 
