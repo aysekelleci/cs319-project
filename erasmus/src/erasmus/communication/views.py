@@ -3,7 +3,7 @@ from .models import Question, Notification,  Post, Response
 from .models import Question, Notification, Post, Response, Forum
 
 from django.views import View
-from accounts.models import ErasmusUser, Coordinator
+from accounts.models import ErasmusUser, Coordinator, Student
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import QuestionForm, PostForm
 from django.contrib import messages
@@ -185,7 +185,7 @@ class ForumView(LoginRequiredMixin, View):
 class AddPostView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
-        forum_user = get_forum_user(user)
+        forum_user = ErasmusUser.objects.filter(user=user).first()
         new_post = None
 
         post_form = PostForm()
@@ -196,21 +196,21 @@ class AddPostView(LoginRequiredMixin, View):
 
     def post(self, request):
         user = request.user
-        forum_user = get_forum_user(user)
-        forum = Forum.objects.filter.first()
+        forum_user = ErasmusUser.objects.filter(user=user).first()
+        forum = Forum.objects.filter().first()
 
         post_form = PostForm(data=request.POST)
         if forum_user is None:
-            messsage.error('user does not exist in erasmus user')
+            # messsages.error(request, 'user does not exist in erasmus user')
             return redirect("/forum")
 
-        if question_form.is_valid():
+        if post_form.is_valid():
             new_post = post_form.save(commit=False)
-            new.post.forum = forum
-            new_post.user = form_user
+            new_post.forum = forum
+            new_post.user = forum_user
 
             # Save the question to the database
-            new_question.save()
+            new_post.save()
 
         else:
             messages.info(request, "Post Form is not valid")
@@ -244,13 +244,11 @@ class DeleteResponseView(LoginRequiredMixin, View):
 
         response = get_object_or_404(Response, pk=reponse_id, user=forum_user)
 
+        response.delete()
 
-
-
-
-
-
-
+        messages.success(request, "Response is deleted")
+        return redirect("/faq")
+        
 
 
 
@@ -261,7 +259,7 @@ def get_forum_user(user):
     if erasmus_user is not None:
         forum_user = Coordinator.objects.filter(user=erasmus_user).first()  # get coordinator
         if forum_user is None:
-            forum_user = Coordinator.objects.filter(user=erasmus_user).first()  # get student
+            forum_user = Student.objects.filter(user=erasmus_user).first()  # get student
 
     return forum_user
 

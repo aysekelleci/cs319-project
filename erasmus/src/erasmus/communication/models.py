@@ -48,7 +48,3 @@ class Response(models.Model):
 
 
 
-
-
-
-
