@@ -28,12 +28,10 @@ class University(models.Model):
     def __str__(self):
         return '{}'.format(self.university_name)
 
-
 class MergedCourse(models.Model):
     course_type = models.CharField(max_length=30)
     bilkent_equivalent = models.ForeignKey("Course", on_delete=models.SET_NULL, blank=True,
                                            null=True)
-
 
 class Course(models.Model):
     course_name = models.CharField(max_length=100)

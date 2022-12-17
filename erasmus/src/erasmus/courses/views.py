@@ -34,8 +34,9 @@ class CourseView(LoginRequiredMixin,View):
     def get(self, request):
         student = None
         user = request.user
-        courses = None
-        user_courses = None
+        approved_courses = None
+        user_unmerged_courses = None
+        user_merged_course_dict = None
         erasmus_user = ErasmusUser.objects.get(user=user)
         if Coordinator.objects.filter(user=erasmus_user).first():
             user_type = "Coordinator"
@@ -44,14 +45,25 @@ class CourseView(LoginRequiredMixin,View):
             user_type = "Student"
             student = Student.objects.filter(user=erasmus_user).first()
             # get preapproved courses for the university the student will be attending
-            courses = Course.objects.filter(university=student.university, approved=True)
-            user_courses = UserCourse.objects.filter(user=student)
+            approved_courses = Course.objects.filter(university=student.university, approved=True)
+            # get the user's current courses, approved or unapprovec
+            _user_courses = UserCourse.objects.filter(user=student)
+            _user_courses_merged = UserCourse.objects.filter(user=student, course__is_merged__exact=True)
+            merged_courses = {user_course.course.merged_course for user_course in _user_courses_merged}
+            user_merged_course_dict = {}
+            for merged_course in merged_courses:
+                one_merged_course_contents = [] # each list contains the courses composing one merged course
+                for course in _user_courses:
+                    if course.merged_course is merged_course:
+                        one_merged_course_contents.append(course)
+                user_merged_course_dict[merged_course] = one_merged_course_contents
 
+            user_unmerged_courses = UserCourse.objects.filter(user=student, course__is_merged__exact=False)
         else:
             user_type = "Board Member"
 
-        context = {'user': user, 'courses': courses, "user_type": user_type, 'student': student,
-                   'user_courses': user_courses}
+        context = {'user': user, 'approved_courses': approved_courses, "user_type": user_type, 'student': student,
+                   'user_unmerged_courses': user_unmerged_courses, 'user_merged_course_dict': user_merged_course_dict}
 
         return render(request, 'courses/courses.html', context)
 
@@ -212,7 +224,6 @@ class DeleteDocumentView(LoginRequiredMixin, View):
 
 
 
-
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
         unapproved_courses = UserCourse.objects.filter(course__approved__exact=False)
@@ -353,16 +364,4 @@ class CreatePreApprovalView(CreateDocumentView):
         document.save(document_name)
 
         return document_name, date, PREAPPROVAL_FORM
-
-
-
-
-
-
-
-
-
-
-
-
 
