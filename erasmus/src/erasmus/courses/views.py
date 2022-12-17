@@ -90,7 +90,7 @@ class DeleteCourseView(LoginRequiredMixin,View):
             course_item = None
         if course_item is not None:
             course_item.delete()
-            messages.info(request, "This item removed from course list.")
+            messages.success(request, "This item removed from course list.")
         return redirect("/courses")
 
 
