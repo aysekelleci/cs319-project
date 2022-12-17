@@ -1,6 +1,61 @@
+{% extends 'accounts/navbar.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'student_profile_from_coordinator.css' %}">
+{% endblock %}
+
+{% block main_content %}
+
+<div class="main_content">
+            <div class="viewed-student-info">
+                <div class = "photo-mail">
+                    <img src="../../static/user.png" alt="user" width="100px" height="100px" >
+                    <div id="user-name" >
+                        <p > User´s Name </p>
+                    </div>
+                    <div id="mail-icon">
+                        <button id="mail-button">
+                            <img  src="../../static/send_message2.png" alt="message" width="90" height="70">
+                        </button>
+                    </div>
+
+                </div>
+                <hr>
+                <div id= "data-page">
+                    <div id= "data-table">
+                        <table id="user-info-table">
+                            <tr>
+                                <td >E-mail: </td>
+                                <td >x.y@ug.bilkent.edu.tr</td>
+                            </tr>
+                            <tr>
+                                <td>Phone: </td>
+                                <td>0555 555 55 55</td>
+                            </tr>
+                            <tr>
+                                <td>University/Mobility Period </td>
+                                <td> unknown </td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>Erasmus Successful</td>
+                            </tr>
+                            <tr>
+                                <td>Id</td>
+                                <td>2xxxxxxx</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="courses-button">
+                        <button id="button-part1" style="background-color: #130d3834;"> Student´s Courses </button>
+                        <button id="button-part2" style="background-color: #130d3834;" > Student´s Files </button>
+                    </div>
+                </div>
+            </div>
 
 
-<h1> Student PROFILE </h1>
-<h1>{{ student.gpa }} </h1>
+</div>
 
-<h1> {{visitor.user.user.username}} and {{ user.username }}</h1>
+{% endblock %}

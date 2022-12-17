@@ -2,7 +2,19 @@
 
 {% block main_content %}
 <div class="header" style="margin-bottom: 20px;">Frequently Asked Questions</div>
+
 <div class="page_content" style="margin-top: 25px;">
+    {% if messages %}
+    <div class="message-content">
+        {% for message in messages %}
+        <div class="success-message">
+            <div style="font-weight: bold; color: #47783d;">Success:</div>
+            <div style="color: #47783d;">{{message}}</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     {% if not user_type == "Student" %}
     <div class="faq_buttons">
         <button type="button" onclick="location.href = '../../add-question'">Add a New FAQ</button>
@@ -10,7 +22,7 @@
     {% endif %}
     <ol class="faq">
         {% for q in questions %}
-        <li style="font-weight: bold; ">{{q.question}}</li>
+        <li style="font-weight: bold;">{{q.question}}</li>
         <p style="margin-bottom: 20px;">{{q.answer}}</p><br>
         {% if not user_type == "Student" %}
         <div class="faq-operation-buttons" style="background: #efefef; border: 1px solid #767676; border-radius: 3px;">

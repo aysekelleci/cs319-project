@@ -279,3 +279,18 @@ input[type=url], input[type=text] {
 .navbar_wrapper .main_content .page_content ol:hover .faq-operation-buttons {
     display: block;
 }
+
+.message-content {
+  width: 98%;
+  height: 50px;
+  font-size: 19px;
+  color: #47783d;
+  background-color: #dff0d8;
+  border: 1px solid #d8ebcb;
+  border-radius: 4px;
+  list-style: none;
+}
+
+.message-content .success-message {
+  display: flex;
+}
