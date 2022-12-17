@@ -14,6 +14,21 @@ from courses.forms import CourseForm, DocumentForm
 from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
 
+import os
+from django.conf import settings
+from django.http import HttpResponse, Http404
+
+def download(request, path):
+    # get the download path
+    download_path = os.path.join(settings.MEDIA_ROOT, path)
+    if os.path.exists(download_path):
+
+        with open(download_path, 'rb') as fh:
+
+            response = HttpResponse(fh.read(), content_type="application/document")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(download_path)
+            return response
+    raise Http404
 
 class CourseView(LoginRequiredMixin,View):
     def get(self, request):
@@ -173,6 +188,24 @@ class UploadDocumentView(LoginRequiredMixin, View):
             messages.info(request, "Document is added")
             context = {'student': student, 'document_form': document_form, 'new_document': new_document}
             return render(request, 'courses/upload-documents.html', context)
+
+class DownloadDocument(View):
+    def get(self, request, document_id):
+        document = get_object_or_404(Document, pk=document_id)
+
+
+class DeleteDocumentView(LoginRequiredMixin, View):
+    def get(self, request, document_id):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+            document = get_object_or_404(Document, pk=document_id, user=student)
+
+            document.delete()
+
+        return redirect("/documents")
+
 
 
 
