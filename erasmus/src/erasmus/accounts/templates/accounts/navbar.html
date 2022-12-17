@@ -63,7 +63,20 @@
     </div>
 
     <div class="main_content">
-        {% block main_content %} {% endblock %}
+        {% block header_content %} {% endblock %}
+
+        {% if messages %}
+        <div class="message-content">
+            {% for message in messages %}
+            <div class="success-message">
+                <div style="font-weight: bold; color: #47783d;">Success:</div>
+                <div style="color: #47783d;">{{message}}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block page_content %} {% endblock %}
     </div>
 </div>
 

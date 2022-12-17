@@ -3,11 +3,12 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block main_content %}
-<div class="header">
-Add Question To FAQ
-</div>
+{% block header_content %}
+<div class="header">Add Question To FAQ</div>
+{% endblock %}
 
+
+{% block page_content %}
 <div class="page_content">
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
