@@ -286,7 +286,7 @@ class MergeCourseView(LoginRequiredMixin, View):
     def get(self, request, course_id1, course_id2, course_id3, course_id4, course_id5,
             course_id6, course_id7, course_id8, course_id9, course_id10):
 
-        if not Course.objects.filter(pk=course_id1).exists() and not Course.objects.filter(pk=course_id2).exists():
+        if Course.objects.filter(pk=course_id1).exists() and Course.objects.filter(pk=course_id2).exists():
             # get the bilkent equivalent course
             bilkent_equivalent = Course.objects.filter(pk=course_id1).first().bilkent_equivalent
 
@@ -311,8 +311,8 @@ class MergeCourseView(LoginRequiredMixin, View):
                     course.merged_course = merged_course
                     course.save()
 
-            messages.info(request, "Successfully merged courses.")
-            return redirect("add_unapproved_course")
+            messages.success(request, "Successfully merged courses.")
+            return redirect("/courses")
         else:
             messages.error(request, "You need to choose at least two courses to merge.")
             return redirect("/courses")
