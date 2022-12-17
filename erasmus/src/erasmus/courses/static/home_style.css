@@ -46,7 +46,7 @@ section
     display: grid;
     grid-template-columns: 1fr 1fr;
 
-    height: 200px;
+    height: 100%;
     border: 0ch;
 }
 .toDo
@@ -54,8 +54,8 @@ section
     display: block;
     border: solid;
     border-color: 1px solid rgba(0,0,0,0.05);
-    width: 500px;
-    height: 280px;
+    width: 90%;
+    height: 400px;
     overflow-x: auto;
     overflow-y: auto;
 }
@@ -69,8 +69,8 @@ section
     display: block;
     border: solid;
     border-color: 1px solid rgba(0,0,0,0.05);
-    width: 500px;
-    height: 280px;
+    width: 90%;
+    height: 400px;
     overflow-x: auto;
     overflow-y: auto;
 }
