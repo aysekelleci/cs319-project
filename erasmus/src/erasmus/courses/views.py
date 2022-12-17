@@ -19,6 +19,8 @@ class CourseView(LoginRequiredMixin,View):
     def get(self, request):
         student = None
         user = request.user
+        courses = None
+        user_courses = None
         erasmus_user = ErasmusUser.objects.get(user=user)
         if Coordinator.objects.filter(user=erasmus_user).first():
             user_type = "Coordinator"
@@ -28,6 +30,8 @@ class CourseView(LoginRequiredMixin,View):
             student = Student.objects.filter(user=erasmus_user).first()
             # get preapproved courses for the university the student will be attending
             courses = Course.objects.filter(university=student.university, approved=True)
+            user_courses = UserCourse.objects.filter(user=student)
+
         else:
             user_type = "Board Member"
 
