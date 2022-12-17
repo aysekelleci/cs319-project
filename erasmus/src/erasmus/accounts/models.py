@@ -12,7 +12,7 @@ class ErasmusUser(models.Model):
     name = models.CharField(max_length=100, blank=True)
     email = models.CharField(max_length=100)
     bilkent_id = models.IntegerField()
-    phone = models.IntegerField()
+    phone = models.IntegerField(default="", blank=True)
     department = models.CharField(max_length=100, default="Computer Engineering")
 
     def __str__(self):

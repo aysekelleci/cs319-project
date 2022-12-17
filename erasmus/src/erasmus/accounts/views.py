@@ -154,12 +154,24 @@ def getUser(user):
     return todo_user
 
 '''
+
+import pandas as pd
+from django.contrib.auth.models import User
 class PlacementView(LoginRequiredMixin, View):
     # read the placement table
+    dataframe1 = pd.read_excel('book2.xlsx')
     # create students
-    # place students
-    # send notification to students
 
+    user = User(username="", password='')
+    user.save()
+    erasmus_user = ErasmusUser(user=user, name = '', email = '', bilkent_id = '', department = '')
+    erasmus_user.save()
+    student = Student(user=erasmus_user, gpa = '', score = '', status='', is_erasmus_done = False, academic_year = '', semester = '')
+
+    # place students
+
+
+    # send notification to students
 
 class CancelPlacement(LoginRequiredMixin, View):
 '''
