@@ -11,6 +11,10 @@
 
 body{
   background-color: #f3f5f9;
+  background-size: cover;
+  background: url(../../static/bilkent_amblem_background.png) no-repeat;
+  background-position: 60% 60%;
+  background-size: 300px 300px;
 }
 
 .navbar_wrapper{
