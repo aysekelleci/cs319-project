@@ -1,6 +1,27 @@
+{% extends 'accounts/navbar.html' %}
+{% block main_content %}
+<div class="header">Waiting Approvals</div>
+<style>
+</style>
 
-<!--
-    This page shows unapproved course and coordinators are able to see waiting
-    courses and approve or reject courses
-
-    -->
+<div class="page_content">
+    <div id="notif_table">
+            <table id="filtered_list" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Subject</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for course in unapproved_courses %}
+                <tr>
+                    <td><a href=#>Student <i class="fas fa-external-link-alt"></i></a></td>
+                    <td><a>{{course.course_name}} waiting for approval</a></td>
+                </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
+</div>
+{% endblock %}
