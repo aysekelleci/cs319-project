@@ -296,16 +296,11 @@ input[type=url], input[type=text] {
 .message-content {
   width: 98%;
   font-size: 19px;
-  color: #47783d;
-  /*background-color: #dff0d8;*/
-  background-color: #f2dede;
-  /*border: 1px solid #d8ebcb;*/
-  border: 1px solid #edd1d4;
   border-radius: 4px;
   list-style: none;
   padding: 0;
 }
 
-.message-content .success-message {
+.message-content .success-message, .message-content .unsuccess-message, .message-content .info-message {
   display: flex;
 }

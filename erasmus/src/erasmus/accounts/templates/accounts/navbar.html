@@ -69,14 +69,22 @@
         {% if messages %}
         <div class="message-content">
             {% for message in messages %}
-            <div class="success-message">
+            {% if message.tags == 'success' %}
+            <div class="success-message" style="background: #dff0d8; border: 1px solid #d8ebcb;">
                 <div style="font-weight: bold; color: #47783d;">Successful:</div>
                 <div style="color: #47783d;">{{message}}</div>
             </div>
-            <div class="success-message">
+            {% elif message.tags == 'error' %}
+            <div class="unsuccess-message" style="background-color: #f2dede; border: 1px solid #edd1d4;">
                 <div style="font-weight: bold; color: #aa4644;">Unsuccessful:</div>
                 <div style="color: #aa4644;">{{message}}</div>
             </div>
+            {% elif message.tags == 'info' %}
+            <div class="info-message" style="background-color: #fcf8e3; border: 1px solid #faeed2;">
+                <div style="font-weight: bold; color: #8d6d3b;">Info:</div>
+                <div style="color: #8d6d3b;">{{message}}</div>
+            </div>
+            {% endif%}
             {% endfor %}
         </div>
         {% endif %}

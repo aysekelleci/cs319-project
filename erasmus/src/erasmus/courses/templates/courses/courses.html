@@ -26,18 +26,39 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for course in user_courses %}
+                {% for course in user_unmerged_courses %}
                 <tr>
                     <td id="count"></td>
-                    <td>{{course.course.course_codes}}</td>
-                    <td>{{course.course.course_name}}</td>
-                    <td>{{course.course.course_credit}}</td>
-                    <td>{{course.course.bilkent_equivalent}}</td>
-                    <td>{{course.course.bilkent_equivalent.course_credit}}</td>
+                    <td>{{course.course_codes}}</td>
+                    <td>{{course.course_name}}</td>
+                    <td>{{course.course_credit}}</td>
+                    <td>{{course.bilkent_equivalent}}</td>
+                    <td>{{course.bilkent_equivalent.course_credit}}</td>
                     <td>NULL</td>
-                    <td><a class="button" href="/remove-from-courses/{{course.course.pk}}">Remove</a></td>
+                    <td>
+                        <a class="button" href="/remove-from-courses/{{course.course.pk}}">Remove</a>
+                        <input type="checkbox">
+                    </td>
                 </tr>
                 {%endfor%}
+                {% for courseKey, courseList in user_merged_course_dict.items %}
+                <h1>{{user_merged_course_dict.items}}</h1>
+                {% for course in courseList %}
+                <tr>
+                    <td id="count"></td>
+                    <td>{{course.course_codes}}</td>
+                    <td>{{course.course_name}}</td>
+                    <td>{{course.course_credit}}</td>
+                    <td>{{course.bilkent_equivalent}}</td>
+                    <td>{{course.bilkent_equivalent.course_credit}}</td>
+                    <td>NULL</td>
+                    <td>
+                        <a class="button" href="/remove-from-courses/{{course.course.pk}}">Remove</a>
+                        <input type="checkbox">
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
                 </tbody>
                 <tfoot>
                 <tr>
@@ -80,7 +101,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for course in courses %}
+                {% for course in approved_unmerged_courses %}
                 <tr>
                     <td id="count"></td>
                     <td>{{course.course_codes}}</td>
