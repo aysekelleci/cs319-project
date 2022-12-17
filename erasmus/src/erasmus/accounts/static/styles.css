@@ -170,7 +170,7 @@ th {
 td {
   border-bottom: 1px solid #646c9a;
   border-collapse: collapse;
-  padding: 10px;
+  padding: 15px;
   text-align: center;
   background-color: #130d3834;
 }
@@ -179,11 +179,23 @@ tr:hover {
   background-color: #fff;
 }
 
-button{
+button {
   padding: 10px;
   font-size: 15px;
   color: #717171;
   cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid #767676;
+}
+
+a[class="button"] {
+  padding: 10px;
+  font-size: 15px;
+  color: #717171;
+  cursor: pointer;
+  background: #efefef;
+  border: 1px solid #767676;
+  border-radius: 3px;
 }
 
 input[type=submit] {
