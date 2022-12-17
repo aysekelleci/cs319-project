@@ -6,80 +6,81 @@
     <link rel="stylesheet" href="{% static 'forum.css' %}">
 {% endblock %}
 
+{% block header_content %}
+<div class="header">Forum</div>
+{% endblock %}
+
+
 {% block page_content %}
-
-<div class="main_content">
-
-    <div class="heading" >
-            <h1 class="head">FORUM </h1>
-        </div>
+<div class="page_content">
 
         <div class="bottom-forum" >
+
+            <!--
             <div class="search-filter-new-container">
                 <div class="search-filter-new">
 
 
-                    <div  class="text_field_chat-container">
-                            <input class="text_field_chat" type="text">
-                    </div>
+
                     <a href="#"><img src="../../static/search_button.png" alt="search" id="search-button"></a>
 
 
                     <button class="filter-button" onclick="openForm()"><img class="filter-icon-forum" src="../../static/filter-icon.png" alt=""></button>
                     <a href="forum_post_create.html"><img class="new-post-icon" src="../../static/plus.png" alt=""></a>
-                </div>
+                </div>-->
             </div>
             <div class="forum-container">
                 <div>
+                    <input type="text" id="filter_input" onkeyup="filterForumTable()" style="width:100%" placeholder="Search for courses..">
 
-                <table class= "forum-table">
+                    <table class="sortable" id="filtered_list" style="width: 100%; border-collapse: collapse; background-color: #fff">
                         <!-- Forum title heading part-->
-                        <tr>
-                            <th class="f-title"> <h3> Forum Title </h3></th>
+                        <tr style="background-color: #fff">
+                            <th class="f-title" > <h3> Forum Title </h3></th>
                             <th class="f-initiatier"><h3>  Posted by</h3></th>
                             <th class="f-answers"><h3>Replies</h3></th>
                         </tr>
 
                         <!-- Forum  posts part-->
                         <tr class="rows">
-                            <th class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></th>
-                            <th class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></th>
-                            <th class="forum-answers"><a href="forum_post.html">9</a></th>
+                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
                         <tr class="rows">
-                            <th class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></th>
-                            <th class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></th>
-                            <th class="forum-answers"><a href="forum_post.html">9</a></th>
+                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
                         <tr class="rows">
-                            <th class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></th>
-                            <th class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></th>
-                            <th class="forum-answers"><a href="forum_post.html">9</a></th>
+                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
                         <tr class="rows">
-                            <th class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></th>
-                            <th class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></th>
-                            <th class="forum-answers"><a href="forum_post.html">9</a></th>
+                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
-                        <tr onclick="document.location='forum_post.html'"  >
-                            <th class="forum-title">Pasaport ücretlerini okul mu karşılıyor</th>
-                            <th class="forum-initiatier">Mustafa Hamit</th>
-                            <th class="forum-answers">9</th>
+                        <tr class="rows">
+                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
-                        <tr onclick="document.location='forum_post.html'"  >
-                            <th class="forum-title">Pasaport ücretlerini okul mu karşılıyor</th>
-                            <th class="forum-initiatier">Mustafa Hamit</th>
-                            <th class="forum-answers">9</th>
+                        <tr class="rows">
+                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
-                        <tr onclick="document.location='forum_post.html'"  >
-                            <th class="forum-title">Pasaport ücretlerini okul mu karşılıyor</th>
-                            <th class="forum-initiatier">Mustafa Hamit</th>
-                            <th class="forum-answers">9</th>
+                        <tr class="rows">
+                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
-                        <tr onclick="document.location='forum_post.html'"  >
-                            <th class="forum-title">Pasaport ücretlerini okul mu karşılıyor</th>
-                            <th class="forum-initiatier">Mustafa Hamit</th>
-                            <th class="forum-answers">9</th>
+                        <tr class="rows">
+                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
 
 

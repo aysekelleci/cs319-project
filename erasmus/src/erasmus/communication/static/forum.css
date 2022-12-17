@@ -10,7 +10,6 @@
     border-radius : 6px;
 }
 .search-filter-new{
-
     display: flex;
     width: 98%;
     height: 25px;
@@ -23,8 +22,8 @@
 
 .forum-container{
     border-radius : 6px;
-    width: 98%;
-    height: 100%;
+    width: 97%;
+    height: fit-content;
 }
 .filter-button{
     background-color: inherit;
@@ -48,14 +47,15 @@
 .forum-container{
     border: solid 2px;
 }
+
 .forum-table tbody {
     margin: auto;
     width: 1260px;
-
 }
-.forum-table .rows:hover{
+
+table .rows:hover {
   background-color: #db1430;
-  color: #fff;
+  color: #000000;
   cursor:hand;
 }
 

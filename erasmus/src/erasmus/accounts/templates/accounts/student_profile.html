@@ -6,15 +6,17 @@
     <link rel="stylesheet" href="{% static 'student_profile_from_coordinator.css' %}">
 {% endblock %}
 
+{% block header_content %}
+<div class="header">User´s Name</div>
+{% endblock %}
+
+
 {% block page_content %}
 
 <div class="page_content">
             <div class="viewed-student-info">
                 <div class = "photo-mail">
                     <img src="../../static/user.png" alt="user" width="100px" height="100px" >
-                    <div id="user-name" >
-                        <p > User´s Name </p>
-                    </div>
                     <div id="mail-icon">
                         <button id="mail-button">
                             <img  src="../../static/send_message2.png" alt="message" width="90" height="70">
