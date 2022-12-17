@@ -17,24 +17,19 @@ from datetime import datetime
 
 class CourseView(LoginRequiredMixin,View):
     def get(self, request):
+        student = None
         user = request.user
         erasmus_user = ErasmusUser.objects.get(user=user)
         if Coordinator.objects.filter(user=erasmus_user).first():
             user_type = "Coordinator"
+
         elif Student.objects.filter(user=erasmus_user).first():
             user_type = "Student"
             student = Student.objects.filter(user=erasmus_user).first()
+            # get preapproved courses for the university the student will be attending
+            courses = Course.objects.filter(university=student.university, approved=True)
         else:
             user_type = "Board Member"
-
-        user_courses = UserCourse.objects.filter(user=student)
-
-        courses = None
-
-        # get preapproved courses for the university the student will be attending
-        if Student.objects.filter(user=erasmus_user).first():
-            student = Student.objects.filter(user=erasmus_user).first()
-            courses = Course.objects.filter(university=student.university, approved=True)
 
         context = {'user': user, 'courses': courses, "user_type": user_type, 'student': student,
                    'user_courses': user_courses}

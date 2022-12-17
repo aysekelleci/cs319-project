@@ -63,9 +63,11 @@ class AddQuestion(LoginRequiredMixin, View):
             messages.info(request, "Question Form is not valid")
             return redirect("/faq")
 
-        context = {'coordinator': coordinator, 'question_form': question_form, 'new_question': new_question}
+        questions = Question.objects.all()
+        context = {'coordinator': coordinator, 'question_form': question_form,
+                   'new_question': new_question, 'questions': questions}
         messages.info(request, "Question is added")
-        return redirect("/faq")
+        return render(request, 'communication/faq.html', context)
 
 
 class DeleteQuestionView(LoginRequiredMixin, View):
