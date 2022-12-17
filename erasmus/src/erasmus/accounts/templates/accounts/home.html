@@ -31,7 +31,25 @@
                 <input type="text" id="filter_input" onkeyup="filterToDo()" style="width:100%" placeholder="Search for To Do">
                 <table id="filtered_list" style="width:100%">
                     <tbody>
-                    {% for toDo in todo %}
+                    {% for flaggedToDo in flagged_todo %}
+                    <tr>
+                        <td style="width:100%">
+                            <a href=#>{{flaggedToDo.header}}</a><br>
+                            Explanation: {{flaggedToDo.body}}<br>
+                            Due Date: {{flaggedToDo.due_date}}<br>
+                        </td>
+                        <td>
+                            <a href='/flag-todo/{{flaggedToDo.pk}}/0/'><i class="fa fa-times fa-xs"></i></a>
+                        </td>
+                        <td>
+                            <a href='/delete-todo/{{flaggedToDo.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
+                        </td>
+                        <td>
+                            <a href='/todo-state/{{flaggedToDo.pk}}/1/'><i class="fa fa-check fa-xs"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% for toDo in unflagged_todo %}
                     <tr>
                         <td style="width:100%">
                             <a href=#>{{toDo.header}}</a><br>
@@ -39,10 +57,10 @@
                             Due Date: {{toDo.due_date}}<br>
                         </td>
                         <td>
-                            <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
+                            <a href='/flag-todo/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
                         </td>
                         <td>
-                            <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
+                            <a href='/delete-todo/{{toDo.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
                         </td>
                         <td>
                             <a href='/todo-state/{{toDo.pk}}/1/'><i class="	fa fa-check fa-xs"></i></a>
@@ -58,18 +76,18 @@
                 <input type="text" id="filter_input" onkeyup="filterToDo()" style="width:100%" placeholder="Search for Done">
                 <table id="filtered_list" style="width:100%">
                     <tbody>
-                        {% for toDo in todo %}
+                        {% for done in done %}
                         <tr>
                             <td style="width:100%">
-                                <a href = #>{{toDo.header}}</a><br>
-                                Explanation: {{toDo.body}}<br>
-                                Due Date: {{toDo.due_date}}<br>
+                                <a href=#>{{done.header}}</a><br>
+                                Explanation: {{done.body}}<br>
+                                Due Date: {{done.due_date}}<br>
                             </td>
                             <td>
-                                <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
+                                <a href='/delete-todo/{{done.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
                             </td>
                             <td>
-                                <a href='/todo-state/{{toDo.pk}}/1/'><i class="	fa fa-times fa-xs"></i></a>
+                                <a href='/todo-state/{{done.pk}}/0/'><i class="	fa fa-times fa-xs"></i></a>
                             </td>
                         </tr>
                         {%endfor%}
@@ -80,19 +98,22 @@
         <button class = "addToDo" onclick = "openForm()">Add To Do</button>
 
         <div class = "form-popup" id = "myForm">
-        <form action = "/action_page.php" class = "form-container">
+            <form class = "form-container">
 
-            <input type="text" placeholder = "Enter To Do" name="email" required>
+                {% csrf_token %}
+                {{todo_form|crispy}}
 
-            <button type = "submit" class = "btn">Add</button>
-            <button type = "button" class="btn cancel" onclick = "closeForm()">Close</button>
-        </form>
+                <input type="text" placeholder = "Enter To Do" name="email" required>
+
+                <button type = "submit" class = "btn">Add</button>
+                <button type = "button" class="btn cancel" onclick = "closeForm()">Close</button>
+            </form>
         </div>
 
         <script>
-        function openForm() 
+        function openForm()
         {
-            document.getElementById( "myForm" ).style.display = "block";
+            document.getElementById( "myFor" ).style.display = "block";
         }
 
         function closeForm() 

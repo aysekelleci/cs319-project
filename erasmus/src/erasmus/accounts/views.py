@@ -76,13 +76,13 @@ class DeleteToDoView(LoginRequiredMixin,View):
         todo = get_object_or_404(ToDo, pk=todo_id)
 
         try:
-            todo_item = ToDo.objects.get(user=todo_user, course=todo)  # control whether todo item already added
+            todo_item = get_object_or_404(ToDo, pk=todo_id)  # control whether todo item already added
         except:
             todo_item = None
         if todo_item is not None:
             todo_item.delete()
             messages.info(request, "This todo removed the list.")
-            return redirect("accounts/profile")
+            return redirect("/accounts/profile")
 
 
 class FlagToDoView(LoginRequiredMixin,View):
@@ -96,7 +96,7 @@ class FlagToDoView(LoginRequiredMixin,View):
 
         todo.is_flagged = is_flagged
         todo.save() # update the todo object
-        return redirect("accounts/profile")
+        return redirect("/accounts/profile")
 
 class UpdateToDoStateView(LoginRequiredMixin,View):
 
