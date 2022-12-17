@@ -9,7 +9,12 @@ urlpatterns = [
     path('edit-question/<int:question_id>', views.EditQuestionView.as_view(), name="edit-question"),
     path('notification/', views.NotificationView.as_view(), name="notification"),
     path('forum/', views.ForumView.as_view(), name="forum"),
-    path('delete-notification/<int:notification_id>/', views.DeleteNotificationView.as_view(),  name="delete-notification"),
-    path('flag-notification/<int:notification_id>/<int:is_flagged>/', views.FlagNotificationView.as_view(),  name="flag-notification"),
+    path('delete-notification/<int:notification_id>/', views.DeleteNotificationView.as_view(),
+         name="delete-notification"),
+    path('flag-notification/<int:notification_id>/<int:is_flagged>/', views.FlagNotificationView.as_view(),
+         name="flag-notification"),
+    path('add-post/', views.AddPostView.as_view(), name="add-post"),
+    path('delete-post/<int:post_id>', views.DeletePostView.as_view(), name="delete-post"),
+
     path('', include('accounts.urls')),
 ]
