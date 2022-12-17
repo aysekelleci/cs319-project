@@ -1,8 +1,11 @@
 from .models import Question, Notification,  Post, Response
+
+from .models import Question, Notification, Post, Response
+
 from django.views import View
 from accounts.models import ErasmusUser, Coordinator
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import QuestionForm
+from .forms import QuestionForm, PostForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
@@ -183,9 +186,49 @@ class AddPostView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         forum_user = get_forum_user(user)
-        
+        new_post = None
+
+        post_form = PostForm()
+
+        context = {'forum_user': forum_user, 'post_form': post_form, 'new_post': new_post}
+
+        return render(request, 'communication/add-post.html', context)
+
+    def post(self, request):
+        user = request.user
+        forum_user = get_forum_user(user)
+
+        post_form = PostForm(data=request.POST)
+        if forum_user is None:
+            messsage.error('user does not exist in erasmus user')
+            return redirect("/forum")
+
+        if question_form.is_valid():
+            new_post = post_form.save(commit=False)
+            new_post.user = form_user
+
+            # Save the question to the database
+            new_question.save()
+
+        else:
+            messages.info(request, "Post Form is not valid")
+            return redirect("/forum")
+
+        messages.success(request, " Post is added")
+        return redirect("/forum")
 
 
+class DeletePostView(LoginRequiredMixin, View):
+    def get(self, request, post_id):
+        user = request.user
+        forum_user = get_forum_user(user)
+
+        post = get_object_or_404(Question, pk=post_id, user=forum_user)  # Check whether given course object exists
+
+        post.delete()
+
+        messages.success(request, "Question is deleted")
+        return redirect("/forum")
 
 
 
