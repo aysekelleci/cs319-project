@@ -113,7 +113,7 @@ class EditQuestionView(View):
             if coordinator is None:
                 return redirect("/faq")
 
-            question_form = QuestionForm(instance=old_product, data=request.POST)
+            question_form = QuestionForm(instance=old_question, data=request.POST)
 
             if question_form.is_valid():
                 messages.info(request, "This question was successfully updated.")
