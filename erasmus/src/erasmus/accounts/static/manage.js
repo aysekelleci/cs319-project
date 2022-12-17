@@ -118,3 +118,8 @@ function filterToDo() {
     }
   }
 }
+
+function popUp(message)
+{
+    alert(message);
+}
