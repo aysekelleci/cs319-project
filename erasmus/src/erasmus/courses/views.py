@@ -13,24 +13,6 @@ from courses.forms import CourseForm, DocumentForm
 from datetime import datetime
 
 
-# Create your views here.
-class HomeView(LoginRequiredMixin,View):
-    def get(self, request):
-        user = request.user
-        todo = ToDo.objects.all()
-        erasmus_user = ErasmusUser.objects.filter(user=user).first()
-
-        if Student.objects.filter(user=erasmus_user).exists():
-            todo_user = Student.objects.filter(user=erasmus_user).first()
-        elif Coordinator.objects.filter(user=erasmus_user).exists():
-            todo_user = Coordinator.objects.filter(user=erasmus_user).first()
-        elif BoardMember.objects.filter(user=erasmus_user).exists():
-            todo_user = BoardMember.objects.filter(user=erasmus_user).first()
-        else:
-            todo_user = None
-
-        context = {'user': todo_user, 'todo': todo}
-        return render(request, 'courses/home.html', context)
 
 
 class CourseView(LoginRequiredMixin,View):

@@ -14,6 +14,27 @@ from accounts.forms import ToDoForm
 from django.db.models import Q
 
 
+# Create your views here.
+class HomeView(LoginRequiredMixin,View):
+    def get(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+
+        unflagged_todo = ToDo.objects.filter(user=erasmus_user, is_done=False, is_flagged=False)
+        flagged_todo = ToDo.objects.filter(user=erasmus_user, is_done=False, is_flagged=True)
+        done = ToDo.objects.filter(user=erasmus_user, is_done=True)
+
+        if Student.objects.filter(user=erasmus_user).exists():
+            todo_user = Student.objects.filter(user=erasmus_user).first()
+        elif Coordinator.objects.filter(user=erasmus_user).exists():
+            todo_user = Coordinator.objects.filter(user=erasmus_user).first()
+        elif BoardMember.objects.filter(user=erasmus_user).exists():
+            todo_user = BoardMember.objects.filter(user=erasmus_user).first()
+        else:
+            todo_user = None
+
+        context = {'user': todo_user, 'unflagged_todo': unflagged_todo, 'flagged_todo': flagged_todo, 'done': done}
+        return render(request, 'accounts/home.html', context)
 
 
 class AddToDoView(LoginRequiredMixin, View):
@@ -144,7 +165,7 @@ class SearchToDo(LoginRequiredMixin,View):
 
     def get(self, request):
         return render(request, 'accounts/todo_search.html')
-
+"""
 def getUser(user):
     erasmus_user = ErasmusUser.objects.filter(user=user).first()
 
@@ -158,8 +179,7 @@ def getUser(user):
         todo_user = None
 
     return todo_user
-    
-"""
+
 
 
 
