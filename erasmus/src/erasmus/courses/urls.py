@@ -24,6 +24,7 @@ urlpatterns = [
          views.MergeCourseView.as_view(), name="merge-courses"),
     path('upload-documents/', views.UploadDocumentView.as_view(), name="upload-documents"),
     path('create-document/', views.CreatePreApprovalView.as_view(), name="create-document"),
+    path('delete-document/<int:document_id>', views.DeleteDocumentView.as_view(), name="delete-document"),
     path('', include('communication.urls')),
 ]
 

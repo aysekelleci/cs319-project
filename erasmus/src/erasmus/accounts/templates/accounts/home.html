@@ -9,7 +9,7 @@
 {% endblock %}
 
 
-{% block main_content %}
+{% block page_content %}
 <div class = "mainBox">
 
     <div class = "status">
@@ -95,7 +95,7 @@
                 </table>
         </section>
 
-        <button class = "addToDo" onclick = "openForm()">Add To Do</button>
+        <button class = "addToDo" onclick="location.href = '../../add-todo'">Add To Do</button>
 
         <div class = "form-popup" id = "myForm">
             <form class = "form-container">
@@ -113,7 +113,7 @@
         <script>
         function openForm()
         {
-            document.getElementById( "myFor" ).style.display = "block";
+            document.getElementById( "myForm" ).style.display = "block";
         }
 
         function closeForm() 

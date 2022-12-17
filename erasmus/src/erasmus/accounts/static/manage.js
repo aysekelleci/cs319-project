@@ -7,12 +7,14 @@ window.onload = function init() {
         textID = localStorage.clickedButton;
     }
 
+    console.log(localStorage.clickedButton);
+
     button = document.getElementById(buttonID);
     text = document.getElementById(textID);
     button.style.backgroundColor = "#db1430";
     text.style.color = "#fff";
 
-    //localStorage.clickedButton = "0";
+    localStorage.clickedButton = "0";
 }
 
 function filterTable() {
@@ -61,13 +63,8 @@ function clicked(button)
 {
     localStorage.clickedButton = button.id;
 
-    if (storageAvailable('localStorage')) {
-      console.log("storage works");
-    }
-    else {
-      console.log("storage dows not work");
-    }
     console.log("clicked");
+    console.log(localStorage.clickedButton);
 }
 
 function storageAvailable(type) {

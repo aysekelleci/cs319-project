@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block header_content %}
-<div class="header">Add Question To FAQ</div>
+<div class="header">Add To Do</div>
 {% endblock %}
 
 
@@ -12,7 +12,7 @@
 <div class="page_content">
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{question_form|crispy}}
+        {{todo_form|crispy}}
         <button class="btn btn-primary my-4" type="submit">Submit</button>
 </form>
 </div>

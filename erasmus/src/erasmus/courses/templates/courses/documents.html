@@ -1,6 +1,15 @@
 {% extends 'accounts/navbar.html' %}
-{% block main_content %}
-<div class="header">Files</div>
+
+{% block header_content %}
+<div class="header">Files
+    <div class="header_buttons">
+        <button type="button" onclick="location.href = '../../upload-documents'">Add a New File</button>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block page_content %}
 <div class="page_content">
     <div id="course_table">
             <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for courses..">
@@ -23,8 +32,8 @@
                     <td style="width:200px">{{document.date}}</td>
                     <td style="width:350px;">
                         <button href="#" type="button">View</button>
-                        <button href="#" type="button">Download</button>
-                        <button href="#" type="button">Delete</button>
+                        <a class="button" href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
+                        <a class="button" href="/delete-document/{{ document.pk}}">Delete</a>
                     </td>
                 </tr>
                 {%endfor%}
