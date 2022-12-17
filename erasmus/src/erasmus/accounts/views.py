@@ -62,8 +62,8 @@ class AddToDoView(LoginRequiredMixin, View):
             new_todo = None
 
             if todo_form.is_valid():
-                new_todo.user = erasmus_user
                 new_todo = todo_form.save(commit=False)
+                new_todo.user = erasmus_user
                 new_todo.save()
 
         context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
