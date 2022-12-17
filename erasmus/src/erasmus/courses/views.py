@@ -1,18 +1,18 @@
 import docx
+import pytz
+import os
+from datetime import datetime
+
 from django.shortcuts import render
 from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files import File
+from courses.forms import CourseForm, DocumentForm
 from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
-from django.contrib import messages
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from courses.forms import CourseForm, DocumentForm
-from datetime import datetime
-
-
 
 
 class CourseView(LoginRequiredMixin,View):
@@ -251,13 +251,29 @@ class MergeCourseView(LoginRequiredMixin, View):
             messages.info(request, "You need to choose at least two courses to merge.")
             return redirect("add_unapproved_course")
 
-class CreateDocumentView(LoginRequiredMixin, View):
+from abc import ABC, abstractmethod
+class CreateDocumentView(LoginRequiredMixin, View, ABC):
+    @abstractmethod
+    def fill_necessary_information(self, student):
+        pass
     def get(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         student = Student.objects.filter(user=erasmus_user).first()
 
-        # fixme: this should create different forms
+        document_name, date, document_type = self.fill_necessary_information(student)
+
+        with open(document_name, 'rb') as f:
+            new_pre_approval = Document(document_name='Unsigned ' + document_type.lower() + ' of ' + erasmus_user.name,
+                                        date=date, is_signed=False, user=student,
+                                        document_type=document_type)
+            new_pre_approval.document = File(f, name=os.path.basename(f.name))
+            new_pre_approval.save()
+
+        return redirect("/courses")
+
+class CreatePreApprovalView(CreateDocumentView):
+    def fill_necessary_information(self, student):
         # read the template pre-approval form and its tables
         document = docx.api.Document('courses/static/pre_approval_form.docx')
         student_info_table = document.tables[0]
@@ -265,51 +281,41 @@ class CreateDocumentView(LoginRequiredMixin, View):
         courses_table = document.tables[2]
         coordinator_table = document.tables[3]
 
-        student_info_table.cell(0, 1).text = erasmus_user.name.split()[:-1]     # name
-        student_info_table.cell(0, 3).text = str(erasmus_user.bilkent_id)            # bilkent id number
-        student_info_table.cell(1, 1).text = erasmus_user.name.split()[-1]      # surname
-        student_info_table.cell(1, 3).text = erasmus_user.department            # department
+        student_info_table.cell(0, 1).text = student.user.name.split()[:-1]  # name
+        student_info_table.cell(0, 3).text = str(student.user.bilkent_id)  # bilkent id number
+        student_info_table.cell(1, 1).text = student.user.name.split()[-1]  # surname
+        student_info_table.cell(1, 3).text = student.user.department  # department
 
-        host_uni_table.cell(0, 1).text = student.university.university_name     # host university name
-        host_uni_table.cell(0, 3).text = student.academic_year                  # academic year
-        host_uni_table.cell(1, 3).text = student.semester                       # semester
+        host_uni_table.cell(0, 1).text = student.university.university_name  # host university name
+        host_uni_table.cell(0, 3).text = student.academic_year  # academic year
+        host_uni_table.cell(1, 3).text = student.semester  # semester
 
         courses = UserCourse.objects.filter(user=student)
 
         for i, user_course in enumerate(courses):
             course = user_course.course
             bilkent_equivalent = course.bilkent_equivalent
-            courses_table.cell(2+i, 1).text = course.course_codes               # course code
-            courses_table.cell(2 + i, 2).text = course.course_name              # course name
-            courses_table.cell(2 + i, 3).text = str(course.course_credit)            # course credit
+            courses_table.cell(2 + i, 1).text = course.course_codes  # course code
+            courses_table.cell(2 + i, 2).text = course.course_name  # course name
+            courses_table.cell(2 + i, 3).text = str(course.course_credit)  # course credit
             if bilkent_equivalent is not None:
-                if bilkent_equivalent.course_type == MUST_COURSE:       # bilkent course name
-                    courses_table.cell(2 + i, 4).text = bilkent_equivalent.course_codes + " " +\
+                if bilkent_equivalent.course_type == MUST_COURSE:  # bilkent course name
+                    courses_table.cell(2 + i, 4).text = bilkent_equivalent.course_codes + " " + \
                                                         bilkent_equivalent.course_name
                 elif bilkent_equivalent.course_type == ELECTIVE_COURSE:
                     courses_table.cell(2 + i, 4).text = bilkent_equivalent.elective_group_name
-                courses_table.cell(2 + i, 5).text = str(bilkent_equivalent.course_credit)        # bilkent course credit
-                if bilkent_equivalent.course_type == ELECTIVE_COURSE:                  # bilkent elective course code
+                courses_table.cell(2 + i, 5).text = str(bilkent_equivalent.course_credit)  # bilkent course credit
+                if bilkent_equivalent.course_type == ELECTIVE_COURSE:  # bilkent elective course code
                     courses_table.cell(2 + i, 6).text = bilkent_equivalent.course_codes
 
-        coordinator_table.cell(1, 1).text = student.coordinator.user.name       # coordinator name
+        coordinator_table.cell(1, 1).text = student.coordinator.user.name  # coordinator name
 
-
-        document_name = STATIC_DOCUMENTS_FOLDER + 'pre_approval_form' + datetime.now().strftime("%d-%m-%Y-%H-%M-%S") + ".docx"
+        turkey_timezone = pytz.timezone("Turkey")
+        date = datetime.now(turkey_timezone)
+        document_name = STATIC_DOCUMENTS_FOLDER + 'pre_approval_form' + date.strftime("%d-%m-%Y-%H-%M-%S") + ".docx"
         document.save(document_name)
 
-        import os
-        from django.core.files import File
-
-        with open(document_name, 'rb') as f:
-            new_pre_approval = Document(document_name="Pre-Approval Form " + erasmus_user.name,
-                                        date=datetime.now(), is_signed=False, user=student,
-                                        document_type=PREAPPROVAL_FORM)
-            new_pre_approval.document = File(f, name=os.path.basename(f.name))
-            new_pre_approval.save()
-
-        return redirect("/courses")
-
+        return document_name, date, PREAPPROVAL_FORM
 
 
 

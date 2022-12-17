@@ -8,10 +8,9 @@
                 <thead>
                 <tr>
                     <th style="width:65px" id="count">Count</th>
-                    <th style="width:175px">Name</th>
-                    <th style="width:300px">File</th>
-                    <th style="width:200px">Date</th>
-                    <th style="width:150px">Type</th>
+                    <th style="width:175px">Type</th>
+                    <th style="width:250px">Name</th>
+                    <th style="width:225px">Date</th>
                     <th style="width:350px" colspan="2">Operations</th>
                 </tr>
                 </thead>
@@ -19,10 +18,9 @@
                 {% for document in documents %}
                 <tr>
                     <td style="width:65px" id="count"></td>
-                    <td style="width:175px">{{document.document_name}}</td>
-                    <td style="width:300px">{{document.document}}</td>
-                    <td style="width:200px">{{document.date}}</td>
                     <td style="width:150px">{{document.document_type}}</td>
+                    <td style="width:175px">{{document.document_name}}</td>
+                    <td style="width:200px">{{document.date}}</td>
                     <td style="width:350px;">
                         <button href="#" type="button">View</button>
                         <button href="#" type="button">Download</button>
