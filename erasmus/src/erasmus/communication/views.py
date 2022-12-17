@@ -1,8 +1,11 @@
 from .models import Question, Notification,  Post, Response
+
+from .models import Question, Notification, Post, Response
+
 from django.views import View
 from accounts.models import ErasmusUser, Coordinator
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import QuestionForm
+from .forms import QuestionForm, PostForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
@@ -135,26 +138,34 @@ class NotificationView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        notifications = Notification.objects.filter(user=erasmus_user)
-        context = {'user': erasmus_user, 'notifications': notifications}
+
+        unflagged_notifications = Notification.objects.filter(user=erasmus_user, is_flagged=False)
+        flagged_notifications = Notification.objects.filter(user=erasmus_user, is_flagged=True)
+
+        context = {'user': erasmus_user, 'unflagged_notifications': unflagged_notifications,
+                   "flagged_notifications": flagged_notifications}
         return render(request, 'communication/notifications.html', context)
 
 class DeleteNotificationView(LoginRequiredMixin, View):
-        def get(self, request):
-            user = request.user
-            erasmus_user = ErasmusUser.objects.filter(user=user).first()
-            notifications = Notification.objects.filter(user=erasmus_user)
-            context = {'user': erasmus_user, 'notifications': notifications}
-            return render(request, 'communication/notifications.html', context)
+    def get(self, request, notification_id):
+
+        try:
+            notification = get_object_or_404(Notification, pk=notification_id)
+        except:
+            notification = None
+        if notification is not None:
+            notification.delete()
+            messages.info(request, "Notification removed.")
+            return redirect("/notification")
 
 
 class FlagNotificationView(LoginRequiredMixin, View):
-    def get(self, request):
-        user = request.user
-        erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        notifications = Notification.objects.filter(user=erasmus_user)
-        context = {'user': erasmus_user, 'notifications': notifications}
-        return render(request, 'communication/notifications.html', context)
+    def get(self, request, notification_id, is_flagged):
+        notification = get_object_or_404(Notification, pk=notification_id)
+
+        notification.is_flagged = is_flagged
+        notification.save()  # update the todo object
+        return redirect("/notification")
 
 
 class ForumView(LoginRequiredMixin, View):
@@ -175,7 +186,61 @@ class AddPostView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         forum_user = get_forum_user(user)
-        
+        new_post = None
+
+        post_form = PostForm()
+
+        context = {'forum_user': forum_user, 'post_form': post_form, 'new_post': new_post}
+
+        return render(request, 'communication/add-post.html', context)
+
+    def post(self, request):
+        user = request.user
+        forum_user = get_forum_user(user)
+
+        post_form = PostForm(data=request.POST)
+        if forum_user is None:
+            messsage.error('user does not exist in erasmus user')
+            return redirect("/forum")
+
+        if question_form.is_valid():
+            new_post = post_form.save(commit=False)
+            new_post.user = form_user
+
+            # Save the question to the database
+            new_question.save()
+
+        else:
+            messages.info(request, "Post Form is not valid")
+            return redirect("/forum")
+
+        messages.success(request, " Post is added")
+        return redirect("/forum")
+
+
+class DeletePostView(LoginRequiredMixin, View):
+    def get(self, request, post_id):
+        user = request.user
+        forum_user = get_forum_user(user)
+
+        post = get_object_or_404(Question, pk=post_id, user=forum_user)  # Check whether given course object exists
+
+        post.delete()
+
+        messages.success(request, "Question is deleted")
+        return redirect("/forum")
+
+
+class DeleteResponseView(LoginRequiredMixin, View):
+    def get(self, request, response_id):
+        user = request.user
+        forum_user = get_forum_user(user)
+
+        if forum_user is None:
+            redirect('/forum')
+
+        response = get_object_or_404(Response, pk=reponse_id, user=forum_user)
+
 
 
 

@@ -55,15 +55,17 @@ class CourseView(LoginRequiredMixin,View):
             _merged_courses = {course.merged_course for course in _courses_user if course.is_merged is True}
             user_merged_course_dict = getMergedCoursesDict(_courses_user, _merged_courses)
             user_unmerged_courses = [course for course in _courses_user if course.is_merged is False]
+
+            rejected_courses = Course.objects.filter(university=student.university, rejected=True)
         else:
             user_type = "Board Member"
 
         context = {'user': user, 'approved_unmerged_courses': approved_unmerged_courses,
                    "approved_merged_course_dict": approved_merged_course_dict, "user_type": user_type, 'student': student,
-                   'user_unmerged_courses': user_unmerged_courses, 'user_merged_course_dict': user_merged_course_dict}
+                   'user_unmerged_courses': user_unmerged_courses, 'user_merged_course_dict': user_merged_course_dict,
+                   'rejected_courses': rejected_courses}
 
         return render(request, 'courses/courses.html', context)
-
 def getMergedCoursesDict(courses, merged_courses):
     merged_course_dict = {}
     for merged_course in merged_courses:

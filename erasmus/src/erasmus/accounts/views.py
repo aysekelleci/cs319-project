@@ -67,22 +67,18 @@ class AddToDoView(LoginRequiredMixin, View):
                 new_todo.save()
 
         context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
-        messages.success("Todo was added successfully")
+        messages.success(request, "Todo was added successfully")
         return redirect('accounts/profile')
 
 class DeleteToDoView(LoginRequiredMixin,View):
     def get(self, request, todo_id):
-        user = request.user
-        todo_user = getUser(user)
-        todo = get_object_or_404(ToDo, pk=todo_id)
-
         try:
-            todo_item = get_object_or_404(ToDo, pk=todo_id)  # control whether todo item already added
+            todo_item = get_object_or_404(ToDo, pk=todo_id)
         except:
             todo_item = None
         if todo_item is not None:
             todo_item.delete()
-            messages.info(request, "This todo removed the list.")
+            messages.info(request, "This todo removed from the list.")
             return redirect("/accounts/profile")
 
 
@@ -143,22 +139,6 @@ class StudentProfilesView(LoginRequiredMixin, View):
         context = {'documents': documents, 'courses': courses, 'visitor': visitor, 'student': student}
         return render(request, 'accounts/student_profile.html', context)
 
-
-
-
-"""
-class SearchToDo(LoginRequiredMixin,View):
-    def post(self, request):
-        searched = request.POST.get('searched', False)
-
-        # search for the query in the todo's header and body
-        todo = ToDo.objects.filter(Q(header__contains=searched) | Q(body__contains=searched))
-
-        return render(request, 'accounts/todo_search.html', {'searched': searched, "todo": todo})
-
-    def get(self, request):
-        return render(request, 'accounts/todo_search.html')
-"""
 def getUser(user):
     erasmus_user = ErasmusUser.objects.filter(user=user).first()
 
@@ -172,7 +152,6 @@ def getUser(user):
         todo_user = None
 
     return todo_user
-
 
 
 
