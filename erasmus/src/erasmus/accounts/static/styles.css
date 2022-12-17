@@ -259,6 +259,7 @@ input[type=url], input[type=text] {
 .navbar_wrapper .main_content .page_content ol li {
   list-style: decimal;
   list-style-position: inside;
+
 }
 
 .navbar_wrapper .main_content .page_content .faq_buttons {
@@ -266,4 +267,14 @@ input[type=url], input[type=text] {
   padding: 5px;
   border-bottom: 1px solid rgba(0,0,0,0.05);
   text-align: center;
+}
+
+.navbar_wrapper .main_content .page_content ol .faq-operation-buttons {
+  display: none;
+  margin: -45px 0;
+  position: absolute;
+}
+
+.navbar_wrapper .main_content .page_content ol:hover .faq-operation-buttons {
+    display: block;
 }

@@ -52,7 +52,7 @@ class CourseView(LoginRequiredMixin,View):
         # get preapproved courses for the university the student will be attending
         if Student.objects.filter(user=erasmus_user).first():
             student = Student.objects.filter(user=erasmus_user).first()
-            courses = Course.objects.filter(university=student.university,approved=True)
+            courses = Course.objects.filter(university=student.university, approved=True)
 
         context = {'user': user, 'courses': courses, "user_type": user_type, 'student': student,
                    'user_courses': user_courses}

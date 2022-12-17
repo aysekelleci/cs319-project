@@ -39,7 +39,7 @@ class Course(models.Model):
     course_name = models.CharField(max_length=100)
     course_codes = models.CharField(max_length=20)
     course_credit = models.FloatField()
-    university = models.ForeignKey(University, on_delete=models.CASCADE, null=True )
+    university = models.ForeignKey(University, on_delete=models.CASCADE, null=True, related_name='courses')
     bilkent_equivalent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
     approved = models.BooleanField(default=False)
     course_type = models.CharField(max_length=30, choices=COURSE_TYPE_CHOICES)
@@ -65,7 +65,7 @@ class Document(models.Model):
     document = models.FileField(upload_to=STATIC_DOCUMENTS_FOLDER)
     date = models.DateTimeField(auto_now_add=True)
     is_signed = models.BooleanField(default=False)
-    user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='documents_user', default=1)
+    user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='documents', default=1)
     document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPE_CHOICES, default=4)
     #signers
     #size
