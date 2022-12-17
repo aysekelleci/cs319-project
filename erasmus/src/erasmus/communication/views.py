@@ -101,7 +101,7 @@ class EditQuestionView(View):
 
             context = {'old_question': old_question, 'question_form': question_form, 'coordinator': coordinator}
 
-            return render(request, 'communication/edit_faq.html', context)
+            return render(request, 'communication/edit-question.html', context)
 
     def post(self, request, question_id):
         old_question = get_object_or_404(Question, pk=question_id)
@@ -122,7 +122,7 @@ class EditQuestionView(View):
 
             else:
                 messages.info(request, "This question form is not valid.")
-                return render(request, "communication/edit_question.html", context)
+                return render(request, "communication/edit-question.html", context)
 
 
 class NotificationView(LoginRequiredMixin, View):
