@@ -1,0 +1,162 @@
+.bottom-forum{
+    width: 98%;
+    height: fit-content;
+    /*filter: blur(4px);*/
+}
+.search-filter-new-container{
+    width: 98%;
+    height: 45px;
+    border: solid 2px;
+    border-radius : 6px;
+}
+.search-filter-new{
+
+    display: flex;
+    width: 98%;
+    height: 25px;
+
+}
+#search-button{
+    width: 28px;
+    cursor: pointer;
+}
+
+.forum-container{
+    border-radius : 6px;
+    width: 98%;
+    height: 100%;
+}
+.filter-button{
+    background-color: inherit;
+    padding-top: 0px;
+    border: none;
+    cursor: pointer;
+
+    position:absolute;
+    right: 80px;
+
+}
+.filter-icon-forum{
+    height: 25px;
+
+}
+.new-post-icon{
+    height: 25px;
+    position:absolute;
+    right: 45px;
+}
+.forum-container{
+    border: solid 2px;
+}
+.forum-table tbody {
+    margin: auto;
+    width: 1260px;
+
+}
+.forum-table .rows:hover{
+  background-color: #db1430;
+  color: #fff;
+  cursor:hand;
+}
+
+.forum-table td{
+    height: 45px ;
+    margin: auto;
+    text-align: left;
+    background-color: #130d3834;
+}
+.forum-table .rows{
+
+    width: 100%;
+    border-radius : 6px;
+}
+
+.forum-table .rows th a{
+    display: block;
+
+
+}
+
+.forum-table .forum-title{
+    width: 108%;
+    height: 45px ;
+    margin: auto;
+    text-align: left;
+}
+.forum-table .forum-initiatier{
+    width: 15%;
+    height: 45px ;
+    margin: auto;
+    text-align: center;
+}
+.forum-table .forum-answers{
+    width: 7%;
+    height: 45px ;
+    margin: auto;
+    text-align: center;
+}
+
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.filter-popup {
+  display: none;
+  position: fixed;
+  top: 200px;
+  right: 100px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.popup-container{
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+
+.popup-container .btn-filter{
+    background-color: #2f32df;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+
+
+.popup-container .btn {
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.popup-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.popup-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
