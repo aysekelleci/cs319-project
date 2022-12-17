@@ -145,3 +145,21 @@ function filterForumTable() {
     }
   }
 }
+
+function mergeCourses()
+{
+    var loc = "../../merge-course/"
+    var checkboxes = document.getElementsByClassName('merge-course-selection');
+    var selected = [];
+    for (var i=0; i<checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+        selected.push(checkboxes[i].id);
+    }
+    console.log(selected);
+
+    for (var i = 0; i < selected.length; i++)
+        loc += selected[i];
+
+    window.location.href = loc;
+}
+}

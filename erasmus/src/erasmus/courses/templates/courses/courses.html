@@ -45,7 +45,7 @@
                     {% endif %}
                     <td>
                         <a class="button" href="/remove-from-courses/{{course.pk}}">Remove</a>
-                        <input type="checkbox">
+                        <input type="checkbox" class="merge-course-selection" id="{{course.pk}}">
                     </td>
                 </tr>
                 {%endfor%}
@@ -79,7 +79,7 @@
                 <tfoot>
                 <tr>
                     <td colspan="8">ECTS Total: sum</td>
-                    <td><a class="button" href="/merge-course/{{course.pk}}">Merge</a></td>
+                    <td><a class="button" onclick="mergeCourses()" href="#">Merge</a></td>
                 </tr>
                 </tfoot>
             </table>

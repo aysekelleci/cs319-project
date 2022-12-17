@@ -282,7 +282,7 @@ class RejectCourseView(LoginRequiredMixin, View):
         return redirect('/waiting-courses/')
 
 class MergeCourseView(LoginRequiredMixin, View):
-    def get(self, request, course_type, bilkent_eq_id, course_id1, course_id2, course_id3, course_id4, course_id5,
+    def get(self, request, bilkent_eq_id, course_id1, course_id2, course_id3, course_id4, course_id5,
             course_id6, course_id7, course_id8, course_id9, course_id10):
 
         if not Course.objects.filter(pk=course_id1).exists() and not Course.objects.filter(pk=course_id2).exists():
@@ -290,7 +290,7 @@ class MergeCourseView(LoginRequiredMixin, View):
             bilkent_equivalent = Course.objects.filter(pk=bilkent_eq_id).first()
 
             # create a "parent" merged course instance
-            merged_course = MergedCourse(course_type=course_type, bilkent_equivalent=bilkent_equivalent)
+            merged_course = MergedCourse(bilkent_equivalent=bilkent_equivalent)
             merged_course.save()
 
             course_ids = [course_id1, course_id2, course_id3, course_id4, course_id5, course_id6, course_id7, course_id8,
