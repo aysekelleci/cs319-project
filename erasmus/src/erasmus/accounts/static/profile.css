@@ -1,0 +1,38 @@
+
+.main{
+    width: 100%;
+    height:100vh;
+}
+.heading{
+    width: 100%;
+    height: 75px;   
+}
+.title{
+    padding-top: 30px;
+    text-align: center;
+    font-size: xx-large;         
+}
+
+.user-info-table{
+
+    margin: auto;
+    border-collapse: separate;
+    align-items: center; 
+    height: auto;
+}
+.user-info-table tr{
+    margin: auto;
+}
+.user-info-table td{
+    width: 550px;
+    height: 45px ;
+    margin: auto;
+    text-align: left;
+    background-color: #130d3834;
+}
+.user-photo{
+    padding: 10px;
+    height: 75px;
+    margin-left: 46.45%;
+    border-radius: 50px; 
+}
