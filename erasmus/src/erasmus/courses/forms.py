@@ -10,7 +10,7 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         # fields = ('product_text', 'product_description')
-        fields = ('course_name', 'course_codes', 'course_credit', 'course_type')
+        fields = ('course_name', 'code', 'course_credit')
 
 
 class DocumentForm(forms.ModelForm):

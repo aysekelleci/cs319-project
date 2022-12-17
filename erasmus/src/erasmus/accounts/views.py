@@ -153,7 +153,16 @@ def getUser(user):
 
     return todo_user
 
+'''
+class PlacementView(LoginRequiredMixin, View):
+    # read the placement table
+    # create students
+    # place students
+    # send notification to students
 
+
+class CancelPlacement(LoginRequiredMixin, View):
+'''
 
 
 

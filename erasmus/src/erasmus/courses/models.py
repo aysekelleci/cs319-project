@@ -28,27 +28,30 @@ class University(models.Model):
     def __str__(self):
         return '{}'.format(self.university_name)
 
-class MergedCourse(models.Model):
-    course_type = models.CharField(max_length=30)
-    bilkent_equivalent = models.ForeignKey("Course", on_delete=models.SET_NULL, blank=True,
-                                           null=True)
-
-class Course(models.Model):
+class BilkentCourse(models.Model):
     course_name = models.CharField(max_length=100)
-    course_codes = models.CharField(max_length=20)
+    course_code = models.CharField(max_length=20)
     course_credit = models.FloatField()
-    university = models.ForeignKey(University, on_delete=models.CASCADE, null=True, related_name='courses')
-    bilkent_equivalent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
-    approved = models.BooleanField(default=False)
     course_type = models.CharField(max_length=30, choices=COURSE_TYPE_CHOICES)
     elective_group_name = models.CharField(max_length=100, blank=True)
     course_coordinator_name = models.CharField(blank=True, max_length=100)
+
+class MergedCourse(models.Model):
+    bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, blank=True, null=True)
+
+class Course(models.Model):
+    course_name = models.CharField(max_length=100)
+    code = models.CharField(max_length=20, default="")
+    course_credit = models.FloatField()
+    university = models.ForeignKey(University, on_delete=models.CASCADE, null=True, related_name='courses')
+    bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, blank=True, null=True)
+    approved = models.BooleanField(default=False)
     merged_course = models.ForeignKey(MergedCourse, on_delete=models.SET_NULL, blank=True, null=True)
     is_merged = models.BooleanField(default=False)
     is_rejected = models.BooleanField(default=False)
 
     def __str__(self):
-        return '{}'.format(self.course_codes + ": " + self.course_name)
+        return '{}'.format(self.code + ": " + self.course_name)
 
 
 DOCUMENT_TYPE_CHOICES = (

@@ -52,7 +52,7 @@ class UserCourse(models.Model):
     grade = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return '{}'.format(self.course.course_codes + self.course.course_name)
+        return '{}'.format(self.course.code + self.course.course_name)
 
 class ToDo(models.Model):
     header = models.CharField(max_length=100)
