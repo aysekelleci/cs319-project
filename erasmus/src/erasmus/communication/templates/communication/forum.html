@@ -44,6 +44,7 @@
                             <th class="f-title" > <h3> Forum Title </h3></th>
                             <th class="f-initiatier"><h3>  Posted by</h3></th>
                             <th class="f-answers"><h3>Replies</h3></th>
+                             <th> </th>
                         </tr>
 
                         <!-- Forum  posts part-->
@@ -52,6 +53,9 @@
                            <td class="forum-title" style="text-align: left"><a href="forum_post.html"> {{post.topic}} </a></td>
                             <td class="forum-initiatier"><a href="forum_post.html"> {{post.user.name}}</a></td>
                             <td class="forum-answers"><a href="forum_post.html">9</a></td>
+                             <th>
+                                 < button id = "button-delete"> delete</button>
+                             </th>
                         </tr>
                         {%endfor%}
 
