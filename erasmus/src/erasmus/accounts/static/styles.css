@@ -263,32 +263,35 @@ input[type=url], input[type=text] {
 
 }
 
-.navbar_wrapper .main_content .page_content .faq_buttons {
-  display: block;
-  padding: 5px;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  text-align: center;
+.header_buttons {
+  position: absolute;
 }
 
-.navbar_wrapper .main_content .page_content ol .faq-operation-buttons {
-  display: none;
+.header_buttons button {
+  margin: -45px -20px;
+}
+
+.navbar_wrapper .main_content .page_content ol .faq-buttons {
+  /*display: none;*/
   margin: -45px 0;
   position: absolute;
 }
 
-.navbar_wrapper .main_content .page_content ol:hover .faq-operation-buttons {
+.navbar_wrapper .main_content .page_content ol:hover .faq-buttons {
     display: block;
 }
 
 .message-content {
   width: 98%;
-  height: 50px;
   font-size: 19px;
   color: #47783d;
-  background-color: #dff0d8;
-  border: 1px solid #d8ebcb;
+  /*background-color: #dff0d8;*/
+  background-color: #f2dede;
+  /*border: 1px solid #d8ebcb;*/
+  border: 1px solid #edd1d4;
   border-radius: 4px;
   list-style: none;
+  padding: 0;
 }
 
 .message-content .success-message {
