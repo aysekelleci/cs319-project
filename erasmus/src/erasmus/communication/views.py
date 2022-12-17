@@ -147,16 +147,16 @@ class NotificationView(LoginRequiredMixin, View):
         return render(request, 'communication/notifications.html', context)
 
 class DeleteNotificationView(LoginRequiredMixin, View):
-        def get(self, request, notification_id):
+    def get(self, request, notification_id):
 
-            try:
-                notification = get_object_or_404(Notification, pk=notification_id)
-            except:
-                notification = None
-            if notification is not None:
-                notification.delete()
-                messages.info(request, "Notification removed.")
-                return redirect("/notification")
+        try:
+            notification = get_object_or_404(Notification, pk=notification_id)
+        except:
+            notification = None
+        if notification is not None:
+            notification.delete()
+            messages.info(request, "Notification removed.")
+            return redirect("/notification")
 
 
 class FlagNotificationView(LoginRequiredMixin, View):
