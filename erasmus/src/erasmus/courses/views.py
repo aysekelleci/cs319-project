@@ -117,11 +117,15 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
 
         course_form = CourseForm(data=request.POST)
         if course_form.is_valid():
-            # Create Comment object but don't save to database yet
+            # Create course object but don't save to database yet
             new_course = course_form.save(commit=False)
 
-            # Save the comment to the database
+            # Save the course to the database
             new_course.save()
+
+            # Create a course specific for the user as well
+            new_user_course = UserCourse(course=new_course, user=student)
+            new_user_course.save()
 
             # add a todo item for the coordinator to evaluate the unapproved course
             coordinator_todo = ToDo(header=f"Evaluate new unapproved course of {erasmus_user.name}", user=student.coordinator.user,
@@ -211,7 +215,7 @@ class DeleteDocumentView(LoginRequiredMixin, View):
 
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
-        unapproved_courses = Course.objects.filter(approved=False)
+        unapproved_courses = UserCourse.objects.filter(course__approved__exact=False)
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
@@ -349,7 +353,6 @@ class CreatePreApprovalView(CreateDocumentView):
         document.save(document_name)
 
         return document_name, date, PREAPPROVAL_FORM
-
 
 
 
