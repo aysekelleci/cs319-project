@@ -15,9 +15,7 @@
     <div class = "status">
         {% if user_type == "Student" %}
         <h1 class = "statusLabel"> Status: </h1>
-        <div class = "statusBox">
-            <p> {{user.status}} </p>
-        </div>
+        <h1 class = "statusBox"> {{user.status}} </h1>
         {%endif%}
     </div>
 
@@ -34,7 +32,7 @@
                     {% for flaggedToDo in flagged_todo %}
                     <tr bgcolor= "#FFBAAB">
                         <td style="width:100%">
-                            <a href=#>{{flaggedToDo.header}}</a><br>
+                            <a href="../../waiting-courses">{{flaggedToDo.header}}</a><br>
                             Explanation: {{flaggedToDo.body}}<br>
                             Due Date: {{flaggedToDo.due_date}}<br>
                         </td>

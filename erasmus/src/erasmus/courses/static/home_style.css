@@ -27,16 +27,9 @@ section
 }
 .statusBox
 {
-    margin-top: 5px;
-    display: block;
-    border-style: outset;
-    width: max-content;
-    height: 40px;
+  margin-top: 14px;
+  font-size: 35px;
 
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    background-color: rgb(255, 249, 245);
 }
 .toDoandDone
 {
