@@ -6,6 +6,8 @@ from .forms import QuestionForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
+
+from .model import Post, Response
 # Create your views here.
 
 
@@ -66,7 +68,7 @@ class AddQuestion(LoginRequiredMixin, View):
         questions = Question.objects.all()
         context = {'coordinator': coordinator, 'question_form': question_form,
                    'new_question': new_question, 'questions': questions}
-        messages.info(request, "Question is added")
+        messages.success(request, "Question is added")
         return render(request, 'communication/faq.html', context)
 
 
@@ -84,7 +86,7 @@ class DeleteQuestionView(LoginRequiredMixin, View):
 
         question.delete()
 
-        messages.info(request, "Question was deleted")
+        messages.success(request, "Question is deleted")
         return redirect("/faq")
 
 
@@ -118,13 +120,15 @@ class EditQuestionView(View):
             question_form = QuestionForm(instance=old_question, data=request.POST)
 
             if question_form.is_valid():
-                messages.info(request, "This question was successfully updated.")
+                messages.info(request, "This question is successfully updated.")
                 question_form.save()
                 return redirect("/faq")
 
             else:
-                messages.info(request, "This question form is not valid.")
                 context = {'old_question': old_question, 'question_form': question_form, 'coordinator': coordinator}
+
+                messages.error(request, "This question form is not valid.")
+
                 return render(request, "communication/edit-question.html", context)
 
 
@@ -133,7 +137,7 @@ class NotificationView(LoginRequiredMixin, View):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         notifications = Notification.objects.filter(user=erasmus_user)
-        context = {'user': erasmus_user, 'notifications': notifications} # TODO get flagged unflagged
+        context = {'user': erasmus_user, 'notifications': notifications}
         return render(request, 'communication/notifications.html', context)
 
 class DeleteNotificationView(LoginRequiredMixin, View):
@@ -154,6 +158,44 @@ class FlagNotificationView(LoginRequiredMixin, View):
         return render(request, 'communication/notifications.html', context)
 
 
+class ForumView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            forum_user = Coordinator.objects.filter(user=erasmus_user).first()  # get coordinator
+            if forum_user is None:
+                forum_user = Coordinator.objects.filter(user=erasmus_user).first()  # get student
 
+        posts = Post.objects.all
+        context = {'forum_user': forum_user, 'posts': posts}
+        return render(request, 'communication/forum.html', context)
+
+
+class AddPostView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        forum_user = get_forum_user(user)
+        
+
+
+
+
+
+
+
+
+
+
+def get_forum_user(user):
+
+    erasmus_user = ErasmusUser.objects.filter(user=user).first()
+    forum_user = None
+    if erasmus_user is not None:
+        forum_user = Coordinator.objects.filter(user=erasmus_user).first()  # get coordinator
+        if forum_user is None:
+            forum_user = Coordinator.objects.filter(user=erasmus_user).first()  # get student
+
+    return forum_user
 
 
