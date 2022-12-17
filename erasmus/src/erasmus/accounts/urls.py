@@ -9,7 +9,8 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('todo-state/<int:todo_id>/<int:is_done>', views.UpdateToDoState.as_view(),  name="todo-state"),
+    path('accounts/profile/', views.HomeView.as_view(),  name="profile"),
+    path('todo-state/<int:todo_id>/<int:is_done>/', views.UpdateToDoState.as_view(),  name="todo-state"),
     path('profile/', views.ProfileView.as_view(), name="profile"),
     path('profile/<int:student_id>', views.StudentProfilesView.as_view(), name="student-profile"),
 ]
