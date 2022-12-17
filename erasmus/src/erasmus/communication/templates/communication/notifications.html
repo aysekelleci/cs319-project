@@ -16,14 +16,25 @@
     <div id="notif_table">
             <table id="filtered_list" style="width:100%">
                 <tbody>
-                {% for notif in notifications %}
+                {% for notif in flagged_notifications %}
+                <tr bgcolor= "#FFBAAB">
+                    <td style="width:100%"><a href=#>{{notif.header}}</a></td>
+                    <td>
+                        <a href='/flag-notification/{{notif.pk}}/0/'><i class="fa fa-flag fa-xs"></i></a>
+                    </td>
+                    <td>
+                        <a href='/delete-notification/{{notif.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
+                    </td>
+                </tr>
+                {%endfor%}
+                {% for notif in unflagged_notifications %}
                 <tr>
                     <td style="width:100%"><a href=#>{{notif.header}}</a></td>
                     <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="far fa-flag fa-xs"></i></a>
+                        <a href='/flag-notification/{{notif.pk}}/1/'><i class="far fa-flag fa-xs"></i></a>
                     </td>
                     <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
+                        <a href='/delete-notification/{{notif.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
                     </td>
                 </tr>
                 {%endfor%}
