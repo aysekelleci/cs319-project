@@ -69,7 +69,7 @@ def getMergedCoursesDict(courses, merged_courses):
     for merged_course in merged_courses:
         one_merged_course_contents = []  # each list contains the courses composing one merged course
         for course in courses:
-            if course.is_merged and course.merged_course is merged_course:
+            if ( course.is_merged and (course.merged_course.pk is merged_course.pk) ):
                 one_merged_course_contents.append(course)
         merged_course_dict[merged_course] = one_merged_course_contents
     return merged_course_dict

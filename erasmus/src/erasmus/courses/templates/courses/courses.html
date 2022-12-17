@@ -22,6 +22,7 @@
                     </th>
                     <th style="width:7%">Credits</th>
                     <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
+                    <th style="width:10%">Is Approved</th>
                     <th style="width:10%">Operation</th>
                 </tr>
                 </thead>
@@ -35,27 +36,43 @@
                     <td>{{course.bilkent_equivalent}}</td>
                     <td>{{course.bilkent_equivalent.course_credit}}</td>
                     <td>NULL</td>
+                    {% if course.approved %}
+                    <td>Approved</td>
+                    {% elif course.is_rejected %}
+                    <td>Rejected</td>
+                    {% else %}
+                    <td>Waiting For Approval</td>
+                    {% endif %}
                     <td>
-                        <a class="button" href="/remove-from-courses/{{course.course.pk}}">Remove</a>
+                        <a class="button" href="/remove-from-courses/{{course.pk}}">Remove</a>
                         <input type="checkbox">
                     </td>
                 </tr>
                 {%endfor%}
                 {% for courseKey, courseList in user_merged_course_dict.items %}
-                <h1>{{user_merged_course_dict.items}}</h1>
                 {% for course in courseList %}
                 <tr>
                     <td id="count"></td>
                     <td>{{course.course_codes}}</td>
                     <td>{{course.course_name}}</td>
                     <td>{{course.course_credit}}</td>
-                    <td>{{course.bilkent_equivalent}}</td>
-                    <td>{{course.bilkent_equivalent.course_credit}}</td>
-                    <td>NULL</td>
-                    <td>
-                        <a class="button" href="/remove-from-courses/{{course.course.pk}}">Remove</a>
-                        <input type="checkbox">
+
+                    {% if courseList.0 is course %}
+                    <td rowspan="2">{{course.bilkent_equivalent}}</td>
+                    <td rowspan="2">{{course.bilkent_equivalent.course_credit}}</td>
+                    <td rowspan="2">NULL</td>
+                    {% if course.approved %}
+                    <td rowspan="2">Approved</td>
+                    {% elif course.is_rejected %}
+                    <td rowspan="2">Rejected</td>
+                    {% else %}
+                    <td rowspan="2">Waiting For Approval</td>
+                    {% endif %}
+                    <td rowspan="2">
+                        <a class="button" href="/remove-from-courses/{{course.pk}}">Remove</a>
                     </td>
+                    {% endif %}
+
                 </tr>
                 {% endfor %}
                 {% endfor %}
@@ -113,6 +130,24 @@
                     <td><a class="button" href="/add-to-courses/{{course.pk}}">Add</a></td>
                 </tr>
                 {%endfor%}
+                {% for courseKey, courseList in approved_merged_course_dict.items %}
+                {% for course in courseList %}
+                <tr>
+                    <td id="count"></td>
+                    <td>{{course.course_codes}}</td>
+                    <td>{{course.course_name}}</td>
+                    <td>{{course.course_credit}}</td>
+
+                    {% if courseList.0 is course %}
+                    <td rowspan="2">{{course.bilkent_equivalent}}</td>
+                    <td rowspan="2">{{course.bilkent_equivalent.course_credit}}</td>
+                    <td rowspan="2">NULL</td>
+                    <td rowspan="2"><a class="button" href="/add-to-courses/{{course.pk}}">Add</a></td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+                {% endfor %}
                 </tbody>
             </table>
 
