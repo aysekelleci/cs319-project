@@ -49,52 +49,13 @@
                         <!-- Forum  posts part-->
                         {% for post in posts %}
                         <tr>
-                           <td class="forum-title"><a href="forum_post.html"> post.topic </a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html"> post.user</a></td>
+                           <td class="forum-title" style="text-align: left"><a href="forum_post.html"> {{post.topic}} </a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html"> {{post.user.name}}</a></td>
                             <td class="forum-answers"><a href="forum_post.html">9</a></td>
                         </tr>
-                    {%endfor%}
+                        {%endfor%}
 
-                        <tr class="rows">
-                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
-                        </tr>
-                        <tr class="rows">
-                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
-                        </tr>
-                        <tr class="rows">
-                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
-                        </tr>
-                        <tr class="rows">
-                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
-                        </tr>
-                        <tr class="rows">
-                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
-                        </tr>
-                        <tr class="rows">
-                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
-                        </tr>
-                        <tr class="rows">
-                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
-                        </tr>
-                        <tr class="rows">
-                            <td class="forum-title"><a href="forum_post.html"> Pasaport ücretlerini okul mu karşılıyor</a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html">Mustafa Hamit</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
-                        </tr>
+
 
 
 
@@ -105,15 +66,6 @@
         </div>
 
 
-        <div class="filter-popup" id="myForm">
-            <form class="popup-container">
-                <button type="button" class="btn-filter"  >filter by this </button>
-                <button type="button" class="btn-filter"  >filter by this </button>
-                <button type="button" class="btn-filter"  >filter by this </button>
-                <button type="button" class="btn-filter"  >filter by this </button>
-                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-            </form>
-        </div>
 
 </div>
 
