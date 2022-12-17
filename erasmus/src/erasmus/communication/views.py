@@ -135,26 +135,34 @@ class NotificationView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        notifications = Notification.objects.filter(user=erasmus_user)
-        context = {'user': erasmus_user, 'notifications': notifications}
+
+        unflagged_notifications = Notification.objects.filter(user=erasmus_user, is_flagged=False)
+        flagged_notifications = Notification.objects.filter(user=erasmus_user, is_flagged=True)
+
+        context = {'user': erasmus_user, 'unflagged_notifications': unflagged_notifications,
+                   "flagged_notifications": flagged_notifications}
         return render(request, 'communication/notifications.html', context)
 
 class DeleteNotificationView(LoginRequiredMixin, View):
-        def get(self, request):
-            user = request.user
-            erasmus_user = ErasmusUser.objects.filter(user=user).first()
-            notifications = Notification.objects.filter(user=erasmus_user)
-            context = {'user': erasmus_user, 'notifications': notifications}
-            return render(request, 'communication/notifications.html', context)
+        def get(self, request, notification_id):
+
+            try:
+                notification = get_object_or_404(Notification, pk=notification_id)
+            except:
+                notification = None
+            if notification is not None:
+                notification.delete()
+                messages.info(request, "Notification removed.")
+                return redirect("/notification")
 
 
 class FlagNotificationView(LoginRequiredMixin, View):
-    def get(self, request):
-        user = request.user
-        erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        notifications = Notification.objects.filter(user=erasmus_user)
-        context = {'user': erasmus_user, 'notifications': notifications}
-        return render(request, 'communication/notifications.html', context)
+    def get(self, request, notification_id, is_flagged):
+        notification = get_object_or_404(Notification, pk=notification_id)
+
+        notification.is_flagged = is_flagged
+        notification.save()  # update the todo object
+        return redirect("/notification")
 
 
 class ForumView(LoginRequiredMixin, View):

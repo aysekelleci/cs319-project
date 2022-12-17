@@ -72,17 +72,13 @@ class AddToDoView(LoginRequiredMixin, View):
 
 class DeleteToDoView(LoginRequiredMixin,View):
     def get(self, request, todo_id):
-        user = request.user
-        todo_user = getUser(user)
-        todo = get_object_or_404(ToDo, pk=todo_id)
-
         try:
-            todo_item = get_object_or_404(ToDo, pk=todo_id)  # control whether todo item already added
+            todo_item = get_object_or_404(ToDo, pk=todo_id)
         except:
             todo_item = None
         if todo_item is not None:
             todo_item.delete()
-            messages.info(request, "This todo removed the list.")
+            messages.info(request, "This todo removed from the list.")
             return redirect("/accounts/profile")
 
 

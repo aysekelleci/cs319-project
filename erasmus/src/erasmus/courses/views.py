@@ -63,7 +63,6 @@ class CourseView(LoginRequiredMixin,View):
                    'user_unmerged_courses': user_unmerged_courses, 'user_merged_course_dict': user_merged_course_dict}
 
         return render(request, 'courses/courses.html', context)
-
 def getMergedCoursesDict(courses, merged_courses):
     merged_course_dict = {}
     for merged_course in merged_courses:
