@@ -234,7 +234,7 @@ class DeleteDocumentView(LoginRequiredMixin, View):
 
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
-        unapproved_courses = UserCourse.objects.filter(course__approved__exact=False)
+        unapproved_courses = UserCourse.objects.filter(course__approved__exact=False, course__is_rejected__exact=False)
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
@@ -253,14 +253,15 @@ class ApproveCoursesView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
-            redirect("accounts/profile")
+            return redirect("accounts/profile")
 
         else:
-            course = Course.objects.get_or_404(pk=course_id)
+            course = Course.objects.filter(pk=course_id).first()
             if course is not None:
                 course.approved = True
+                course.save()
 
-        redirect("waiting-courses/")
+        return redirect("/waiting-courses/")
 
 
 class RejectCourseView(LoginRequiredMixin, View):
@@ -270,14 +271,15 @@ class RejectCourseView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
-            redirect('accounts/profile')
+            return redirect('accounts/profile')
 
         else:
-            course = Course.objects.get_or_404(pk=course_id)
+            course = Course.objects.filter(pk=course_id).first()
             if course is not None:
                 course.is_rejected = True
+                course.save()
 
-        redirect('waiting-courses')
+        return redirect('/waiting-courses/')
 
 class MergeCourseView(LoginRequiredMixin, View):
     def get(self, request, course_type, bilkent_eq_id, course_id1, course_id2, course_id3, course_id4, course_id5,
