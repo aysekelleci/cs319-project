@@ -72,15 +72,14 @@
                         <a class="button" href="/remove-from-courses/{{course.pk}}">Remove</a>
                     </td>
                     {% endif %}
-
                 </tr>
                 {% endfor %}
                 {% endfor %}
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th>ECTS Total:</th>
-                    <th id="sum"></th>
+                    <td colspan="8">ECTS Total: sum</td>
+                    <td><a class="button" href="/merge-course/{{course.pk}}">Merge</a></td>
                 </tr>
                 </tfoot>
             </table>
