@@ -17,6 +17,7 @@ from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo,
 import os
 from django.conf import settings
 from django.http import HttpResponse, Http404
+from abc import ABC, abstractmethod
 
 def download(request, path):
     # get the download path
@@ -282,19 +283,25 @@ class RejectCourseView(LoginRequiredMixin, View):
         return redirect('/waiting-courses/')
 
 class MergeCourseView(LoginRequiredMixin, View):
-    def get(self, request, bilkent_eq_id, course_id1, course_id2, course_id3, course_id4, course_id5,
+    def get(self, request, course_id1, course_id2, course_id3, course_id4, course_id5,
             course_id6, course_id7, course_id8, course_id9, course_id10):
 
         if not Course.objects.filter(pk=course_id1).exists() and not Course.objects.filter(pk=course_id2).exists():
             # get the bilkent equivalent course
-            bilkent_equivalent = Course.objects.filter(pk=bilkent_eq_id).first()
+            bilkent_equivalent = Course.objects.filter(pk=course_id1).first().bilkent_equivalent
+
+            course_ids = [course_id1, course_id2, course_id3, course_id4, course_id5, course_id6, course_id7,
+                          course_id8, course_id9, course_id10]
+            # check if Bilkent equivalent courses of all courses are the same
+            for course_id in course_ids:
+                course = Course.objects.filter(pk=course_id).first()
+                if course is not None and course.bilkent_equivalent.pk is not bilkent_equivalent.pk:
+                    messages.error(request, "Bilkent equivalent courses of all courses to be merged must be the same.")
+                    return redirect("/courses")
 
             # create a "parent" merged course instance
             merged_course = MergedCourse(bilkent_equivalent=bilkent_equivalent)
             merged_course.save()
-
-            course_ids = [course_id1, course_id2, course_id3, course_id4, course_id5, course_id6, course_id7, course_id8,
-                          course_id9, course_id10]
 
             # merge up to 10 courses by designating their parent course as the created MergedCourse instance
             for course_id in course_ids:
@@ -304,12 +311,13 @@ class MergeCourseView(LoginRequiredMixin, View):
                     course.merged_course = merged_course
                     course.save()
 
+            messages.info(request, "Successfully merged courses.")
             return redirect("add_unapproved_course")
         else:
-            messages.info(request, "You need to choose at least two courses to merge.")
-            return redirect("add_unapproved_course")
+            messages.error(request, "You need to choose at least two courses to merge.")
+            return redirect("/courses")
 
-from abc import ABC, abstractmethod
+
 class CreateDocumentView(LoginRequiredMixin, View, ABC):
     @abstractmethod
     def fill_necessary_information(self, student):
