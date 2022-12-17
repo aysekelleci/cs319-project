@@ -33,7 +33,9 @@
                     <td style="width:350px;">
                         <button href="#" type="button">View</button>
                         <button href="#" type="button">Download</button>
-                        <button href="#" type="button">Delete</button>
+                        <a href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
+                        <button href="/delete-document/{{ document.pk}}" type="button">Delete</button>
+                        <a href="/delete-document/{{ document.pk}}" >Delete</a>
                     </td>
                 </tr>
                 {%endfor%}
