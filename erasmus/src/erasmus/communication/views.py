@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from .models import Question, Notification
 from django.views import View
 from accounts.models import ErasmusUser, Coordinator
@@ -7,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import QuestionForm
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, render
 # Create your views here.
 
 
@@ -66,7 +65,65 @@ class AddQuestion(LoginRequiredMixin, View):
 
         context = {'coordinator': coordinator, 'question_form': question_form, 'new_question': new_question}
         messages.info(request, "Question is added")
-        return render(request, 'communication/faq.html', context)
+        return redirect("/faq")
+
+
+class DeleteQuestionView(LoginRequiredMixin, View):
+    def get(self, request, question_id):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            coordinator = Coordinator.objects.filter(user=erasmus_user).first()  # get coordinator
+
+            if coordinator is None:
+                return redirect("/faq")
+
+        question = get_object_or_404(Question, pk=question_id)  # Check whether given course object exists
+
+        question.delete()
+
+        messages.info(request, "Question was deleted")
+        return redirect("/faq")
+
+
+class EditQuestionView(View):
+    def get(self, request, question_id):
+        old_question = get_object_or_404(Question, pk=question_id)
+        user=request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            coordinator = Coordinator.objects.filter(user=erasmus_user).first()  # get coordinator
+
+            if coordinator is None:
+                return redirect("/faq")
+
+            question_form = QuestionForm(instance=old_question)
+
+            context = {'old_question': old_question, 'question_form': question_form, 'coordinator': coordinator}
+
+            return render(request, 'communication/edit_faq.html', context)
+
+    def post(self, request, question_id):
+        old_question = get_object_or_404(Question, pk=question_id)
+        user=request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            coordinator = Coordinator.objects.filter(user=erasmus_user).first()  # get coordinator
+
+            if coordinator is None:
+                return redirect("/faq")
+
+            question_form = QuestionForm(instance=old_product, data=request.POST)
+
+            if question_form.is_valid():
+                messages.info(request, "This question was successfully updated.")
+                question_form.save()
+                return redirect("/faq")
+
+            else:
+                messages.info(request, "This question form is not valid.")
+                return render(request, "communication/edit_question.html", context)
+
 
 class NotificationView(LoginRequiredMixin, View):
     def get(self, request):
