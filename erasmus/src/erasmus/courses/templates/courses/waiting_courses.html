@@ -14,15 +14,19 @@
             <table id="filtered_list" style="width:100%">
                 <thead>
                     <tr>
-                        <th>User</th>
+                        <th>Student</th>
+                        <th>University</th>
                         <th>Subject</th>
+                        <th>Details</th>
+                        <th>Approve</th>
+                        <th>Reject</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for course in unapproved_courses %}
+                {% for user_course in unapproved_courses %}
                 <tr>
-                    <td><a href="../../student/0">Student <i class="fas fa-external-link-alt"></i></a></td>
-                    <td><a>{{course.course_name}} waiting for approval</a></td>
+                    <td><a href="../../student/0">{{user_course.user.user.name}} <i class="fas fa-external-link-alt"></i></a></td>
+                    <td><a>{{user_course.course.course_name}} waiting for approval</a></td>
                 </tr>
                 {%endfor%}
                 </tbody>

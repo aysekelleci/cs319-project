@@ -16,69 +16,17 @@
     <div id="notif_table">
             <table id="filtered_list" style="width:100%">
                 <tbody>
+                {% for notif in notifications %}
                 <tr>
-                    <td style="width:100%"><a href=#>A Notificaiton</a></td>
+                    <td style="width:100%"><a href=#>{{notif.header}}</a></td>
                     <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
+                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="far fa-flag fa-xs"></i></a>
                     </td>
                     <td>
                         <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
                     </td>
                 </tr>
-                <tr>
-                    <td style="width:100%"><a href=#>A Notificaiton</a></td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
-                    </td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:100%"><a href=#>A Notificaiton</a></td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
-                    </td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:100%"><a href=#>A Notificaiton</a></td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
-                    </td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:100%"><a href=#>A Notificaiton</a></td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
-                    </td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:100%"><a href=#>A Notificaiton</a></td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
-                    </td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width:100%"><a href=#>A Notificaiton</a></td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
-                    </td>
-                    <td>
-                        <a href='/todo-state/{{toDo.pk}}/1/'><i class="fa fa-trash fa-xs"></i></a>
-                    </td>
-                </tr>
+                {%endfor%}
                 </tbody>
             </table>
         </div>
