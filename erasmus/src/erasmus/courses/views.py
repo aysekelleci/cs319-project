@@ -293,6 +293,7 @@ class CreateDocumentView(LoginRequiredMixin, View):
 
         coordinator_table.cell(1, 1).text = student.coordinator.user.name       # coordinator name
 
+
         document_name = STATIC_DOCUMENTS_FOLDER + 'pre_approval_form' + datetime.now().strftime("%d-%m-%Y-%H-%M-%S") + ".docx"
         document.save(document_name)
 

@@ -85,7 +85,7 @@ class DeleteToDoView(LoginRequiredMixin,View):
             return redirect("accounts/profile")
 
 
-class FlagToDo(LoginRequiredMixin,View):
+class FlagToDoView(LoginRequiredMixin,View):
 
     '''
     is_flagged : boolean, whether the todo should be flagged
@@ -98,7 +98,7 @@ class FlagToDo(LoginRequiredMixin,View):
         todo.save() # update the todo object
         return redirect("accounts/profile")
 
-class UpdateToDoState(LoginRequiredMixin,View):
+class UpdateToDoStateView(LoginRequiredMixin,View):
 
     def get(self, request, todo_id, is_done):
         user = request.user
@@ -141,14 +141,6 @@ class StudentProfilesView(LoginRequiredMixin, View):
         courses = UserCourse.objects.filter(user=student)
         context = {'documents': documents, 'courses': courses, 'visitor': visitor, 'student': student}
         return render(request, 'accounts/student_profile.html', context)
-
-
-
-
-
-
-
-
 
 
 
