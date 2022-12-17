@@ -54,7 +54,9 @@
                             <td class="forum-initiatier"><a href="forum_post.html"> {{post.user.name}}</a></td>
                             <td class="forum-answers"><a href="forum_post.html">9</a></td>
                              <th>
-                                 < button id = "button-delete"> delete</button>
+                                 {% if this.user.name == post.user.name %}
+                                 <button type="reset"> delete</button>
+                                 {% endif %}
                              </th>
                         </tr>
                         {%endfor%}
