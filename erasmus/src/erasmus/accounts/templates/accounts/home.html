@@ -32,14 +32,14 @@
                 <table id="filtered_list" style="width:100%">
                     <tbody>
                     {% for flaggedToDo in flagged_todo %}
-                    <tr>
+                    <tr bgcolor= "#FFBAAB">
                         <td style="width:100%">
                             <a href=#>{{flaggedToDo.header}}</a><br>
                             Explanation: {{flaggedToDo.body}}<br>
                             Due Date: {{flaggedToDo.due_date}}<br>
                         </td>
                         <td>
-                            <a href='/flag-todo/{{flaggedToDo.pk}}/0/'><i class="fa fa-times fa-xs"></i></a>
+                            <a href='/flag-todo/{{flaggedToDo.pk}}/0/'><i class="fa fa-flag fa-xs"></i></a>
                         </td>
                         <td>
                             <a href='/delete-todo/{{flaggedToDo.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
@@ -57,7 +57,7 @@
                             Due Date: {{toDo.due_date}}<br>
                         </td>
                         <td>
-                            <a href='/flag-todo/{{toDo.pk}}/1/'><i class="fa fa-flag fa-xs"></i></a>
+                            <a href='/flag-todo/{{toDo.pk}}/1/'><i class="far fa-flag fa-xs"></i></a>
                         </td>
                         <td>
                             <a href='/delete-todo/{{toDo.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
