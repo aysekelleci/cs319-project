@@ -138,7 +138,7 @@
                     <td>{{course.course_credit}}</td>
 
                     {% if courseList.0 is course %}
-                    <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+                    <td rowspan="2">{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
                     <td rowspan="2">{{course.bilkent_equivalent.course_credit}}</td>
                     <td rowspan="2">NULL</td>
                     <td rowspan="2"><a class="button" href="/add-to-courses/{{course.pk}}">Add</a></td>
