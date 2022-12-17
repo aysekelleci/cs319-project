@@ -49,7 +49,7 @@ class AddToDoView(LoginRequiredMixin, View):
         todo_form = ToDoForm()
 
         return render(request,
-                      'accounts/add_todo.html',
+                      'accounts/add-todo.html',
                       {'new_todo': new_todo,
                        'todo_form': todo_form,
                        'username': username,
@@ -67,7 +67,7 @@ class AddToDoView(LoginRequiredMixin, View):
                 new_todo.save()
 
         context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
-        return render(request, 'accounts/add_todo.html', context)
+        return render(request, 'accounts/add-todo.html', context)
 
 class DeleteToDoView(LoginRequiredMixin,View):
     def get(self, request, todo_id):
