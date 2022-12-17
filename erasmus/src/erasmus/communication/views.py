@@ -231,6 +231,20 @@ class DeletePostView(LoginRequiredMixin, View):
         return redirect("/forum")
 
 
+class DeleteResponseView(LoginRequiredMixin, View):
+    def get(self, request, response_id):
+        user = request.user
+        forum_user = get_forum_user(user)
+
+        if forum_user is None:
+            redirect('/forum')
+
+        response = get_object_or_404(Response, pk=reponse_id, user=forum_user)
+
+
+
+
+
 
 
 
