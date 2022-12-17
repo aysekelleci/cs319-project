@@ -139,22 +139,6 @@ class StudentProfilesView(LoginRequiredMixin, View):
         context = {'documents': documents, 'courses': courses, 'visitor': visitor, 'student': student}
         return render(request, 'accounts/student_profile.html', context)
 
-
-
-
-"""
-class SearchToDo(LoginRequiredMixin,View):
-    def post(self, request):
-        searched = request.POST.get('searched', False)
-
-        # search for the query in the todo's header and body
-        todo = ToDo.objects.filter(Q(header__contains=searched) | Q(body__contains=searched))
-
-        return render(request, 'accounts/todo_search.html', {'searched': searched, "todo": todo})
-
-    def get(self, request):
-        return render(request, 'accounts/todo_search.html')
-"""
 def getUser(user):
     erasmus_user = ErasmusUser.objects.filter(user=user).first()
 
@@ -168,7 +152,6 @@ def getUser(user):
         todo_user = None
 
     return todo_user
-
 
 
 
