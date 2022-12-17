@@ -8,5 +8,6 @@ urlpatterns = [
     path('delete-question/<int:question_id>', views.DeleteQuestionView.as_view(), name="delete-question"),
     path('edit-question/<int:question_id>', views.EditQuestionView.as_view(), name="edit-question"),
     path('notification/', views.NotificationView.as_view(), name="notification"),
+    path('forum/', views.ForumView.as_view(), name="forum"),
     path('', include('accounts.urls')),
 ]
