@@ -1,8 +1,7 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-{% endblock %}
+{% block stylesheet %}{% endblock %}
 
 {% block content %}
 <!DOCTYPE html>
@@ -69,8 +68,12 @@
         <div class="message-content">
             {% for message in messages %}
             <div class="success-message">
-                <div style="font-weight: bold; color: #47783d;">Success:</div>
+                <div style="font-weight: bold; color: #47783d;">Successful:</div>
                 <div style="color: #47783d;">{{message}}</div>
+            </div>
+            <div class="success-message">
+                <div style="font-weight: bold; color: #aa4644;">Unsuccessful:</div>
+                <div style="color: #aa4644;">{{message}}</div>
             </div>
             {% endfor %}
         </div>
