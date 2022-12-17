@@ -56,7 +56,7 @@ class CourseView(LoginRequiredMixin,View):
             user_merged_course_dict = getMergedCoursesDict(_courses_user, _merged_courses)
             user_unmerged_courses = [course for course in _courses_user if course.is_merged is False]
 
-            rejected_courses = Course.objects.filter(university=student.university, rejected=True)
+            rejected_courses = Course.objects.filter(university=student.university, is_rejected=True)
         else:
             user_type = "Board Member"
 

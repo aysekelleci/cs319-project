@@ -6,17 +6,15 @@
     <link rel="stylesheet" href="{% static 'profile.css' %}">
 {% endblock %}
 
-{% block main_content %}
+{% block header_content %}
+<div class="header">Your Page</div>
+{% endblock %}
 
-<div class="main_content">
+{% block page_content %}
+<div class="page_content">
     <div class= "main" >
-        <div class="heading">
-            <h1 class="title">Your Page </h1>
-        </div>
-        <hr>
-        
         <div class="user-info">
-           
+
             <table class="user-info-table">
                 <tbody style="height: auto" class="profile_view">
                 <tr>
@@ -54,13 +52,9 @@
             </tbody>
             </table>
         </div>
-
-
     </div>
 
 
 
 </div>
-
-<h3>  </h3>
 {% endblock %}
