@@ -1,6 +1,6 @@
 from .models import Question, Notification,  Post, Response
 
-from .models import Question, Notification, Post, Response
+from .models import Question, Notification, Post, Response, Forum
 
 from django.views import View
 from accounts.models import ErasmusUser, Coordinator
@@ -197,6 +197,7 @@ class AddPostView(LoginRequiredMixin, View):
     def post(self, request):
         user = request.user
         forum_user = get_forum_user(user)
+        forum = Forum.objects.filter.first()
 
         post_form = PostForm(data=request.POST)
         if forum_user is None:
@@ -205,6 +206,7 @@ class AddPostView(LoginRequiredMixin, View):
 
         if question_form.is_valid():
             new_post = post_form.save(commit=False)
+            new.post.forum = forum
             new_post.user = form_user
 
             # Save the question to the database
@@ -221,6 +223,7 @@ class AddPostView(LoginRequiredMixin, View):
 class DeletePostView(LoginRequiredMixin, View):
     def get(self, request, post_id):
         user = request.user
+
         forum_user = get_forum_user(user)
 
         post = get_object_or_404(Question, pk=post_id, user=forum_user)  # Check whether given course object exists
