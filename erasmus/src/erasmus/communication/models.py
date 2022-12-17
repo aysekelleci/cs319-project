@@ -32,7 +32,7 @@ class Forum(models.Model):
 
 
 class Post(models.Model):
-    forum = models.ForeignKey(FAQ, on_delete=models.CASCADE, related_name="forum_singleton", default=True)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="forum_singleton", default=True)
     user = models.ForeignKey(ErasmusUser, on_delete=models.CASCADE, related_name='posts')
     date = models.DateTimeField(auto_now_add=True)
     topic = models.CharField(max_length=50)
