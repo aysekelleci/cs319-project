@@ -133,7 +133,7 @@ class NotificationView(LoginRequiredMixin, View):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         notifications = Notification.objects.filter(user=erasmus_user)
-        context = {'user': erasmus_user, 'notifications': notifications} # TODO get flagged unflagged
+        context = {'user': erasmus_user, 'notifications': notifications}
         return render(request, 'communication/notifications.html', context)
 
 class DeleteNotificationView(LoginRequiredMixin, View):
