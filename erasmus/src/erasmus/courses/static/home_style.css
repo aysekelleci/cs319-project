@@ -14,7 +14,7 @@ section
 .status
 {
     display: grid;
-    grid-template-columns: 14% 65%;
+    grid-template-columns: 10% 65%;
 
     width: 100%;
 
