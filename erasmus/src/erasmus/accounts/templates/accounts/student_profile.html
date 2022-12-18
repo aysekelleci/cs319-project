@@ -114,16 +114,16 @@
                             <td></td>
                         {% endif %}
 
-                        {% if course.course.approved %}
+                        {% if course.approved %}
                             <td>Approved</td>
-                        {% elif course.course.is_rejected %}
+                        {% elif course.is_rejected %}
                             <td>Rejected</td>
                         {% else %}
                         <td>
                             Waiting For Approval
                             <div style="display: flex; gap: 10px;">
-                                <a class="button" href="/approve-course/{{course.course.pk}}">Approve</a>
-                                <a class="button" href="/reject-course/{{course.course.pk}}">Reject</a>
+                                <a class="button" href="/approve-course/{{course.pk}}">Approve</a>
+                                <a class="button" href="/reject-course/{{course.pk}}">Reject</a>
                             </div>
                         </td>
                         {% endif %}
@@ -154,16 +154,16 @@
                     <td rowspan="2"></td>
                     {% endif %}
 
-                    {% if courseKey.approved %}
+                    {% if course.approved %}
                     <td rowspan="2">Approved</td>
-                    {% elif courseKey.is_rejected %}
+                    {% elif course.is_rejected %}
                     <td rowspan="2">Rejected</td>
                     {% else %}
                     <td rowspan="2">
                         Waiting For Approval
                         <div style="display: flex; gap: 10px;">
-                            <a class="button" href="/approve-course/{{course.course.pk}}">Approve</a>
-                           <a class="button" href="/reject-course/{{course.course.pk}}">Reject</a>
+                            <a class="button" href="/approve-course/{{course.pk}}">Approve</a>
+                           <a class="button" href="/reject-course/{{course.pk}}">Reject</a>
                         </div></td>
                     {% endif %}
                     {% endif %}

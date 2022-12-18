@@ -255,9 +255,9 @@ class RejectCourseView(LoginRequiredMixin, View):
             course = Course.objects.filter(pk=course_id).first()
             if course is not None:
                 if course.is_merged:
-                    course.merged_course.approved = True
+                    course.merged_course.is_rejected = True
                 else:
-                    course.approved = True
+                    course.is_rejected = True
                 course.save()
                 messages.success(request, "Course rejected.")
             else:
