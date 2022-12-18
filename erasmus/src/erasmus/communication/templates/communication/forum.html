@@ -44,7 +44,7 @@
                             <td class="forum-answers"><a href="../../post-detail/{{post.pk}}">{{post.number_of_responses}}</a></td>
                              <th>
                                  {% if  post.user.name == forum_user.user.name %}
-                                 <button type="reset" > delete</button>
+                                 <a href="../../delete-post/{{post.pk}}"> <button type="reset" > delete</button></a>
                                  {% endif %}
                              </th>
                         </tr>

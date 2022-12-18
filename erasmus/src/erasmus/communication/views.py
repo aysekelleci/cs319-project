@@ -261,7 +261,7 @@ class PostDetailView(LoginRequiredMixin, View):
 
         post = Post.objects.filter(pk=post_id).first()
         responses = None
-        if post.exists():
+        if post is not None:
             responses = Response.objects.filter(post=post)
 
         new_response = None
