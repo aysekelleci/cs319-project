@@ -8,16 +8,20 @@
     <link rel="stylesheet" href="{% static 'home_style.css' %}">
 {% endblock %}
 
+{% block header_content %}
+{% if user_type == "Student" %}
+<div class="header">Status: {{user.status}}</div>
+{% else %}
+<div class="header">Home</div>
+{%endif%}
+
+{% endblock %}
+
 
 {% block page_content %}
 <div class = "page_content">
 
-    <div class = "status">
-        {% if user_type == "Student" %}
-        <h1 class = "statusLabel"> Status: </h1>
-        <h1 class = "statusBox"> {{user.status}} </h1>
-        {%endif%}
-    </div>
+
 
     <section class = "toDoandDone">
 
