@@ -21,6 +21,7 @@
         </thead>
 
         <tbody>
+        {% if students_of_coordinator %}
             {% for student in students_of_coordinator %}
             <tr>
                 <td>{{student.user.name}}</td>
@@ -40,6 +41,11 @@
                 <td><a href="../../profile/{{student.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
             </tr>
             {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">No students yet</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
 </div>
