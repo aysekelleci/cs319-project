@@ -15,7 +15,7 @@ class ToDoForm(forms.ModelForm):
 class PhoneForm(forms.ModelForm):
     class Meta:
         model = ErasmusUser
-        fields = ('phone',)
+        fields = ('phone', 'email')
 
 
 class PreferencesForm(forms.ModelForm):

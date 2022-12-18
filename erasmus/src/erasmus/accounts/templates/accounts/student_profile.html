@@ -181,9 +181,9 @@
                     <td rowspan="2"></td>
                     {% endif %}
 
-                    {% if course.approved %}
+                    {% if courseKey.approved %}
                     <td rowspan="2">Approved</td>
-                    {% elif course.is_rejected %}
+                    {% elif courseKey.is_rejected %}
                     <td rowspan="2">Rejected</td>
                     {% else %}
                     <td rowspan="2">
