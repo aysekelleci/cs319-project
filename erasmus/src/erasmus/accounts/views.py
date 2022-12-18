@@ -133,10 +133,16 @@ class StudentProfilesView(LoginRequiredMixin, View):
                 return render(request, 'accounts/student_profile.html', context)
 
         visitor = Coordinator.objects.filter(user=erasmus_user).first()
+        _courses_user = [user_course.course for user_course in UserCourse.objects.filter(user=student)]
+        _merged_courses = {course.merged_course for course in _courses_user if course.is_merged is True}
+        student_merged_course_dict = getMergedCoursesDict(_courses_user, _merged_courses)
+        student_unmerged_courses = [course for course in _courses_user if course.is_merged is False]
+
         # if visitor is Coordinator, add students courses, files
         documents = Document.objects.filter(user=student)
         courses = UserCourse.objects.filter(user=student)
         context = {'documents': documents, 'courses': courses, 'visitor': visitor, 'student': student,
+                   'student_unmerged_courses': student_unmerged_courses, 'student_merged_course_dict': student_merged_course_dict,
                    'MUST_COURSE': MUST_COURSE, 'ELECTIVE_COURSE': ELECTIVE_COURSE}
         return render(request, 'accounts/student_profile.html', context)
 
@@ -195,6 +201,20 @@ class StudentListView(LoginRequiredMixin, View):
             return render(request, "accounts/student_list.html", context)
 
         redirect("/login")
+
+
+
+"""
+class ChangePhoneView(LoginRequiredMixin, View):
+    def(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+        
+"""
+
+
+
 
 
 
