@@ -244,13 +244,11 @@ class ChangePhoneEmailView(LoginRequiredMixin, View):
                 phone_email_form.save()
 
                 messages.success(request, 'phone number and email is updated')
-                return render(request, 'accounts/change_phone.html',
-                              {'phone_email_form': phone_email_form, 'erasmus_user': erasmus_user})
+                return redirect('/profile/')
 
             else:
                 messages.error(request, 'phone-email form is not valid')
-                return render(request, 'accounts/change_phone.html',
-                              {'phone_email_form': phone_email_form, 'erasmus_user': erasmus_user})
+                return redirect('/profile/')
 
         return redirect('/login/')
 
@@ -263,7 +261,7 @@ class EditPreferencesView(LoginRequiredMixin, View):
             student = Student.objects.filter(user=erasmus_user).first()
 
             if student is None:
-                messages.error(request, 'Preferences are is not available for coordinators')
+                messages.error(request, 'Preferences are not available for coordinators')
                 return redirect('/accounts/profile/')
 
             preferences_form = PreferencesForm(instance=student)
