@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-<!--               {% for user_course in unapproved_merged_courses %}
+               {% for user_course in unapproved_merged_courses %}
                 <tr>
                     <td><a>{{user_course.user.user.name}}</a></td>
                     <td><a>{{user_course.user.university}}</a></td>
@@ -32,7 +32,7 @@
                     <td><a href="/approve-course/{{user_course.course.pk}}"><i class="fa fa-check"></i></a></td>
                     <td><a href="/reject-course/{{user_course.course.pk}}"><i class="fa fa-times"></i></a></td>
                 </tr>
-                {%endfor%}-->
+                {%endfor%}
                 {% for user_course in unapproved_unmerged_courses %}
                 <tr>
                     <td><a>{{user_course.user.user.name}}</a></td>

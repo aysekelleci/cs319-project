@@ -211,7 +211,7 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
                                                                 course__is_rejected__exact=False,
                                                                 course__is_merged__exact=False)
 
-        unapproved_merged_courses = UserCourse.objects.all()(course__merged_course__approved__exact=False,
+        unapproved_merged_courses = UserCourse.objects.all().filter(course__merged_course__approved__exact=False,
                                                              course__merged_course__is_rejected__exact=False,
                                                              course__is_merged__exact=True).distinct("course__merged_course")
         user = request.user
