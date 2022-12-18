@@ -28,11 +28,11 @@
                     <table class="sortable" id="filtered_list" style="width: 100%; border-collapse: collapse; background-color: #fff">
                         <!-- Forum title heading part-->
                         <tr style="background-color: #fff">
-                            <th class="f-title" > <h3> Forum Title </h3></th>
-                            <th class="f-initiatier"><h3>  Posted by</h3></th>
-                            <th class="f-initiatier"><h3>  Date/Time </h3></th>
-                            <th class="f-answers"><h3>Replies</h3></th>
-                             <th> </th>
+                            <th  class="sorttable_nosort"> <h3> Forum Title </h3></th>
+                            <th   class="sorttable_nosort" ><h3>  Posted by</h3></th>
+                            <th class="sorttable_nosort"><h3>  Date/Time </h3></th>
+                            <th class="sorttable_nosort"><h3>Replies</h3></th>
+                             <th class="sorttable_nosort"> </th>
                         </tr>
 
                         <!-- Forum  posts part-->
@@ -42,7 +42,7 @@
                             <td class="forum-initiatier"><a href="../../profile/{{post.user.pk}}"> {{post.user.name}}</a></td>
                             <td class="forum-answers"><a href="../../post-detail/{{post.pk}}">  {{post.date}} </a></td>
                             <td class="forum-answers"><a href="../../post-detail/{{post.pk}}">{{post.number_of_responses}}</a></td>
-                             <th>
+                             <th class="sorttable_nosort">
                                  {% if  post.user.name == forum_user.user.name %}
                                  <a href="../../delete-post/{{post.pk}}"> <button type="reset" > delete</button></a>
                                  {% endif %}
