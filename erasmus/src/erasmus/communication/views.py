@@ -1,6 +1,6 @@
 from .models import Question, Notification,  Post, Response
 
-from .models import Question, Notification, Post, Response, Forum
+from .models import Question, Notification, Post, Response, Forum, FAQ
 
 from django.views import View
 from accounts.models import ErasmusUser, Coordinator, Student
@@ -58,6 +58,9 @@ class AddQuestion(LoginRequiredMixin, View):
         new_question = None
 
         if question_form.is_valid():
+            if FAQ.objects.filter().first() is None:
+                faq = FAQ()
+                faq.save()
             new_question = question_form.save(commit=False)
             new_question.user = coordinator
 

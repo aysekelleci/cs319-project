@@ -24,17 +24,17 @@
                 <td>{{student.user.name}}</td>
                 <td>{{student.status}}</td>
                 <td>{{student.university}}</td>
-                <td>{{student.coordinator}}</td>
+                <td>{{student.coordinator.user.name}}</td>
                 <td><a href="../../profile/{{student.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
             </tr>
             {% endfor %}
 
-            {% for student in others_students %}
+            {% for student in other_students %}
             <tr>
                 <td>{{student.user.name}}</td>
                 <td>{{student.status}}</td>
                 <td>{{student.university}}</td>
-                <td>{{student.coordinator}}</td>
+                <td>{{student.coordinator.user.name}}</td>
                 <td><a href="../../profile/{{student.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
             </tr>
             {% endfor %}

@@ -8,7 +8,7 @@ from courses.models import Course, University
 
 
 class ErasmusUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='erasmus_user')
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     bilkent_id = models.IntegerField()
