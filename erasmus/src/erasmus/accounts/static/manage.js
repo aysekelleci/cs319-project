@@ -51,10 +51,19 @@ function toggleButtons(button, count) {
         element = document.getElementById("toggle-element-" + id.toString());
         hidden = element.getAttribute("hidden");
 
-        if ( id.toString() == button_id )
-            element.removeAttribute("hidden");
+        if (hidden)
+        {
+            if ( id.toString() == button_id )
+                element.removeAttribute("hidden");
+            else
+                element.setAttribute("hidden", "hidden");
+        }
         else
-            element.setAttribute("hidden", "hidden");
+        {
+            if ( id.toString() == button_id )
+                element.setAttribute("hidden", "hidden");
+        }
+
     }
     console.log(button_id);
 }
