@@ -25,7 +25,7 @@
                 <tbody>
                 {% for user_course in unapproved_courses %}
                 <tr>
-                    <td><a href="../../profile/{{user_course.user.user.pk}}">{{user_course.user.user.name}} <i class="fas fa-external-link-alt"></i></a></td>
+                    <td><a href="../../profile/{{user_course.user.pk}}">{{user_course.user.user.name}} <i class="fas fa-external-link-alt"></i></a></td>
                     <td><a>{{user_course.user.university}}</a></td>
                     <td><a>{{user_course.course.course_name}} waiting for approval</a></td>
                     <td><a href=#><i class="fas fa-external-link-alt"></i></a></td>
