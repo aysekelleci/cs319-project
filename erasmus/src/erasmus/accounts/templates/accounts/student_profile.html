@@ -73,38 +73,7 @@
             </table>
         </div>
         <div >
-            <div>
-                <h2>Student's Files</h2>
-                <table class="file-table" style="width: 100%">
-                    <thead>
-                    <tr>
-                        <th style="width:65px" id="count"></th>
-                        <th style="width:175px">Type</th>
-                        <th style="width:250px">Name</th>
-                        <th style="width:225px">Date</th>
-                        <th style="width:350px" colspan="2">
-                            Operations
-                            <a class="button" href="../../upload-documents/1/{{student.user.pk}}">Upload</a>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for document in documents %}
-                    <tr>
-                        <td style="width:65px" id="count"></td>
-                        <td style="width:150px">{{document.document_type}}</td>
-                        <td style="width:175px">{{document.document_name}}</td>
-                        <td style="width:200px">{{document.date}}</td>
-                        <td style="width:350px;">
-                            <button href="#" type="button">View</button>
-                            <a class="button" href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
-                        </td>
-                    </tr>
-                    {%endfor%}
-                    </tbody>
-                </table>
-            </div>
-            <div>
+            <div style="border-bottom: 1px solid #e0e4e8; padding-bottom: 10px;">
                 <h2>Student's Courses</h2>
                 <table class="course-table" style="width: 100%">
                     <thead>
@@ -213,6 +182,45 @@
                     <a  class="final-list" href="#">Reject Final List</a>
                 </div>
             </div>
+
+            <div>
+
+                <div style="display: flex; display: 0; ">
+                    <h2 style="width: 100%; display: inline-block; align-self: flex-end;">Student's Files</h2>
+                    <div style="padding: 0; display: flex; justify-content: right; width: 100%;">
+                    <a class="button" href="../../upload-documents/1/{{student.user.pk}}">Upload Signed Documents</a>
+                </div>
+
+                </div>
+                <table class="file-table" style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th style="width:65px" id="count"></th>
+                        <th style="width:175px">Type</th>
+                        <th style="width:250px">Name</th>
+                        <th style="width:225px">Date</th>
+                        <th style="width:350px" colspan="2">
+                            Operations
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for document in documents %}
+                    <tr>
+                        <td style="width:65px" id="count"></td>
+                        <td style="width:150px">{{document.document_type}}</td>
+                        <td style="width:175px">{{document.document_name}}</td>
+                        <td style="width:200px">{{document.date}}</td>
+                        <td style="width:350px;">
+                            <button href="#" type="button">View</button>
+                            <a class="button" href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+
         </div>
         {%endif%}
     </div>
