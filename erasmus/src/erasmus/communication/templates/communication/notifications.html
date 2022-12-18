@@ -20,10 +20,10 @@
                 <tr bgcolor= "#FFBAAB">
                     <td style="width:100%"><a href=#>{{notif.header}}</a></td>
                     <td>
-                        <a href='/flag-notification/{{notif.pk}}/0/'><i class="fa fa-flag fa-xs"></i></a>
+                        <a href='/flag-notification/{{notif.pk}}/0/'><img src="../../static/filled-flag-icon.png" alt="Unflag"  width="15" height="15"></a>
                     </td>
                     <td>
-                        <a href='/delete-notification/{{notif.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
+                        <a href='/delete-notification/{{notif.pk}}/'><img src="../../static/trash-icon.png" alt="Delete"  width="15" height="15"></a>
                     </td>
                 </tr>
                 {%endfor%}
@@ -31,10 +31,10 @@
                 <tr>
                     <td style="width:100%"><a href=#>{{notif.header}}</a></td>
                     <td>
-                        <a href='/flag-notification/{{notif.pk}}/1/'><i class="far fa-flag fa-xs"></i></a>
+                        <a href='/flag-notification/{{notif.pk}}/1/'><img src="../../static/flag-icon.png" alt="Flag"  width="15" height="15"></a>
                     </td>
                     <td>
-                        <a href='/delete-notification/{{notif.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
+                        <a href='/delete-notification/{{notif.pk}}/'><img src="../../static/trash-icon.png" alt="Delete"  width="15" height="15"></a>
                     </td>
                 </tr>
                 {%endfor%}
