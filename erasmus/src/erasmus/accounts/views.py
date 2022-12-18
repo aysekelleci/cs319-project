@@ -111,11 +111,17 @@ class ProfileView(LoginRequiredMixin, View):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         if erasmus_user is not None:
-            student = Student.objects.filter(user=erasmus_user).first()
-            courses = UserCourse.objects.filter(user=student)
-            documents = Document.objects.filter(user=student)
-            context = {'student': student, 'courses': courses, 'documents':documents}
-            return render(request, 'accounts/profile.html', context)
+            if Student.objects.filter(user=erasmus_user).first() is not None:
+                student = Student.objects.filter(user=erasmus_user).first()
+                courses = UserCourse.objects.filter(user=student)
+                documents = Document.objects.filter(user=student)
+                context = {'student': student, 'courses': courses, 'documents': documents}
+                return render(request, 'accounts/profile.html', context)
+
+            elif Coordinator.objects.filter(user=erasmus_user).first() is not None:
+                coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+                context = {'coordinator': coordinator}
+                return render(request, 'accounts/profile.html', context)
 
         return redirect("/login")
 
@@ -145,6 +151,7 @@ class StudentProfilesView(LoginRequiredMixin, View):
                    'student_unmerged_courses': student_unmerged_courses, 'student_merged_course_dict': student_merged_course_dict,
                    'MUST_COURSE': MUST_COURSE, 'ELECTIVE_COURSE': ELECTIVE_COURSE}
         return render(request, 'accounts/student_profile.html', context)
+
 
 def getMergedCoursesDict(courses, merged_courses):
     merged_course_dict = {}
@@ -244,7 +251,6 @@ class ChangePhoneEmailView(LoginRequiredMixin, View):
                               {'phone_email_form': phone_email_form, 'erasmus_user': erasmus_user})
 
         return redirect('/login/')
-
 
 
 class EditPreferencesView(LoginRequiredMixin, View):
