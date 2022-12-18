@@ -9,7 +9,7 @@ from courses.models import Course, University
 
 class ErasmusUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, blank=True)
+    name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     bilkent_id = models.IntegerField()
     phone = models.IntegerField(default="", blank=True)
