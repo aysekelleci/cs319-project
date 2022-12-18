@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm, TextInput, EmailInput, Textarea
 from .models import ToDo
 
-from django.forms import ModelForm
+from django.forms import ModelForm, EramusUser
 from django.core.exceptions import ValidationError
 
 
