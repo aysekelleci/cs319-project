@@ -18,7 +18,10 @@
 
             <div class="bottom-forum" >
                 <div class="forum-title">
+                      {% if response.user.student %}
                      <a href="../../profile/{{post.user.student.pk}}"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
+                      {%endif%}
+
                     <div style="width: 95%;">
                         <p > {{post.user.name}}: {{post.date}}</p>
                         <h2>
@@ -26,7 +29,8 @@
                         </h2>
                         <p> {{post.text}}</p>
                     </div>
-                    <div ><button class="reply-btn-on-heading" onclick="openTextFieldToReply()">
+                    <div >
+                        <button class="reply-btn-on-heading" onclick="openTextFieldToReply()">
                              <img src="../../static/respond_icon.png" alt="open" class = "reply-icon" >
                         </button>
                     </div>
@@ -41,7 +45,10 @@
                  {% for response in responses %}
                 <tr >
                         <div class="single-reply-content">
+                             {% if response.user.student %}
                             <a href="../../profile/{{response.user.student.pk}}">
+                                {%endif%}
+
                                 <img src="../../static/user.png" alt="user" class="reply-user-photo">
                             </a>
                             <div class = "single-reply-text-content">
