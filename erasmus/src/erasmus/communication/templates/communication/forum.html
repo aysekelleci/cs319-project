@@ -20,19 +20,6 @@
 <div class="page_content">
 
         <div class="bottom-forum" >
-
-            <!--
-            <div class="search-filter-new-container">
-                <div class="search-filter-new">
-
-
-
-                    <a href="#"><img src="../../static/search_button.png" alt="search" id="search-button"></a>
-
-
-                    <button class="filter-button" onclick="openForm()"><img class="filter-icon-forum" src="../../static/filter-icon.png" alt=""></button>
-                    <a href="forum_post_create.html"><img class="new-post-icon" src="../../static/plus.png" alt=""></a>
-                </div>-->
             </div>
             <div class="forum-container">
                 <div>
@@ -51,10 +38,10 @@
                         <!-- Forum  posts part-->
                         {% for post in posts %}
                         <tr>
-                           <td class="forum-title" style="text-align: left"><a href="../../detailed-post"> {{post.topic}} </a></td>
-                            <td class="forum-initiatier"><a href="../../detailed-post"> {{post.user.name}}</a></td>
-                            <td class="forum-answers"><a href="../../detailed-post">  {{post.date}} </a></td>
-                            <td class="forum-answers"><a href="../../detailed-post">{{post.number_of_responses}}</a></td>
+                           <td class="forum-title" style="text-align: left"><a href="../../post-detail/{{post.pk}}"> {{post.topic}} </a></td>
+                            <td class="forum-initiatier"><a href="../../post-detail/{{post.pk}}"> {{post.user.name}}</a></td>
+                            <td class="forum-answers"><a href="../../post-detail/{{post.pk}}">  {{post.date}} </a></td>
+                            <td class="forum-answers"><a href="../../post-detail/{{post.pk}}">{{post.number_of_responses}}</a></td>
                              <th>
                                  {% if  post.user.name == forum_user.user.name %}
                                  <button type="reset" > delete</button>

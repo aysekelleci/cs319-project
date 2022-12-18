@@ -8,7 +8,7 @@
     display: flex;
     height: auto;
     width: 98.5%;
-    background-color: inherit;
+
     text-align: left;
     padding-top: 15px;
 
@@ -26,24 +26,21 @@
 }
 .forum-reply-content{
     background-color: inherit;
-    height: 470px;
+    height: fit-content;
     width: 98.5%;
 }
 
 .single-reply-content{
     display: flex;
-    background-color: inherit;
+    background-color: #e36a6a;
     height: auto;
     width: 98.5%;
-    background-color: rgb(231, 206, 255);
 }
 .single-replyto-reply-content{
     display: flex;
     background-color: inherit;
     height: auto;
     padding-left: 5%;
-    background-color: rgb(186, 255, 255)
-
 }
 #reply-visbility{
     display: none;
@@ -51,7 +48,6 @@
 .post-topic{
     height: fit-content;
     width: fit-content;
-    background-color: rgb(171, 246, 246);
 }
 
 .reply-user-button{
@@ -120,9 +116,7 @@
 #reply-container{
 
     height: fit-content;
-    width: 98.5%;
-    background-color: #e09c9c;
-    text-align: left;
+    width: 98.5%;text-align: left;
     display: flex
 }
 #reply-to-post{
