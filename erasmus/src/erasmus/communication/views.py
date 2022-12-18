@@ -237,7 +237,7 @@ class DeletePostView(LoginRequiredMixin, View):
 
         post.delete()
 
-        messages.success(request, "Question is deleted")
+        messages.success(request, "Post is deleted")
         return redirect("/forum")
 
 

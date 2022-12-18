@@ -543,6 +543,33 @@ class CreateLearningAgreementView(CreateDocumentView):
         document_name = STATIC_DOCUMENTS_FOLDER + 'learning_agreement_form.docx'
         document.save(document_name)
 
-
         return document_name, "", PREAPPROVAL_FORM
+
+
+
+import aspose.words as aw
+from datetime import date
+
+
+class CompareDocument(View):
+
+    def get(self, request):
+        # load first document
+        doc = aw.Document("static/documents/documents/pre_approval_form17-12-2022-13-32-48.docx")
+
+        # load second document
+        doc2 = aw.Document("static/documents/documents/pre_approval_form17-12-2022-13-58-08.docx")
+
+        # compare documents
+        doc.compare(doc2, "user", date.today())
+
+        # save the document to get the revisions
+        if (doc.revisions.count > 0):
+            print("There are some differences between documents")
+            doc.save("static/documents/documents/compared.docx")
+        else:
+            print("Documents are equal")
+
+        messages.success("Documents are compared successfully!!")
+        return redirect('/documents')
 
