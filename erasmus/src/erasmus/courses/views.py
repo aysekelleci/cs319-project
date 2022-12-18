@@ -117,7 +117,7 @@ class DeleteCourseView(LoginRequiredMixin,View):
 
         if user_course_to_delete is not None:
             if course_to_delete.is_merged:
-                user_courses = UserCourse.objects.get(user=student)
+                user_courses = UserCourse.objects.filter(user=student)
                 for user_course in user_courses:
                     course = user_course.course
                     if course.is_merged and course.merged_course.pk is course_to_delete.merged_course.pk:

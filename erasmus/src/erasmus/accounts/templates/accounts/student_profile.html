@@ -42,6 +42,7 @@
                 </tr>
             </table>
         </div>
+        {% if not user_type == "Student" %}
         <div>
             <div>
                 <h2>Student's Files</h2>
@@ -90,7 +91,7 @@
                 </tr>
                     </thead>
                     <tbody>
-                    {% for course in courses %}
+                    {% for course in student_unmerged_courses %}
                     <tr>
                     <td id="count"></td>
                     <td>{{course.course.code}}</td>
@@ -131,6 +132,7 @@
                 </table>
             </div>
         </div>
+        {%endif%}
     </div>
 </div>
 
