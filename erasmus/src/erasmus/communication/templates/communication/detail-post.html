@@ -38,18 +38,20 @@
                     </div>
                 </div>
 
+                 {% for response in responses %}
                 <tr >
                         <div class="single-reply-content">
                             <a href="student_profile.html">
                                 <img src="../../static/user.png" alt="user" class="reply-user-photo">
                             </a>
                             <div class = "single-reply-text-content">
-                                <p > user: response.date</p>
+                                <p > {{response.user.name}}: {{response.date}}</p>
+                                {{response.text}}
                             </div>
 
                         </div>
                 </tr>
-
+                {%endfor%}
 
 
 
