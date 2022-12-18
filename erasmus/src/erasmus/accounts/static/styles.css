@@ -13,8 +13,9 @@ body{
   background-color: #f3f5f9;
   background-size: cover;
   background: url(../../static/bilkent_amblem_background.png) no-repeat;
-  background-position: 60% 60%;
+  background-position: 55% 60%;
   background-size: 300px 300px;
+  background-attachment: fixed;
 }
 
 .navbar_wrapper{
@@ -158,12 +159,17 @@ td[id="count"]::before {
 
 thead {
   counter-reset: section;
+  background-color: #fff;
 }
 
 
 table, th {
   border-collapse: seperate;
   padding: 10px;
+}
+
+tbody, tfoot {
+  background-color: #fff;
 }
 
 th {
@@ -307,4 +313,8 @@ input[type=url], input[type=text] {
 
 .message-content .success-message, .message-content .unsuccess-message, .message-content .info-message {
   display: flex;
+}
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+    content: " \25B4\25BE"
 }
