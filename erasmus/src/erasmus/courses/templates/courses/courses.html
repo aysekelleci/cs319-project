@@ -43,13 +43,18 @@
                     <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
                     {% endif %}
 
-                    {% if course.approved %}
-                    <td>Approved</td>
-                    {% elif course.is_rejected %}
-                    <td>Rejected</td>
-                    {% else %}
-                    <td>Waiting For Approval</td>
-                    {% endif %}
+
+                    <td>
+                        {% if course.approved %}
+                        Approved
+                        {% elif course.is_rejected %}
+                        Rejected
+                        {% else %}
+                        <a class="button" style="display: flex"href="/remove-from-courses/{{course.pk}}">Submit for Approval</a>
+                        {% endif %}
+                        <!--elifWaiting for Approval-->
+                    </td>
+
                     <td>
                         <a class="button" href="/remove-from-courses/{{course.pk}}">Remove</a>
                         <input type="checkbox" class="merge-course-selection" id="{{course.pk}}">
@@ -83,8 +88,8 @@
                     <td rowspan="2">Rejected</td>
                     {% else %}
                     <td rowspan="2">Waiting For Approval</td>
-
                     {% endif %}
+
 
                     <td rowspan="2">
                         <a class="button" href="/remove-from-courses/{{course.pk}}">Remove</a>
@@ -102,6 +107,7 @@
                 </tfoot>
             </table>
         </div>
+        <a class="submit-final-list" href="#">Submit Final List</a>
     </div>
     <div class="add_course">
 
@@ -155,6 +161,7 @@
                     {%endfor%}
                     {% for courseKey, courseList in approved_merged_course_dict.items %}
                     {% for course in courseList %}
+                    {% if courseKey.approved %}
                     <tr>
                         <td id="count"></td>
                         <td>{{course.code}}</td>
@@ -175,6 +182,7 @@
                         <td rowspan="2"><a class="button" href="/add-to-courses/{{course.pk}}">Add</a></td>
                         {% endif %}
                     </tr>
+                    {% endif %}
                     {% endfor %}
                     {% endfor %}
                     </tbody>
