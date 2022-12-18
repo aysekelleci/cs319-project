@@ -34,6 +34,7 @@ def download(request, path):
 #######################################################################################################################
 # Course views
 
+
 class CourseView(LoginRequiredMixin,View):
     def get(self, request):
         student = None
@@ -80,6 +81,7 @@ def getMergedCoursesDict(courses, merged_courses):
                 one_merged_course_contents.append(course)
         merged_course_dict[merged_course] = one_merged_course_contents
     return merged_course_dict
+
 
 class AddCourseView(LoginRequiredMixin, View):
     def get(self, request, course_id):
@@ -139,11 +141,14 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
         username = user.username
         erasmus_user = ErasmusUser.objects.get(user=user)
         student = Student.objects.filter(user=erasmus_user).first()
+        university = student.university
 
         course_form = CourseForm(data=request.POST)
         if course_form.is_valid():
             # Create course object but don't save to database yet
             new_course = course_form.save(commit=False)
+
+            new_course.university = university
 
             # Save the course to the database
             new_course.save()
@@ -156,6 +161,12 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
             messages.info(request, "Course Form is not valid")
             return redirect("add_unapproved_course")
         return redirect("/courses")
+
+
+class AddBilkentCourse(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+
 
 
 
