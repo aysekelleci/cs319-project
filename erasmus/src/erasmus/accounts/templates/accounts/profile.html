@@ -12,7 +12,7 @@
 
 {% block page_content %}
 <div class="page_content">
-
+        {% if  user_type == "Student" %}
         <div class="user-info">
             <table class="user-info-table">
                 <tbody style="height: auto" class="profile_view">
@@ -51,5 +51,34 @@
                 </tbody>
             </table>
         </div>
+        {%endif%}
+        {% if  user_type == "Coordinator" %}
+        <div class="user-info">
+            <table class="user-info-table">
+                <tbody style="height: auto" class="profile_view">
+                <tr>
+                    <td>Name</td>
+                    <td>{{coordinator.user.name}}</td>
+                </tr>
+                <tr>
+                    <td>E-mail: </td>
+                    <td>{{coordinator.user.email}}</td>
+                </tr>
+                <tr>
+                    <td>Phone: </td>
+                    <td>{{coordinator.user.phone}}</td>
+                </tr>
+                <tr>
+                    <td>Id: </td>
+                    <td>{{coordinator.user.bilkent_id}}</td>
+                </tr>
+                <tr>
+                    <td>Department </td>
+                    <td>{{coordinator.user.department}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {%endif%}
  </div>
 {% endblock %}
