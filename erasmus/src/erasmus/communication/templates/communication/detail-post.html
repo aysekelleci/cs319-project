@@ -39,12 +39,14 @@
                     <div id="reply-container">
                         <input type="text" name="Reply" id="reply-to-post">
                         <input type="submit" value="Reply" id="text-reply-btn" >
+
                     </div>
                 </div>
 
                  {% for response in responses %}
                 <tr >
-                        <div class="single-reply-content">
+                    <div style="display: flex">
+                        <div style="width: 90%" class="single-reply-content">
                              {% if response.user.student %}
                             <a href="../../profile/{{response.user.student.pk}}">
                                 {%endif%}
@@ -55,8 +57,11 @@
                                 <p > {{response.user.name}}: {{response.date}}</p>
                                 {{response.text}}
                             </div>
-
                         </div>
+                        {% if forum_user.user.name == response.user.name %}
+                        <input type="submit" value="delete" style="width: 100px; height:40px; background-color:red;">
+                        {%endif%}
+                    </div>
                 </tr>
                 {%endfor%}
 
