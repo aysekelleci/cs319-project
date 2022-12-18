@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm, TextInput, EmailInput, Textarea
-from .models import ToDo
+from .models import ToDo, EramusUser
 
-from django.forms import ModelForm, EramusUser
+from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 
