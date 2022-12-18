@@ -1,8 +1,9 @@
 .bottom-forum{
-    /*
-    background-color: aqua;
-    height: 100%;
-    width: 98.5%;*/
+
+    border:solid  2px black;
+    border-radius: 1%;
+    height: fit-content;
+    width: 98%;
 }
 .forum-title{
     display: flex;
@@ -33,7 +34,7 @@
 .single-reply-content{
     display: flex;
       background-color: rgba(23, 20, 51, 0.16);
-
+    border-radius: 5%;
     height: auto;
     width: 98.5%;
 }
@@ -143,3 +144,17 @@
     background-color: rgb(213, 8, 8);
     border: solid 2px black;
 }*/
+#new-reply-container{
+    background-color: #a41515;
+    display: flex;
+    width: 95%;
+}
+#rebtn{
+    width: 100px;
+    height:40px;
+    background-color:inherit;
+    border:solid  1px black;
+}
+#rebtn:hover{
+    background-color:red;"
+}
