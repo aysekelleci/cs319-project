@@ -7,6 +7,21 @@ from django.utils import timezone
 from courses.models import Course, University
 
 
+from enum import Enum
+
+class Status(Enum):
+    INITIAL = "Account created"
+    PLACED = "Placement done"
+    NO_PLACEMENT = "No placement"
+    CHOOSING_COURSES = "Choosing courses"
+    WAIT_COURSE_APPROVAL = "Waiting for the course approval"
+    WAIT_FINAL_LIST_APPROVAL = "Waiting for the final course list approval"
+    WAIT_PRE_APPROVAL_FORM = "Waiting for the pre-approval form to be signed"
+    IN_MOBILITY = "In mobility period"
+    FINISHED_MOBILITY = "Finished mobility period"
+
+STATUS_TYPE_CHOICES = [(status.value, status.value) for status in Status]
+
 class ErasmusUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='erasmus_user')
     name = models.CharField(max_length=100)
@@ -28,7 +43,7 @@ class Student(models.Model):
     user = models.OneToOneField(ErasmusUser, on_delete=models.CASCADE, related_name='student')
     gpa = models.FloatField()
     score = models.FloatField()
-    status = models.CharField(max_length=100, blank=True)
+    status = models.CharField(max_length=200, choices=STATUS_TYPE_CHOICES, default=STATUS_TYPE_CHOICES[0][0])
     coordinator = models.ForeignKey(Coordinator, blank=True, on_delete=models.SET_NULL, null=True,
                                     related_name='students')
     university = models.ForeignKey(University, on_delete=models.SET_NULL, null=True, blank=True)
@@ -39,6 +54,7 @@ class Student(models.Model):
     phone_visibility = models.BooleanField(default=True)
     mobility_visiblity = models.BooleanField(default=True)
     status_visibility = models.BooleanField(default=True)
+    final_list_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}'.format(self.user.name)
@@ -55,6 +71,7 @@ class UserCourse(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses')
     user = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_user')
     grade = models.IntegerField(blank=True, null=True)
+    submitted = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}'.format(self.course.code + self.course.course_name)

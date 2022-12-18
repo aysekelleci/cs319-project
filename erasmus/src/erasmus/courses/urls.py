@@ -28,6 +28,8 @@ urlpatterns = [
     path('upload-documents/<int:from_student_profile>/<int:viewed_student_id>', views.UploadDocumentView.as_view(), name="upload-documents"),
     path('create-document/', views.CreatePreApprovalView.as_view(), name="create-document"),
     path('delete-document/<int:document_id>', views.DeleteDocumentView.as_view(), name="delete-document"),
+    path('submit-course/<int:course_id>', views.SubmitCourseView.as_view(), name="submit-course"),
+    path('submit-course-list/', views.SubmitCourseListView.as_view(), name="submit-course-list"),
     path('', include('communication.urls')),
 ]
 

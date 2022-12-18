@@ -55,9 +55,11 @@ class Course(models.Model):
     university = models.ForeignKey(University, on_delete=models.CASCADE, null=True, related_name='courses')
     bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, null=True)
     approved = models.BooleanField(default=False)
+    submitted = models.BooleanField(default=False)
     merged_course = models.ForeignKey(MergedCourse, on_delete=models.SET_NULL, blank=True, null=True)
     is_merged = models.BooleanField(default=False)
     is_rejected = models.BooleanField(default=False)
+
 
     def __str__(self):
         return '{}'.format(self.code + ": " + self.course_name)

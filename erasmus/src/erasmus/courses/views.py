@@ -15,6 +15,7 @@ from courses.forms import CourseForm, DocumentForm, CoordinatorDocumentForm, Bil
 
 from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
+from accounts.models import Status
 
 import os
 from django.conf import settings
@@ -46,6 +47,7 @@ class CourseView(LoginRequiredMixin,View):
         user_unmerged_courses = None
         user_merged_course_dict = None
         rejected_courses = None
+        total_ects_credit = None
         erasmus_user = ErasmusUser.objects.get(user=user)
         if Coordinator.objects.filter(user=erasmus_user).first():
             user_type = "Coordinator"
@@ -60,7 +62,7 @@ class CourseView(LoginRequiredMixin,View):
             approved_unmerged_courses = [course for course in _approved_courses if course.is_merged is False]
 
             _courses_user = [user_course.course for user_course in UserCourse.objects.filter(user=student)]
-            #total_ects_credit
+            total_ects_credit = sum([course.course_credit for course in _courses_user])
             _merged_courses = {course.merged_course for course in _courses_user if course.is_merged is True}
             user_merged_course_dict = getMergedCoursesDict(_courses_user, _merged_courses)
             user_unmerged_courses = [course for course in _courses_user if course.is_merged is False]
@@ -72,7 +74,8 @@ class CourseView(LoginRequiredMixin,View):
         context = {'user': user, 'approved_unmerged_courses': approved_unmerged_courses,
                    "approved_merged_course_dict": approved_merged_course_dict, "user_type": user_type, 'student': student,
                    'user_unmerged_courses': user_unmerged_courses, 'user_merged_course_dict': user_merged_course_dict,
-                   'rejected_courses': rejected_courses, 'MUST_COURSE': MUST_COURSE, 'ELECTIVE_COURSE': ELECTIVE_COURSE}
+                   'rejected_courses': rejected_courses, 'total_ects_credit': total_ects_credit,'MUST_COURSE': MUST_COURSE,
+                   'ELECTIVE_COURSE': ELECTIVE_COURSE}
 
         return render(request, 'courses/courses.html', context)
 def getMergedCoursesDict(courses, merged_courses):
@@ -209,10 +212,12 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
         unapproved_unmerged_courses = UserCourse.objects.filter(course__approved__exact=False,
                                                                 course__is_rejected__exact=False,
+                                                                course__submitted__exact = True,
                                                                 course__is_merged__exact=False)
 
         unapproved_merged_courses = UserCourse.objects.all().filter(course__merged_course__approved__exact=False,
                                                              course__merged_course__is_rejected__exact=False,
+                                                             course__merged_course__submitted__exact=True,
                                                              course__is_merged__exact=True).distinct("course__merged_course")
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
@@ -226,6 +231,48 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
                        'unapproved_merged_courses': unapproved_merged_courses}
             return render(request, 'courses/waiting_courses.html', context)
 
+class SubmitCourseView(LoginRequiredMixin, View):
+    def get(self, request, course_id):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        student = Student.objects.filter(user=erasmus_user).first()
+
+        user_course = UserCourse.objects.filter(course__pf__exact=course_id)
+
+        # update user course's submitted status
+        if user_course.course.is_merged:
+            user_course.course.merged_course.submitted = True
+            user_course.course.merged_course.save()
+        else:
+            user_course.submitted = True
+            user_course.save()
+
+        # update student's status
+        student.status = Status.WAIT_COURSE_APPROVAL
+
+        # fixme send notification and todo to the coordinator
+        messages.success(request, "Course submitted for approval.")
+        return redirect('/courses')
+
+class SubmitCourseListView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        student = Student.objects.filter(user=erasmus_user).first()
+
+        user_courses = UserCourse.objects.filter(user=student)
+
+        # check if the user courses are all approved (merged or unmerged)
+        for user_course in user_courses:
+            if (user_course.course.is_merged and not user_course.course.merged_course.approved) or (not user_course.approved):
+                messages.error(request, "You can only submit the final list only if all the courses are approved.")
+                return redirect('/courses')
+
+        # update student's status
+        student.status = Status.WAIT_FINAL_LIST_APPROVAL
+
+        # fixme send notification and todo to the coordinator
+        return redirect('/courses')
 
 class ApproveCoursesView(LoginRequiredMixin, View):
     def get(self, request, course_id):
