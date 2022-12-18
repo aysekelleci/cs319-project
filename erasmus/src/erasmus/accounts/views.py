@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from accounts.forms import ToDoForm
+from accounts.forms import ToDoForm, PhoneForm
 
 from django.db.models import Q
 
@@ -146,6 +146,16 @@ class StudentProfilesView(LoginRequiredMixin, View):
                    'MUST_COURSE': MUST_COURSE, 'ELECTIVE_COURSE': ELECTIVE_COURSE}
         return render(request, 'accounts/student_profile.html', context)
 
+def getMergedCoursesDict(courses, merged_courses):
+    merged_course_dict = {}
+    for merged_course in merged_courses:
+        one_merged_course_contents = []  # each list contains the courses composing one merged course
+        for course in courses:
+            if ( course.is_merged and (course.merged_course.pk is merged_course.pk) ):
+                one_merged_course_contents.append(course)
+        merged_course_dict[merged_course] = one_merged_course_contents
+    return merged_course_dict
+
 def getUser(user):
     erasmus_user = ErasmusUser.objects.filter(user=user).first()
 
@@ -204,14 +214,41 @@ class StudentListView(LoginRequiredMixin, View):
 
 
 
-"""
 class ChangePhoneView(LoginRequiredMixin, View):
-    def(self, request):
+    def get(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         if erasmus_user is not None:
-        
-"""
+            phone_form = PhoneForm()
+
+            new_phone = None
+
+            return render(request,
+                          'accounts/change_phone.html',
+                          {'new_phone': new_phone,
+                           'phone_form': phone_form,
+                           'erasmus_user': erasmus_user})
+
+    def post(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            phone_form = PhoneForm(data=request.POST)
+            new_phone= None
+
+            if phone_form.is_valid():
+                erasmus_user.phone = phone_form
+
+                erasmus_user.save()
+
+                messages.success(request, 'phone number is updated')
+                redirect('/accounts/profile')
+
+            else:
+                messages.error(request, 'form is not valid')
+                return render(request, 'accounts/change_phone.html',
+                              {'new_phone': new_phone, 'phone_form': phone_form, 'erasmus_user': erasmus_user})
+
 
 
 
