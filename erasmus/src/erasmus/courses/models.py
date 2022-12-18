@@ -38,6 +38,11 @@ class BilkentCourse(models.Model):
     elective_group_name = models.CharField(max_length=100, blank=True)
     course_coordinator_name = models.CharField(blank=True, max_length=100)
 
+    def __str__(self):
+        return '{}'.format(self.course_code + ": " + self.course_name)
+
+
+
 class MergedCourse(models.Model):
     bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, null=True)
 

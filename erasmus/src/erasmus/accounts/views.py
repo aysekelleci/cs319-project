@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
-from courses.models import Course, Document
+from courses.models import Course, Document, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, BoardMember, ToDo
 from django.contrib import messages
 
@@ -136,7 +136,8 @@ class StudentProfilesView(LoginRequiredMixin, View):
         # if visitor is Coordinator, add students courses, files
         documents = Document.objects.filter(user=student)
         courses = UserCourse.objects.filter(user=student)
-        context = {'documents': documents, 'courses': courses, 'visitor': visitor, 'student': student}
+        context = {'documents': documents, 'courses': courses, 'visitor': visitor, 'student': student,
+                   'MUST_COURSE': MUST_COURSE, 'ELECTIVE_COURSE': ELECTIVE_COURSE}
         return render(request, 'accounts/student_profile.html', context)
 
 def getUser(user):
