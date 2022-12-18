@@ -225,10 +225,13 @@ class ApproveCoursesView(LoginRequiredMixin, View):
         else:
             course = Course.objects.filter(pk=course_id).first()
             if course is not None:
-                course.approved = True
+                if course.is_merged:
+                    course.merged_course.approved = True
+                else:
+                    course.approved = True
                 course.save()
 
-        return redirect("/waiting-courses/")
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 class RejectCourseView(LoginRequiredMixin, View):
@@ -242,11 +245,13 @@ class RejectCourseView(LoginRequiredMixin, View):
 
         else:
             course = Course.objects.filter(pk=course_id).first()
-            if course is not None:
+            if course.is_merged:
+                course.merged_course.is_rejected = True
+            else:
                 course.is_rejected = True
-                course.save()
+            course.save()
 
-        return redirect('/waiting-courses/')
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 class MergeCourseView(LoginRequiredMixin, View):
     def get(self, request, course_id1, course_id2, course_id3, course_id4, course_id5,
