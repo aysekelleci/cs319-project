@@ -249,7 +249,7 @@ class DeleteResponseView(LoginRequiredMixin, View):
         if forum_user is None:
             redirect('/forum')
 
-        response = get_object_or_404(Response, pk=reponse_id, user=forum_user)
+        response = get_object_or_404(Response, pk=response_id, user=forum_user.user)
 
         response.delete()
 
