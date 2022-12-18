@@ -111,15 +111,27 @@ class DeleteCourseView(LoginRequiredMixin,View):
         user = request.user
         erasmus_user = ErasmusUser.objects.get(user=user)
         student = Student.objects.get(user=erasmus_user)  # get which student wants to add approved course
-        course = get_object_or_404(Course, pk=course_id)
+        course_to_delete = get_object_or_404(Course, pk=course_id)
 
-        try:
-            course_item = UserCourse.objects.get(user=student, course=course)  # control whether course item already added
-        except:
-            course_item = None
-        if course_item is not None:
-            course_item.delete()
-            messages.success(request, "This item removed from course list.")
+        user_course_to_delete = UserCourse.objects.filter(user=student, course=course_to_delete).first()
+
+        if user_course_to_delete is not None:
+            if course_to_delete.is_merged:
+                user_courses = UserCourse.objects.get(user=student)
+                for user_course in user_courses:
+                    course = user_course.course
+                    if course.is_merged and course.merged_course.pk is course_to_delete.merged_course.pk:
+                        # change associated merged courses to not be merged
+                        course.is_merged = False
+                        course.save()
+                        # delete all merged user courses
+                        user_course.delete()
+                # delete the parent merged course object
+                course_to_delete.merged_course.delete()
+                messages.success(request, "Merged courses removed from the list.")
+            else:
+                user_course_to_delete.delete()
+                messages.success(request, "Course removed from the list.")
         return redirect("/courses")
 
 
@@ -176,15 +188,14 @@ class AddBilkentCourse(LoginRequiredMixin, View):
     def post(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        new_course = None
 
         bilkent_course_form = BilkentCourseForm(data=request.POST)
         if bilkent_course_form.is_valid():
             # Create course object but don't save to database yet
             new_course = bilkent_course_form.save(commit=False)
-
             # Save the course to the database
             new_course.save()
-
         else:
             messages.error(request,'Bilkent course form is not valid')
             context = {'erasmus_user': erasmus_user, 'bilkent_course_form': bilkent_course_form, 'new_course': new_course}
@@ -192,12 +203,6 @@ class AddBilkentCourse(LoginRequiredMixin, View):
 
         messages.success(request, 'Bilkent course is added to course list successfully')
         return redirect('/courses')
-
-
-
-
-
-
 
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
@@ -220,8 +225,8 @@ class ApproveCoursesView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
+            messages.error(request, "Only coordinators can evaluate courses.")
             return redirect("accounts/profile")
-
         else:
             course = Course.objects.filter(pk=course_id).first()
             if course is not None:
@@ -230,8 +235,11 @@ class ApproveCoursesView(LoginRequiredMixin, View):
                 else:
                     course.approved = True
                 course.save()
+                messages.success(request, "Course approved.")
+            else:
+                messages.error(request, "This is not a course.")
 
-        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 class RejectCourseView(LoginRequiredMixin, View):
@@ -241,17 +249,21 @@ class RejectCourseView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
+            messages.error(request, "Only coordinators can evaluate courses.")
             return redirect('accounts/profile')
-
         else:
             course = Course.objects.filter(pk=course_id).first()
-            if course.is_merged:
-                course.merged_course.is_rejected = True
+            if course is not None:
+                if course.is_merged:
+                    course.merged_course.approved = True
+                else:
+                    course.approved = True
+                course.save()
+                messages.success(request, "Course rejected.")
             else:
-                course.is_rejected = True
-            course.save()
+                messages.error(request, "This is not a course.")
 
-        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 class MergeCourseView(LoginRequiredMixin, View):
     def get(self, request, course_id1, course_id2, course_id3, course_id4, course_id5,
