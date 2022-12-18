@@ -31,8 +31,8 @@ class University(models.Model):
         return '{}'.format(self.university_name)
 
 class BilkentCourse(models.Model):
-    course_name = models.CharField(max_length=100)
-    course_code = models.CharField(max_length=20)
+    course_name = models.CharField(max_length=100, blank=True)
+    course_code = models.CharField(max_length=20, blank=True)
     course_credit = models.FloatField()
     course_type = models.CharField(max_length=30, choices=COURSE_TYPE_CHOICES)
     elective_group_name = models.CharField(max_length=100, blank=True)

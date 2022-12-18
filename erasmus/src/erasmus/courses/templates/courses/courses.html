@@ -33,9 +33,21 @@
                     <td>{{course.code}}</td>
                     <td>{{course.course_name}}</td>
                     <td>{{course.course_credit}}</td>
+
+                    {% if bilkent_equivalent.course_type == MUST_COURSE %}
                     <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
                     <td>{{course.bilkent_equivalent.course_credit}}</td>
-                    <td>NULL</td>
+                    {% else %}
+                    <td>{{bilkent_equivalent.elective_group_name}}</td>
+                    <td>{{course.bilkent_equivalent.course_credit}}</td>
+                    {% endif %}
+
+                    {% if bilkent_equivalent.course_type == ELECTIVE_COURSE %}
+                    <td>{{course.bilkent_equivalent.course_code}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+
                     {% if course.approved %}
                     <td>Approved</td>
                     {% elif course.is_rejected %}

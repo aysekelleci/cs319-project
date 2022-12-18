@@ -1,12 +1,6 @@
-.viewed-student-info{
+.student-info{
   width: 98%;
-  height: 450px;
-}
-
-#data-table{
-  width: 750px;
-  background-color: #130d3834;
-
+  display: flex;
 }
 
 #user-name{
@@ -28,44 +22,16 @@
 #mail-icon:hover{
   background-color: #db1430;
 }
-#data-page{
-  display: flex;
-}
-#data-table{
-  width: 750px;
-  height:350px;
-}
+
 #user-info-table{
-  width: 750px;
+  width: 50%
 }
-#user-info-table td{
-  width: 375px;
-}
-#user-info-table tr{
-  height: 65px;
-}
+
 .courses-button{
   width: 250px;
   height: 150px;
   position: absolute;
   bottom: 20px;
   right: 20px;
-}
-#button-part1{
-  position: absolute;
- bottom: 100px;
-  right: 40px;
-  border: none;
-  cursor: pointer;
-border: solid 3px rgba(0, 0, 0, 0.58);
-}
-#button-part2{
-  position: absolute;
-  bottom: 40px;
-  right: 47px;
-  border: none;
-  cursor: pointer;
-  border: solid 3px rgba(0, 0, 0, 0.58);
-
 }
 

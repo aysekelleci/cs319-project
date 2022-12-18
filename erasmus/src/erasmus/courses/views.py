@@ -68,7 +68,7 @@ class CourseView(LoginRequiredMixin,View):
         context = {'user': user, 'approved_unmerged_courses': approved_unmerged_courses,
                    "approved_merged_course_dict": approved_merged_course_dict, "user_type": user_type, 'student': student,
                    'user_unmerged_courses': user_unmerged_courses, 'user_merged_course_dict': user_merged_course_dict,
-                   'rejected_courses': rejected_courses}
+                   'rejected_courses': rejected_courses, 'MUST_COURSE': MUST_COURSE, 'ELECTIVE_COURSE': ELECTIVE_COURSE}
 
         return render(request, 'courses/courses.html', context)
 def getMergedCoursesDict(courses, merged_courses):
