@@ -227,6 +227,9 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
                                                              course__merged_course__is_rejected__exact=False,
                                                              course__merged_course__submitted__exact=True,
                                                              course__is_merged__exact=True).distinct("course__merged_course")
+
+        unapproved_final_list_students = Student.objects.all().filter(status__exact=Status.WAIT_FINAL_LIST_APPROVAL)
+
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
@@ -236,7 +239,8 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
             redirect("accounts/profile")
         else:
             context = {'coordinator': coordinator, 'unapproved_unmerged_courses': unapproved_unmerged_courses,
-                       'unapproved_merged_courses': unapproved_merged_courses}
+                       'unapproved_merged_courses': unapproved_merged_courses,
+                       'unapproved_final_list_students': unapproved_final_list_students}
             return render(request, 'courses/waiting_courses.html', context)
 
 class SubmitCourseView(LoginRequiredMixin, View):
@@ -331,6 +335,70 @@ class RejectCourseView(LoginRequiredMixin, View):
 
             return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
+class ApproveFinalListView(LoginRequiredMixin,View):
+    def get(self, request, student_id):
+
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        if coordinator is None:
+            messages.error(request, "Only coordinators can evaluate courses.")
+            return redirect("accounts/profile")
+
+        # get student
+        student = Student.objects.filter(pk=student_id).first()
+
+        # check that the student has at least one course
+        user_courses = UserCourse.objects.all().filter(user=student)
+        if user_courses is None:
+            messages.error(request, "User should have at least one course.")
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+        # check if the user courses are all approved (merged or unmerged)
+        # fixme ask the team
+        for user_course in user_courses:
+            if (user_course.course.is_merged and not user_course.course.merged_course.approved) or (
+            not user_course.approved):
+                messages.error(request, "All courses should be approved first to evaluate the final list.")
+                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+        # update student's status
+        student.final_list_approved = True
+        student.status = Status.FINAL_LIST_APPROVED
+        student.save()
+
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+class RejectFinalListView(LoginRequiredMixin, View):
+    def get(self, request, student_id):
+
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        if coordinator is None:
+            messages.error(request, "Only coordinators can evaluate courses.")
+            return redirect("accounts/profile")
+
+        # get student
+        student = Student.objects.filter(pk=student_id).first()
+
+        # check that the student has at least one course
+        user_courses = UserCourse.objects.all().filter(user=student)
+        if user_courses is None:
+            messages.error(request, "User should have at least one course.")
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+        # check if the user courses are all approved (merged or unmerged)
+        for user_course in user_courses:
+            if (user_course.course.is_merged and not user_course.course.merged_course.approved) or (
+                    not user_course.approved):
+                messages.error(request, "All courses should be approved first to evaluate the final list.")
+                return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+        # fixme send notification to the student
+
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 class MergeCourseView(LoginRequiredMixin, View):
     def get(self, request, course_id1, course_id2, course_id3, course_id4, course_id5,
             course_id6, course_id7, course_id8, course_id9, course_id10):
@@ -472,10 +540,13 @@ class CreateDocumentView(LoginRequiredMixin, View, ABC):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         student = Student.objects.filter(user=erasmus_user).first()
 
-    #    if not student.university.exists():
-     #       messages.error(request, "You need to be placed in a university to generate documents.")
-      #      return redirect("/courses")
+        if student.university is None:
+            messages.error(request, "You need to be placed in a university to generate documents.")
+            return redirect("/courses")
 
+        if not student.final_list_approved:
+            messages.error(request, "Your final course list must be approved before you can generate documents.")
+            return redirect("/courses")
 
         document_name, date, document_type = self.fill_necessary_information(student)
 
@@ -486,6 +557,8 @@ class CreateDocumentView(LoginRequiredMixin, View, ABC):
             new_pre_approval.document = File(f, name=os.path.basename(f.name))
             new_pre_approval.save()
             messages.success(request, "Document is generated")
+            student.status = Status.WAIT_PRE_APPROVAL_FORM
+            student.save()
 
         return redirect("/courses")
 

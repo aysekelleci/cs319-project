@@ -16,6 +16,7 @@ class Status(Enum):
     CHOOSING_COURSES = "Choosing courses"
     WAIT_COURSE_APPROVAL = "Waiting for the course approval"
     WAIT_FINAL_LIST_APPROVAL = "Waiting for the final course list approval"
+    FINAL_LIST_APPROVED =  "Final course list is approved, generate pre-approval form"
     WAIT_PRE_APPROVAL_FORM = "Waiting for the pre-approval form to be signed"
     IN_MOBILITY = "In mobility period"
     FINISHED_MOBILITY = "Finished mobility period"
@@ -27,7 +28,7 @@ class ErasmusUser(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     bilkent_id = models.IntegerField()
-    phone = models.IntegerField(default="", blank=True)
+    phone = models.IntegerField(default="", blank=True) # fixit charfield olsun
     department = models.CharField(max_length=100, default="Computer Engineering")
 
     def __str__(self):
