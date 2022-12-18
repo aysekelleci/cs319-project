@@ -3,3 +3,42 @@
 {% block header_content %}
 <div class="header">Student List</div>
 {% endblock %}
+
+
+{% block page_content %}
+<div class="page_content">
+    <table style="table-layout:fixed; width: 100%">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Status</td>
+                <td>University</td>
+                <td>Coordinator</td>
+                <td>Profile</td>
+        </tr>
+        </thead>
+
+        <tbody>
+            {% for student in students_of_coordinator %}
+            <tr>
+                <td>{{student.user.name}}</td>
+                <td>{{student.status}}</td>
+                <td>{{student.university}}</td>
+                <td>{{student.coordinator}}</td>
+                <td><a href="../../profile/{{student.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
+            </tr>
+            {% endfor %}
+
+            {% for student in others_students %}
+            <tr>
+                <td>{{student.user.name}}</td>
+                <td>{{student.status}}</td>
+                <td>{{student.university}}</td>
+                <td>{{student.coordinator}}</td>
+                <td><a href="../../profile/{{student.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
