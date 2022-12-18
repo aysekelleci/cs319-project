@@ -18,7 +18,7 @@
 
             <div class="bottom-forum" >
                 <div class="forum-title">
-                     <a href="student_profile.html"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
+                     <a href="../../profile/{{post.user.student.pk}}"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
                     <div style="width: 95%;">
                         <p > {{post.user.name}}: {{post.date}}</p>
                         <h2>
@@ -41,7 +41,7 @@
                  {% for response in responses %}
                 <tr >
                         <div class="single-reply-content">
-                            <a href="student_profile.html">
+                            <a href="../../profile/{{response.user.student.pk}}">
                                 <img src="../../static/user.png" alt="user" class="reply-user-photo">
                             </a>
                             <div class = "single-reply-text-content">
