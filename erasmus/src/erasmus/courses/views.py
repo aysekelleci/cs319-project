@@ -406,9 +406,10 @@ class CreateDocumentView(LoginRequiredMixin, View, ABC):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         student = Student.objects.filter(user=erasmus_user).first()
 
-        if not student.university.exists():
-            messages.error(request, "You need to be placed in a university to generate documents.")
-            return redirect("/courses")
+    #    if not student.university.exists():
+     #       messages.error(request, "You need to be placed in a university to generate documents.")
+      #      return redirect("/courses")
+
 
         document_name, date, document_type = self.fill_necessary_information(student)
 
@@ -418,6 +419,7 @@ class CreateDocumentView(LoginRequiredMixin, View, ABC):
                                         document_type=document_type)
             new_pre_approval.document = File(f, name=os.path.basename(f.name))
             new_pre_approval.save()
+            messages.success(request, "Document is generated")
 
         return redirect("/courses")
 
@@ -444,12 +446,12 @@ class CreatePreApprovalView(CreateDocumentView):
         for i, user_course in enumerate(courses):
             course = user_course.course
             bilkent_equivalent = course.bilkent_equivalent
-            courses_table.cell(2 + i, 1).text = course.code  # course code
+            #courses_table.cell(2 + i, 1).text = course.code  # course code
             courses_table.cell(2 + i, 2).text = course.course_name  # course name
             courses_table.cell(2 + i, 3).text = str(course.course_credit)  # course credit
             if bilkent_equivalent is not None:
                 if bilkent_equivalent.course_type == MUST_COURSE:  # bilkent course name
-                    courses_table.cell(2 + i, 4).text = bilkent_equivalent.code + " " + \
+                    courses_table.cell(2 + i, 4).text = bilkent_equivalent.course_code + " " + \
                                                         bilkent_equivalent.course_name
                 elif bilkent_equivalent.course_type == ELECTIVE_COURSE:
                     courses_table.cell(2 + i, 4).text = bilkent_equivalent.elective_group_name
@@ -465,4 +467,23 @@ class CreatePreApprovalView(CreateDocumentView):
         document.save(document_name)
 
         return document_name, date, PREAPPROVAL_FORM
+
+class CreateLearningAgreementView(CreateDocumentView):
+    def fill_necessary_information(self, student):
+        document = docx.api.Document('courses/static/Learning_Agreement.docx')
+
+        student_info_table = document.tables[0]
+        host_uni_tableB = document.tables[1]
+
+        student_info_table.cell(1, 1).text = student.user.name.split()[:-1]  # name
+        student_info_table.cell(1, 3).text = str(student.user.bilkent_id)  # bilkent id number
+        student_info_table.cell(1, 0).text = student.user.name.split()[-1]  # surname
+        student_info_table.cell(3, 3).text = student.user.department  # department
+
+
+        document_name = STATIC_DOCUMENTS_FOLDER + 'learning_agreement_form.docx'
+        document.save(document_name)
+
+
+        return document_name, "", PREAPPROVAL_FORM
 
