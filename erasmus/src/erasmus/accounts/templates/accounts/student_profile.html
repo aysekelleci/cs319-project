@@ -17,37 +17,57 @@
 {% block page_content %}
 <div class="page_content">
     <div class="student-info">
-        {% if  user_type == "Student" %}
+        {% if user_type == "Student" %}
 
         <div id="info-table-container">
             <h2>Student's Info</h2>
             <table class= "user-info-table-" style="width: 100%">
                 <tr>
-                    <td style="width: 50%">E-mail:</td>
-                    <td>{{student.user.email}}</td>
-                </tr>
-                <tr>
-                    <td>Phone:</td>
-                    <td>{{student.user.phone}}</td>
-                </tr>
-                <tr>
-                    <td>University/Mobility Period</td>
-                    <td>NULL</td>
-                </tr>
-                <tr>
-                    <td>Status</td>
-                    <td>{{student.status}}</td>
-                </tr>
-                <tr>
                     <td>Id</td>
                     <td>{{student.user.bilkent_id}}</td>
+                </tr>
+
+                <tr>
+                    <td style="width: 50%">E-mail:</td>
+                    {% if student.email_visibility %}
+                    <td>{{student.user.email}}</td>
+                    {% else %}
+                    <td class="far fa-eye-slash" style="width: 100%"></td>
+                    {% endif %}
+                </tr>
+
+                <tr>
+                    <td style="width: 50%">Phone:</td>
+                    {% if student.phone_visibility %}
+                    <td>{{student.user.phone}}</td>
+                    {% else %}
+                    <td class="far fa-eye-slash" style="width: 100%"></td>
+                    {% endif %}
+                </tr>
+
+                <tr>
+                    <td style="width: 50%">University/Mobility Period</td>
+                    {% if student.mobility_visiblity %}
+                    <td>{{student.university}}/{{student.academic_year}}</td>
+                    {% else %}
+                    <td class="far fa-eye-slash" style="width: 100%"></td>
+                    {% endif %}
+                </tr>
+
+                <tr>
+                    <td style="width: 50%">Status</td>
+                    {% if student.status_visibility%}
+                    <td>{{student.status}}</td>
+                    {% else %}
+                    <td class="far fa-eye-slash" style="width: 100%"></td>
+                    {% endif %}
                 </tr>
             </table>
         </div>
         {%endif%}
 
         {% if not user_type == "Student" %}
-        <div  >
+        <div>
             <h2>Student's Info</h2>
             <table class="user-info-table" style="width: 100%">
                 <tr>
