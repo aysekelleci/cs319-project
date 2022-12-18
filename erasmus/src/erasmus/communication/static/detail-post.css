@@ -145,7 +145,7 @@
     border: solid 2px black;
 }*/
 #new-reply-container{
-    background-color: #a41515;
+    background-color: inherit;
     display: flex;
     width: 95%;
 }
@@ -158,3 +158,4 @@
 #rebtn:hover{
     background-color:red;"
 }
+

@@ -148,6 +148,32 @@ function filterForumTable() {
   }
 }
 
+function filterStudentTable() {
+  // Declare variables
+  var input, filter, table, row, studentName, studentStatus, studentUniversity, i, nameTxtValue, statusTxtValue, universityTxtValue;
+  input = document.getElementById("filter_input");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("filtered_list");
+  row = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < row.length; i++) {
+    studentName = row[i].getElementsByTagName("td")[0];
+    studentStatus = row[i].getElementsByTagName("td")[1];
+    studentUniversity = row[i].getElementsByTagName("td")[2];
+    if (studentName) {
+      nameTxtValue = studentName.textContent || studentName.innerText;
+      statusTxtValue = studentStatus.textContent || studentStatus.innerText;
+      universityTxtValue = studentUniversity.textContent || studentUniversity.innerText;
+      if (nameTxtValue.toUpperCase().indexOf(filter) > -1 || statusTxtValue.toUpperCase().indexOf(filter) > -1 || universityTxtValue.toUpperCase().indexOf(filter) > -1) {
+        row[i].style.display = "";
+      } else {
+        row[i].style.display = "none";
+      }
+    }
+  }
+}
+
 function mergeCourses()
 {
     var loc = "../../merge-course";
