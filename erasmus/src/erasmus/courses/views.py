@@ -313,28 +313,35 @@ class DocumentView(LoginRequiredMixin, View):
 
 
 class UploadDocumentView(LoginRequiredMixin, View):
-    def get(self, request):
+    def get(self, request, from_student_profile, viewed_student_id):
         user = request.user
         student = None
         coordinator = None
         document_form = None
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         if Student.objects.filter(user=erasmus_user).exists():
+            # Student wants to add a document
             student = Student.objects.filter(user=erasmus_user).first()
             document_form = DocumentForm()
         elif Coordinator.objects.filter(user=erasmus_user).exists():
             coordinator = Coordinator.objects.filter(user=erasmus_user).first()
-            document_form = CoordinatorDocumentForm()
+            if from_student_profile:
+                # Coordinator wants to add a document from a student's profile page
+                document_form = DocumentForm()
+            else:
+                # Coordinator wants to add a document from their own files page
+                document_form = CoordinatorDocumentForm()
         else:
             redirect("/login")
 
         context = {'student': student, 'coordinator': coordinator, 'document_form': document_form}
         return render(request, 'courses/upload-documents.html', context)
 
-    def post(self, request):
+    def post(self, request, from_student_profile, viewed_student_id):
         student = None
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        # for the student:
         if Student.objects.filter(user=erasmus_user).exists():
             student = Student.objects.filter(user=erasmus_user).first()
             document_form = DocumentForm(request.POST, request.FILES)
@@ -349,14 +356,18 @@ class UploadDocumentView(LoginRequiredMixin, View):
             else:
                 messages.error(request, "Document form is not valid")
                 return redirect("/documents")
-
+        # for the coordinator:
         elif Coordinator.objects.filter(user=erasmus_user).exists():
-            coordinator = Coordinator.objects.filter(user=erasmus_user).first()
-            document_form = CoordinatorDocumentForm(request.POST, request.FILES)
+            if from_student_profile:
+                document_form = DocumentForm(request.POST, request.FILES)
+            else:
+                document_form = CoordinatorDocumentForm(request.POST, request.FILES)
 
             if document_form.is_valid():
                 new_document = document_form.save(commit=False)
-                new_document.is_signed_coordinator = True
+                new_document.is_signed_coordinator = True # It is assumed that the coordinator would only add signed documents
+                if from_student_profile:
+                    new_document.user = Student.objects.filter(user=erasmus_user).first()
                 # Save the document to the database
                 new_document.save()
                 messages.success(request, "Document is added")
@@ -366,6 +377,8 @@ class UploadDocumentView(LoginRequiredMixin, View):
                 return redirect("/documents")
         else:
             redirect("/login")
+
+
 class DownloadDocument(View):
     def get(self, request, document_id):
         document = get_object_or_404(Document, pk=document_id)
