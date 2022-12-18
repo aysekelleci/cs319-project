@@ -25,6 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% if user_unmerged_courses or user_merged_course_dict.items %}
                 {% for user_course in user_unmerged_courses %}
                 <tr>
                     <td id="count"></td>
@@ -61,8 +62,6 @@
                     </td>
                 </tr>
                 {%endfor%}
-
-
                 {% for courseKey, courseList in user_merged_course_dict.items %}
                 {% for user_course in courseList %}
                 <tr>
@@ -112,6 +111,11 @@
                     <td><a class="button" onclick="mergeCourses()" href="#">Merge</a></td>
                 </tr>
                 </tfoot>
+                {% else %}
+                <tr>
+                    <td colspan="9">No courses yet</td>
+                </tr>
+                {% endif %}
             </table>
         </div>
         <div style="padding: 0; display: flex; justify-content: right;">
@@ -147,6 +151,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% if approved_unmerged_courses or approved_merged_course_dict.items %}
                     {% for course in approved_unmerged_courses %}
                     <tr>
                         <td id="count"></td>
@@ -194,6 +199,11 @@
                     {% endif %}
                     {% endfor %}
                     {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="8">No courses yet</td>
+                    </tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
