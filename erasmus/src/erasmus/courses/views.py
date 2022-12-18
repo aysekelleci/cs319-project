@@ -180,17 +180,17 @@ class AddBilkentCourse(LoginRequiredMixin, View):
         bilkent_course_form = BilkentCourseForm(data=request.POST)
         if bilkent_course_form.is_valid():
             # Create course object but don't save to database yet
-            new_course = course_form.save(commit=False)
+            new_course = bilkent_course_form.save(commit=False)
 
             # Save the course to the database
             new_course.save()
 
         else:
-            messages.error('Bilkent course form is not valid')
+            messages.error(request,'Bilkent course form is not valid')
             context = {'erasmus_user': erasmus_user, 'bilkent_course_form': bilkent_course_form, 'new_course': new_course}
             return render(request, 'courses/add_bilkent_course.html', context)
 
-        messages.success('Bilkent course is added to course list successfully')
+        messages.success(request, 'Bilkent course is added to course list successfully')
         return redirect('/courses')
 
 
