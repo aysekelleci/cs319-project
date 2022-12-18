@@ -10,7 +10,9 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files import File
-from courses.forms import CourseForm, DocumentForm, CoordinatorDocumentForm
+
+from courses.forms import CourseForm, DocumentForm, CoordinatorDocumentForm, BilkentCourseForm
+
 from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
 
@@ -166,6 +168,33 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
 class AddBilkentCourse(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        bilkent_course_form = BilkentCourseForm()
+        context = {'erasmus_user': erasmus_user, 'bilkent_course_form': bilkent_course_form}
+        return render(request, 'courses/add_bilkent_course.html', context)
+
+    def post(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+
+        bilkent_course_form = BilkentCourseForm(data=request.POST)
+        if bilkent_course_form.is_valid():
+            # Create course object but don't save to database yet
+            new_course = course_form.save(commit=False)
+
+            # Save the course to the database
+            new_course.save()
+
+        else:
+            messages.error('Bilkent course form is not valid')
+            context = {'erasmus_user': erasmus_user, 'bilkent_course_form': bilkent_course_form, 'new_course': new_course}
+            return render(request, 'courses/add_bilkent_course.html', context)
+
+        messages.success('Bilkent course is added to course list successfully')
+        return redirect('/courses')
+
+
+
 
 
 

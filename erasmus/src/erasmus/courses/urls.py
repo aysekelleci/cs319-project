@@ -15,6 +15,7 @@ urlpatterns = [
     path('add-to-courses/<int:course_id>', views.AddCourseView.as_view(), name="add-course"),
     path('remove-from-courses/<int:course_id>', views.DeleteCourseView.as_view(), name="remove-course"),
     path('add-unapproved-course/', views.AddUnapprovedCourse.as_view(), name="add-unapproved-course"),
+    path('add-bilkent-course/', views.AddBilkentCourse.as_view(), name="add-bilkent-course"),
     path('documents/', views.DocumentView.as_view(), name="documents"),
     path('waiting-courses/', views.GetWaitingCoursesView.as_view(), name="waiting-courses"),
     path('approve-course/<int:course_id>', views.ApproveCoursesView.as_view(), name="approve-courses"),
