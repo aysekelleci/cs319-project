@@ -16,6 +16,7 @@ urlpatterns = [
     path('add-post/', views.AddPostView.as_view(), name="add-post"),
     path('delete-post/<int:post_id>', views.DeletePostView.as_view(), name="delete-post"),
     path('post-detail/<int:post_id>', views.PostDetailView.as_view(), name="post-detail"),
+    path('delete-response/<int:response_id>', views.DeleteResponseView.as_view(), name="delete-response"),
 
     path('', include('accounts.urls')),
 ]

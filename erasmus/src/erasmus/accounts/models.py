@@ -35,6 +35,11 @@ class Student(models.Model):
     is_erasmus_done = models.BooleanField(default=False)
     academic_year = models.CharField(max_length=20, default="")
     semester = models.CharField(max_length=20, default="")
+    email_visibility = models.BooleanField(default=True)
+    phone_visibility = models.BooleanField(default=True)
+    mobility_visiblity = models.BooleanField(default=True)
+    status_visibility = models.BooleanField(default=True)
+
     def __str__(self):
         return '{}'.format(self.user.user.username)
 

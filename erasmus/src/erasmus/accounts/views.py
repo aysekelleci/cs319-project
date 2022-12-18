@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from accounts.forms import ToDoForm, PhoneForm
+from accounts.forms import ToDoForm, PhoneForm, PreferencesForm
 
 from django.db.models import Q
 
@@ -213,7 +213,6 @@ class StudentListView(LoginRequiredMixin, View):
         redirect("/login")
 
 
-
 class ChangePhoneView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
@@ -234,20 +233,75 @@ class ChangePhoneView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         if erasmus_user is not None:
             phone_form = PhoneForm(data=request.POST)
-            new_phone= None
+            new_phone = None
 
             if phone_form.is_valid():
-                erasmus_user.phone = phone_form
+                new_phone = phone_form(commit=False)
 
-                erasmus_user.save()
+                new_phone.save()
 
                 messages.success(request, 'phone number is updated')
                 redirect('/accounts/profile')
 
+
             else:
-                messages.error(request, 'form is not valid')
+                messages.error(request, 'phone form is not valid')
                 return render(request, 'accounts/change_phone.html',
                               {'new_phone': new_phone, 'phone_form': phone_form, 'erasmus_user': erasmus_user})
+
+        return redirect('/login/')
+
+
+
+class EditPreferencesView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+
+            if student is None:
+                redirect('accounts/profile/')
+
+            preferences_form = PreferencesForm(instance=student)
+
+            new_preferences = None
+
+            return render(request, 'accounts/change_preferences.html', {'new_preferences': new_preferences,
+                                                                        'preferences_form': preferences_form,
+                                                                        'student': student})
+        return redirect('/accounts/profile')
+    def post(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+
+            if student is None:
+                messages.error('')
+                return redirect('/accounts/profile/')
+
+            preferences_form = PreferencesForm(instance=student, data=request.POST)
+            if preferences_form.is_valid():
+                preferences_form.save()
+                messages.success(request, "Preferences are successfully updated.")
+                return redirect("/accounts/profile")
+
+        return redirect('login')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
