@@ -54,7 +54,7 @@
                            <td class="forum-title" style="text-align: left"><a href="../../detailed-post"> {{post.topic}} </a></td>
                             <td class="forum-initiatier"><a href="../../detailed-post"> {{post.user.name}}</a></td>
                             <td class="forum-answers"><a href="../../detailed-post">  {{post.date}} </a></td>
-                            <td class="forum-answers"><a href="../../detailed-post">9</a></td>
+                            <td class="forum-answers"><a href="../../detailed-post">{{post.number_of_responses}}</a></td>
                              <th>
                                  {% if  post.user.name == forum_user.user.name %}
                                  <button type="reset" > delete</button>
@@ -62,8 +62,6 @@
                              </th>
                         </tr>
                         {%endfor%}
-
-
 
 
 

@@ -9,6 +9,7 @@ from .forms import QuestionForm, PostForm, ResponseForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Count
 
 # Create your views here.
 
@@ -180,7 +181,7 @@ class ForumView(LoginRequiredMixin, View):
         forum_user = get_forum_user(user)
         new_response = None
         response = ResponseForm()
-        posts = Post.objects.all().order_by('-date').values()
+        posts = Post.objects.all().order_by('-date').annotate(number_of_responses=Count('responses'))
         context = {'forum_user': forum_user, 'posts': posts, 'new_response': new_response}
         return render(request, 'communication/forum.html', context)
 

@@ -161,7 +161,7 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
 
 class DocumentView(LoginRequiredMixin, View):
     def get(self, request):
-        documents = Document.objects.all().order_by('-date').values()
+        documents = Document.objects.all().order_by('-date')
         user = request.user
 
         context = {'documents': documents}
