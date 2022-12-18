@@ -25,7 +25,7 @@
         <h1 class = "doneLabel"> Done</h1>
 
         <section class = "toDo">
-            <div id="notif_table">
+            <div>
                 <input type="text" id="filter_input" onkeyup="filterToDo('filter_input', 'filtered_list')" style="width:100%" placeholder="Search for To Do">
                 <table id="filtered_list" style="width:100%">
                     <tbody>
@@ -67,10 +67,11 @@
                     {%endfor%}
                     </tbody>
                 </table>
+            </div>
         </section>
 
         <section class = "done">
-            <div id="done_table">
+            <div>
                 <input type="text" id="filter_input2" onkeyup="filterToDo('filter_input2', 'filtered_list2')" style="width:100%" placeholder="Search for Done">
                 <table id="filtered_list2" style="width:100%">
                     <tbody>
@@ -91,34 +92,10 @@
                         {%endfor%}
                     </tbody>
                 </table>
+            </div>
         </section>
 
         <button class = "addToDo" onclick="location.href = '../../add-todo'">Add To Do</button>
-
-        <div class = "form-popup" id = "myForm">
-            <form class = "form-container">
-
-                {% csrf_token %}
-                {{todo_form|crispy}}
-
-                <input type="text" placeholder = "Enter To Do" name="email" required>
-
-                <button type = "submit" class = "btn">Add</button>
-                <button type = "button" class="btn cancel" onclick = "closeForm()">Close</button>
-            </form>
-        </div>
-
-        <script>
-        function openForm()
-        {
-            document.getElementById( "myForm" ).style.display = "block";
-        }
-
-        function closeForm()
-        {
-            document.getElementById( "myForm" ).style.display = "none";
-        }
-        </script>
 
     </section>
 </div>
