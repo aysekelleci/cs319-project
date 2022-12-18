@@ -1,20 +1,20 @@
 section
 {
-    float: left;
+  float: left;
 }
 .status
 {
-    display: grid;
-    grid-template-columns: 10% 65%;
+  display: grid;
+  grid-template-columns: 10% 65%;
 
-    width: 100%;
+  width: 100%;
 
-    margin-top: 1%;
+  margin-top: 1%;
 }
 .statusLabel
 {
-    margin-top: 14px;
-    font-size: 35px;
+  margin-top: 14px;
+  font-size: 35px;
 }
 .statusBox
 {
@@ -24,52 +24,53 @@ section
 }
 .toDoandDone
 {
-    width: 100%;
-    margin-top: 10px;
-    margin-left: 0%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 0%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
-    height: 100%;
-    border: 0ch;
+  height: 100%;
+  border: 0ch;
 }
 .toDo
 {
-    display: block;
-    border: solid;
-    border-color: 1px solid rgba(0,0,0,0.05);
-    width: 90%;
-    height: 100%;
-    overflow-x: auto;
-    overflow-y: auto;
+  display: block;
+  border: solid;
+  border-color: 1px solid rgba(0,0,0,0.05);
+  width: 90%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 .toDoLabel
 {
-    margin-left: 40%;
-    margin-top: 20;
+  margin-left: 40%;
+  margin-top: 20;
 }
 .done
 {
-    display: block;
-    border: solid;
-    border-color: 1px solid rgba(0,0,0,0.05);
-    width: 90%;
-    height: 400px;
-    overflow-x: auto;
-    overflow-y: auto;
+  display: block;
+  border: solid;
+  border-color: 1px solid rgba(0,0,0,0.05);
+  width: 90%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 .doneList
 {
-    margin-left: 3%;
+  margin-left: 3%;
 }
 .doneLabel
 {
-    margin-left: 40%;
-    margin-top: 20;
+  margin-left: 40%;
+  margin-top: 20;
 }
 .addToDo
 {
-    margin-left: 75%;
-    margin-top: 10px;
-    width: fit-content;
+  margin-left: 75%;
+  margin-top: 10px;
+  width: fit-content;
+  height: fit-content;
 }
