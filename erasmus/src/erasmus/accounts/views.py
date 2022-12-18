@@ -177,6 +177,29 @@ class CancelPlacement(LoginRequiredMixin, View):
 '''
 
 
+class StudentListView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        if coordinator is None:
+            redirect("accounts/profile")
+
+        else:
+            students_of_cooordinator = Student.objects.filter(coordinator=coordinator)
+            other_students = Student.objects.exclude(coordinator=coordinator)
+
+            context = {"other_students": other_students, "students_of_coordinator": students_of_cooordinator}
+            return render(request, "accounts/student_list.html", context)
+
+        redirect("/login")
+
+
+
+
+
+
 
 
 

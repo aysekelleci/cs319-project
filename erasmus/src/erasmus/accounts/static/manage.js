@@ -101,22 +101,20 @@ function storageAvailable(type) {
     }
 }
 
-function filterToDo() {
+function filterToDo(inputID, listID) {
   // Declare variables
-  var input, filter, table, row, courseName, courseID, i, courseTxtValue, idTxtValue;
-  input = document.getElementById("filter_input");
+  var input, filter, table, row, toDoName, i, toDoTxtValue;
+  input = document.getElementById(inputID);
   filter = input.value.toUpperCase();
-  table = document.getElementById("filtered_list");
+  table = document.getElementById(listID);
   row = table.getElementsByTagName("tr");
 
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < row.length; i++) {
-    courseName = row[i].getElementsByTagName("td")[0];
-    courseID = row[i].getElementsByTagName("td")[1];
-    if (courseName) {
-      courseTxtValue = courseName.textContent || courseName.innerText;
-      idTxtValue = courseID.textContent || courseID.innerText;
-      if (courseTxtValue.toUpperCase().indexOf(filter) > -1 || idTxtValue.toUpperCase().indexOf(filter) > -1) {
+    toDoName = row[i].getElementsByTagName("td")[1];
+    if (toDoName) {
+      toDoTxtValue = toDoName.textContent || toDoName.innerText;
+      if (toDoTxtValue.toUpperCase().indexOf(filter) > -1) {
         row[i].style.display = "";
       } else {
         row[i].style.display = "none";
