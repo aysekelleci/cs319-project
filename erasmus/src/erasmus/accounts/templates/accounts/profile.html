@@ -12,9 +12,8 @@
 
 {% block page_content %}
 <div class="page_content">
-    <div class= "main" >
-        <div class="user-info">
 
+        <div class="user-info">
             <table class="user-info-table">
                 <tbody style="height: auto" class="profile_view">
                 <tr>
@@ -38,23 +37,19 @@
                     <td>{{student.user.department}}</td>
                 </tr>
                 <tr>
-                    <td> Semester</td>
-                    <td>{{student.user.semester}}</td>
+                    <td>Coordinator</td>
+                    <td>{{student.coordinator.user.name}}</td>
                 </tr>
                 <tr>
-                    <td>Coordinator</td>
-                    <td>{{student.user.coordinator}}</td>
+                    <td> Coordinator Email</td>
+                    <td>{{student.coordinator.user.email}}</td>
                 </tr>
                 <tr>
                     <td>Status </td>
-                    <td>{{student.user.status}}</td>
+                    <td>{{student.status}}</td>
                 </tr>
-            </tbody>
+                </tbody>
             </table>
         </div>
-    </div>
-
-
-
-</div>
+ </div>
 {% endblock %}

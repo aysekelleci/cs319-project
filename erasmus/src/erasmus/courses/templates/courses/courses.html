@@ -17,11 +17,9 @@
                     <th style="width:10%">Course Code</th>
                     <th style="width:20%">Course Name</th>
                     <th style="width:7%">Credits</th>
-                    <th style="width:20%">Course Code and Name for a Required Course,
-                    Elective Group Name for an Elective Requirement
-                    </th>
+                    <th style="width:20%">Course Type</th>
                     <th style="width:7%">Credits</th>
-                    <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
+                    <th style="width:20%">Course Code and Name</th>
                     <th style="width:10%">Status</th>
                     <th style="width:12%" class="sorttable_nosort">Operation</th>
                 </tr>
@@ -35,17 +33,14 @@
                     <td>{{course.course_credit}}</td>
 
                     {% if course.bilkent_equivalent.course_type == MUST_COURSE %}
-                    <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+                    <td>Must Course</td>
                     <td>{{course.bilkent_equivalent.course_credit}}</td>
+                    <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+
                     {% else %}
                     <td>{{course.bilkent_equivalent.elective_group_name}}</td>
                     <td>{{course.bilkent_equivalent.course_credit}}</td>
-                    {% endif %}
-
-                    {% if course.bilkent_equivalent.course_type == ELECTIVE_COURSE %}
                     <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
-                    {% else %}
-                    <td></td>
                     {% endif %}
 
                     {% if course.approved %}
@@ -72,17 +67,14 @@
                     {% if courseList.0 is course %}
 
                     {% if courseKey.bilkent_equivalent.course_type == MUST_COURSE %}
-                    <td rowspan="2">{{courseKey.bilkent_equivalent.course_code}}: {{courseKey.bilkent_equivalent.course_name}}</td>
+                    <td rowspan="2">Must Course</td>
                     <td rowspan="2">{{courseKey.bilkent_equivalent.course_credit}}</td>
+                    <td rowspan="2">{{courseKey.bilkent_equivalent.course_code}}: {{courseKey.bilkent_equivalent.course_name}}</td>
+
                     {% else %}
                     <td rowspan="2">{{courseKey.bilkent_equivalent.elective_group_name}}</td>
                     <td rowspan="2">{{courseKey.bilkent_equivalent.course_credit}}</td>
-                    {% endif %}
-
-                    {% if courseKey.bilkent_equivalent.course_type == ELECTIVE_COURSE %}
                     <td rowspan="2">{{courseKey.bilkent_equivalent.course_code}}: {{courseKey.bilkent_equivalent.course_name}}</td>
-                    {% else %}
-                    <td rowspan="2"></td>
                     {% endif %}
 
                     {% if courseKey.approved %}
@@ -125,25 +117,17 @@
         <div hidden="hidden" id="toggle-element-1">
             <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for courses..">
             <div style="height:300px;overflow:auto;">
-                <table style="width:100%">
-                    <tr>
-                        <th class="sorttable_nosort" style="width:50%">{{student.university}} Courses</th>
-                        <th class="sorttable_nosort" style="width:50%">Bilkent University Equivalent Courses</th>
-                    </tr>
-                </table>
                 <table class="sortable" id="filtered_list" style="width:100%;">
 
                     <thead>
                     <tr>
                         <th style="width:6%" class="sorttable_nosort">Count</th>
-                        <th style="width:10%">Course Code</th>
-                        <th style="width:20%">Course Name</th>
+                        <th style="width:10%">{{student.university}} Course Code</th>
+                        <th style="width:20%">{{student.university}} Course Name</th>
                         <th style="width:7%">Credits</th>
-                        <th style="width:20%">Course Code and Name for a Required Course,
-                        Elective Group Name for an Elective Requirement
-                        </th>
+                        <th style="width:20%">Bilkent University Equivalent Course Type</th>
                         <th style="width:7%">Credits</th>
-                        <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
+                        <th style="width:20%">Bilkent University Equivalent Course Code and Name</th>
                         <th style="width:10%" class="sorttable_nosort">Operation</th>
                     </tr>
                     </thead>
@@ -156,17 +140,14 @@
                         <td>{{course.course_credit}}</td>
 
                         {% if course.bilkent_equivalent.course_type == MUST_COURSE %}
-                        <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+                        <td>Must Course</td>
                         <td>{{course.bilkent_equivalent.course_credit}}</td>
+                        <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+
                         {% else %}
                         <td>{{course.bilkent_equivalent.elective_group_name}}</td>
                         <td>{{course.bilkent_equivalent.course_credit}}</td>
-                        {% endif %}
-
-                        {% if course.bilkent_equivalent.course_type == ELECTIVE_COURSE %}
                         <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
-                        {% else %}
-                        <td></td>
                         {% endif %}
 
                         <td><a class="button" href="/add-to-courses/{{course.pk}}">Add</a></td>
@@ -181,9 +162,16 @@
                         <td>{{course.course_credit}}</td>
 
                         {% if courseList.0 is course %}
-                        <td rowspan="2">{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+                        {% if courseKey.bilkent_equivalent.course_type == MUST_COURSE %}
+                        <td rowspan="2">Must Course</td>
                         <td rowspan="2">{{course.bilkent_equivalent.course_credit}}</td>
-                        <td rowspan="2">NULL</td>
+                        <td rowspan="2">{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+
+                        {% else %}
+                        <td rowspan="2">{{course.bilkent_equivalent.elective_group_name}}</td>
+                        <td rowspan="2">{{course.bilkent_equivalent.course_credit}}</td>
+                        <td rowspan="2">{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+                        {% endif %}
                         <td rowspan="2"><a class="button" href="/add-to-courses/{{course.pk}}">Add</a></td>
                         {% endif %}
                     </tr>
