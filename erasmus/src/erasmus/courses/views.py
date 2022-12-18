@@ -212,7 +212,7 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
         unapproved_unmerged_courses = UserCourse.objects.filter(course__approved__exact=False,
                                                                 course__is_rejected__exact=False,
-                                                                course__submitted__exact = True,
+                                                                submitted__exact=True,
                                                                 course__is_merged__exact=False)
 
         unapproved_merged_courses = UserCourse.objects.all().filter(course__merged_course__approved__exact=False,
@@ -237,7 +237,7 @@ class SubmitCourseView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         student = Student.objects.filter(user=erasmus_user).first()
 
-        user_course = UserCourse.objects.filter(course__pf__exact=course_id)
+        user_course = UserCourse.objects.filter(course__pk__exact=course_id).first()
 
         # update user course's submitted status
         if user_course.course.is_merged:
@@ -260,7 +260,7 @@ class SubmitCourseListView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         student = Student.objects.filter(user=erasmus_user).first()
 
-        user_courses = UserCourse.objects.filter(user=student)
+        user_courses = UserCourse.objects.all().filter(user=student)
 
         # check if the user courses are all approved (merged or unmerged)
         for user_course in user_courses:
