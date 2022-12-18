@@ -6,13 +6,39 @@
 {% block header_content %}
 <div class="header">Add To Do</div>
 {% endblock %}
-
-
 {% block page_content %}
+<style>
+p
+{
+        margin-top: -1%;
+        margin-left: 1.5%;
+}
+button
+{
+        margin-top: 2%;
+}
+
+input {
+    font-size: 19px;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    padding: 0 10px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+</style>
+
 <div class="page_content">
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{todo_form|crispy}}
+        <p>date should be in the form of dd/mm/yyyy</p>
         <button class="btn btn-primary my-4" type="submit">Submit</button>
 </form>
 </div>
