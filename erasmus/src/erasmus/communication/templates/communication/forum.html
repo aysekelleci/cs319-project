@@ -36,13 +36,14 @@
             </div>
             <div class="forum-container">
                 <div>
-                    <input type="text" id="filter_input" onkeyup="filterForumTable()" style="width:100%" placeholder="Search for courses..">
+                    <input type="text" id="filter_input" onkeyup="filterForumTable()" style="width:100%" placeholder="Search a Topic">
 
                     <table class="sortable" id="filtered_list" style="width: 100%; border-collapse: collapse; background-color: #fff">
                         <!-- Forum title heading part-->
                         <tr style="background-color: #fff">
                             <th class="f-title" > <h3> Forum Title </h3></th>
                             <th class="f-initiatier"><h3>  Posted by</h3></th>
+                            <th class="f-initiatier"><h3>  Date/Time </h3></th>
                             <th class="f-answers"><h3>Replies</h3></th>
                              <th> </th>
                         </tr>
@@ -51,11 +52,12 @@
                         {% for post in posts %}
                         <tr>
                            <td class="forum-title" style="text-align: left"><a href="forum_post.html"> {{post.topic}} </a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html"> {{post.user.user.name}}</a></td>
+                            <td class="forum-initiatier"><a href="forum_post.html"> {{post.user.name}}</a></td>
+                            <td class="forum-answers"><a href="forum_post.html">  {{post.date}} </a></td>
                             <td class="forum-answers"><a href="forum_post.html">9</a></td>
                              <th>
-                                 {% if this.user.name == post.user.name %}
-                                 <button type="reset"> delete</button>
+                                 {% if  post.user.name == forum_user.name %}
+                                 <button type="reset" > delete</button>
                                  {% endif %}
                              </th>
                         </tr>
