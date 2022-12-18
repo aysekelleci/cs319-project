@@ -1,0 +1,152 @@
+.bottom-forum{
+    /*
+    background-color: aqua;
+    height: 100%;
+    width: 98.5%;*/
+}
+.forum-title{
+    display: flex;
+    height: auto;
+    width: 98.5%;
+    background-color: inherit;
+    text-align: left;
+    padding-top: 15px;
+
+    overflow: hidden;
+}
+.reply-btn-on-heading{
+
+    width: 40px;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    background-color: inherit;
+    padding-right: 0px;
+    border: none;
+}
+.forum-reply-content{
+    background-color: inherit;
+    height: 470px;
+    width: 98.5%;
+}
+
+.single-reply-content{
+    display: flex;
+    background-color: inherit;
+    height: auto;
+    width: 98.5%;
+    background-color: rgb(231, 206, 255);
+}
+.single-replyto-reply-content{
+    display: flex;
+    background-color: inherit;
+    height: auto;
+    padding-left: 5%;
+    background-color: rgb(186, 255, 255)
+
+}
+#reply-visbility{
+    display: none;
+}
+.post-topic{
+    height: fit-content;
+    width: fit-content;
+    background-color: rgb(171, 246, 246);
+}
+
+.reply-user-button{
+
+    width: 40px;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    background-color: inherit;
+}
+.reply-user-photo{
+    padding-left: 5px;
+    padding-top: 5px;
+    width: 25px;
+    height: 30px;
+
+}
+.single-reply-text-content{
+    width: 70%;
+    background-color: inherit;
+
+    min-height: 30px;
+    overflow: hidden;
+}
+.post-date{
+    background-color:inherit;
+    height: 30px;
+    width: 100px;
+}
+.post-hour{
+    background-color:inherit ;
+    height: 30px;
+    width: 60px;
+}
+
+.open-replies-btn{
+    border: none;
+    padding-top: 5px;
+    width: 40px;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    background-color: inherit;
+}
+.open-replies-icon{
+    width: 20px;
+    height: 20px;
+}
+.reply-btn{
+    border: none;
+    padding-top: 5px;
+    display: flex;
+    width: 40px;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    background-color: inherit;
+}
+.reply-icon{
+    width: 20px;
+    height: 20px;
+}
+.reply-to-reply-row{
+    display: none;
+}
+#reply-container{
+
+    height: fit-content;
+    width: 98.5%;
+    background-color: #e09c9c;
+    text-align: left;
+    display: flex
+}
+#reply-to-post{
+
+    height: fit-content;
+}
+#text-reply-btn{
+    background-color: inherit;
+    height: fit-content;
+    text-align: center;
+    color: black;
+}
+#text-reply-btn:hover{
+    background-color: green;
+    border: solid 2px black;
+}
+/*
+#text-cancel-reply-btn{
+    background-color: inherit;
+     height: fit-content;
+     text-align: center
+
+}
+#text-cancel-reply-btn:hover{
+    background-color: rgb(213, 8, 8);
+    border: solid 2px black;
+}*/
