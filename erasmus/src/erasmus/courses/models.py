@@ -1,3 +1,5 @@
+import os
+
 from django.db import models
 # Create your models here.
 
@@ -70,6 +72,10 @@ class Document(models.Model):
     # is_signed_coordinator = models.BooleanField(default=False)
     user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='documents', default=1)
     document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPE_CHOICES, default=4)
+
+    def get_file_format(self):
+        _, file_format = os.path.splitext(self.document.name)
+        return file_format[1:]
 
 
 
