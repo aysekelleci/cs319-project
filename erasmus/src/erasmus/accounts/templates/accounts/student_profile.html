@@ -117,6 +117,7 @@
                         <th style="width:7%">Credits</th>
                         <th style="width:20%">Bilkent University Equivalent Course Code and Name</th>
                         <th style="width:10%">Status</th>
+                        <th style="width:10%">Operations</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -148,12 +149,20 @@
                         {% else %}
                         <td>
                             Waiting For Approval
-                            <div style="display: flex; gap: 10px;">
-                                <a class="button" href="/approve-course/{{course.pk}}">Approve</a>
-                                <a class="button" href="/reject-course/{{course.pk}}">Reject</a>
-                            </div>
+
                         </td>
                         {% endif %}
+                            <td style="padding: 0">
+                                <div style="display: block; align: center; padding: 0">
+                                <div style="display: flex; padding: 0">
+                                <a class="button" href="/approve-course/{{course.pk}}">Approve</a>
+                                <a class="button" href="/reject-course/{{course.pk}}">Reject</a>
+                                </div>
+                                <div style="display: flex;";>
+                                <a class="button" href="/reject-course/{{course.pk}}">View Syllabus</a>
+                                </div>
+
+                            </div></td>
                         </tr>
                         {%endfor%}
 
