@@ -17,88 +17,112 @@
 {% block page_content %}
 <div class="page_content">
     <div class="student-info">
-        <table id="user-info-table">
-            <tr>
-                <td>E-mail:</td>
-                <td>{{student.user.email}}</td>
-            </tr>
-            <tr>
-                <td>Phone:</td>
-                <td>{{student.user.phone}}</td>
-            </tr>
-            <tr>
-                <td>University/Mobility Period</td>
-                <td>NULL</td>
-            </tr>
-            <tr>
-                <td>Status</td>
-                <td>{{student.status}}</td>
-            </tr>
-            <tr>
-                <td>Id</td>
-                <td>{{student.user.bilkent_id}}</td>
-            </tr>
-        </table>
+        <div>
+            <h2>Student's Files</h2>
+            <table id="user-info-table">
+                <tr>
+                    <td>E-mail:</td>
+                    <td>{{student.user.email}}</td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td>{{student.user.phone}}</td>
+                </tr>
+                <tr>
+                    <td>University/Mobility Period</td>
+                    <td>NULL</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>{{student.status}}</td>
+                </tr>
+                <tr>
+                    <td>Id</td>
+                    <td>{{student.user.bilkent_id}}</td>
+                </tr>
+            </table>
+        </div>
         <div>
             <div>
-                <h2>Current Courses Taken</h2>
-        <table class="file-table">
-            <thead>
-                <tr>
-                    <th style="width:65px" id="count"></th>
-                    <th style="width:175px">Type</th>
-                    <th style="width:250px">Name</th>
-                    <th style="width:225px">Date</th>
-                    <th style="width:350px" colspan="2">Operations</th>
-                </tr>
-                </thead>
-            <tbody>
-            {% for document in documents %}
-                <tr>
-                    <td style="width:65px" id="count"></td>
-                    <td style="width:150px">{{document.document_type}}</td>
-                    <td style="width:175px">{{document.document_name}}</td>
-                    <td style="width:200px">{{document.date}}</td>
-                    <td style="width:350px;">
-                        <button href="#" type="button">View</button>
-                        <a class="button" href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
-                    </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-                </div>
-            <div>
-            <table class="file-table">
-            <thead>
-                <tr>
-                    <th style="width:65px" id="count"></th>
-                    <th style="width:175px">Type</th>
-                    <th style="width:250px">Name</th>
-                    <th style="width:225px">Date</th>
-                    <th style="width:350px" colspan="2">Operations</th>
-                </tr>
-                </thead>
-            <tbody>
-            {% for document in documents %}
-                <tr>
-                    <td style="width:65px" id="count"></td>
-                    <td style="width:150px">{{document.document_type}}</td>
-                    <td style="width:175px">{{document.document_name}}</td>
-                    <td style="width:200px">{{document.date}}</td>
-                    <td style="width:350px;">
-                        <button href="#" type="button">View</button>
-                        <a class="button" href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
-                    </td>
-                </tr>
-                {%endfor%}
-            </tbody>
-        </table>
-                </div>
+                <h2>Student's Files</h2>
+                <table class="file-table">
+                    <thead>
+                    <tr>
+                        <th style="width:65px" id="count"></th>
+                        <th style="width:175px">Type</th>
+                        <th style="width:250px">Name</th>
+                        <th style="width:225px">Date</th>
+                        <th style="width:350px" colspan="2">Operations</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for document in documents %}
+                    <tr>
+                        <td style="width:65px" id="count"></td>
+                        <td style="width:150px">{{document.document_type}}</td>
+                        <td style="width:175px">{{document.document_name}}</td>
+                        <td style="width:200px">{{document.date}}</td>
+                        <td style="width:350px;">
+                            <button href="#" type="button">View</button>
+                            <a class="button" href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                </table>
             </div>
-    </div>
-    <div class="courses-button">
-        <button id="button-part1" style="background-color: #130d3834;"> Student´s Courses </button>
+            <div>
+                <h2>Student's Courses</h2>
+                <table class="course-table">
+                    <thead>
+                    <tr>
+                    <th style="width:6%" class="sorttable_nosort">Count</th>
+                    <th style="width:10%">Course Code</th>
+                    <th style="width:20%">Course Name</th>
+                    <th style="width:7%">Credits</th>
+                    <th style="width:20%">Course Code and Name for a Required Course,
+                    Elective Group Name for an Elective Requirement
+                    </th>
+                    <th style="width:7%">Credits</th>
+                    <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
+                    <th style="width:10%">Status</th>
+                </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in courses %}
+                    <tr>
+                    <td id="count"></td>
+                    <td>{{course.course.code}}</td>
+                    <td>{{course.course.course_name}}</td>
+                    <td>{{course.course.course_credit}}</td>
+
+                    {% if course.course.bilkent_equivalent.course_type == MUST_COURSE %}
+                    <td>{{course.course.bilkent_equivalent.course_code}}: {{course.course.bilkent_equivalent.course_name}}</td>
+                    <td>{{course.course.bilkent_equivalent.course_credit}}</td>
+                    {% else %}
+                    <td>{{course.course.bilkent_equivalent.elective_group_name}}</td>
+                    <td>{{course.course.bilkent_equivalent.course_credit}}</td>
+                    {% endif %}
+
+                    {% if course.course.bilkent_equivalent.course_type == ELECTIVE_COURSE %}
+                    <td>{{course.course.bilkent_equivalent.course_code}}: {{course.course.bilkent_equivalent.course_name}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+
+                    {% if course.course.approved %}
+                    <td>Approved</td>
+                    {% elif course.course.is_rejected %}
+                    <td>Rejected</td>
+                    {% else %}
+                    <td>Waiting For Approval</td>
+                    {% endif %}
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
