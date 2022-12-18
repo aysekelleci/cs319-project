@@ -213,41 +213,35 @@ class StudentListView(LoginRequiredMixin, View):
         redirect("/login")
 
 
-class ChangePhoneView(LoginRequiredMixin, View):
+class ChangePhoneEmailView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         if erasmus_user is not None:
-            phone_form = PhoneForm()
+            phone_email_form = PhoneForm(instance=erasmus_user)
 
-            new_phone = None
-
-            return render(request,
-                          'accounts/change_phone.html',
-                          {'new_phone': new_phone,
-                           'phone_form': phone_form,
-                           'erasmus_user': erasmus_user})
+        return render(request, 'accounts/change_phone.html', {'phone_email_form': phone_email_form,
+                                                              'erasmus_user': erasmus_user})
 
     def post(self, request):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         if erasmus_user is not None:
-            phone_form = PhoneForm(data=request.POST)
-            new_phone = None
 
-            if phone_form.is_valid():
-                new_phone = phone_form(commit=False)
+            phone_email_form = PhoneForm(instance=erasmus_user, data=request.POST)
+            if phone_email_form.is_valid():
+                # new_phone_email = phone_email_form(commit=False)
 
-                new_phone.save()
+                phone_email_form.save()
 
-                messages.success(request, 'phone number is updated')
-                redirect('/accounts/profile')
-
+                messages.success(request, 'phone number and email is updated')
+                return render(request, 'accounts/change_phone.html',
+                              {'phone_email_form': phone_email_form, 'erasmus_user': erasmus_user})
 
             else:
-                messages.error(request, 'phone form is not valid')
+                messages.error(request, 'phone-email form is not valid')
                 return render(request, 'accounts/change_phone.html',
-                              {'new_phone': new_phone, 'phone_form': phone_form, 'erasmus_user': erasmus_user})
+                              {'phone_email_form': phone_email_form, 'erasmus_user': erasmus_user})
 
         return redirect('/login/')
 
@@ -261,7 +255,8 @@ class EditPreferencesView(LoginRequiredMixin, View):
             student = Student.objects.filter(user=erasmus_user).first()
 
             if student is None:
-                redirect('accounts/profile/')
+                messages.error(request, 'Preferences are is not available for coordinators')
+                return redirect('/accounts/profile/')
 
             preferences_form = PreferencesForm(instance=student)
 
@@ -278,14 +273,15 @@ class EditPreferencesView(LoginRequiredMixin, View):
             student = Student.objects.filter(user=erasmus_user).first()
 
             if student is None:
-                messages.error('')
+                messages.error(request, 'Preferences are not available for coordinators')
                 return redirect('/accounts/profile/')
 
             preferences_form = PreferencesForm(instance=student, data=request.POST)
             if preferences_form.is_valid():
                 preferences_form.save()
                 messages.success(request, "Preferences are successfully updated.")
-                return redirect("/accounts/profile")
+                return render(request, 'accounts/change_preferences.html', {'preferences_form': preferences_form,
+                                                                            'student': student})
 
         return redirect('login')
 

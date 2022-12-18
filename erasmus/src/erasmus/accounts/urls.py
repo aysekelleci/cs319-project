@@ -21,7 +21,7 @@ urlpatterns = [
                                                                      success_url='done'), name='password_change'),
     path('settings/password/done/', auth_views.PasswordChangeDoneView.as_view(template_name='accounts/password_change.html'),
          name='password_change_done'),
-    path('change-phone/', views.ChangePhoneView.as_view(), name="change-phone"),
+    path('change-phone/', views.ChangePhoneEmailView.as_view(), name="change-phone"),
     path('edit-preferences/', views.EditPreferencesView.as_view(), name="edit-preferences"),
     path('profile/<int:student_id>', views.StudentProfilesView.as_view(), name="student-profile"),
 ]
