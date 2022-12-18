@@ -68,7 +68,7 @@ class AddToDoView(LoginRequiredMixin, View):
 
         context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
         messages.success(request, "Todo was added successfully")
-        return redirect('accounts/profile')
+        return redirect('/accounts/profile')
 
 class DeleteToDoView(LoginRequiredMixin,View):
     def get(self, request, todo_id):
