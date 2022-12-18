@@ -206,7 +206,14 @@ class AddBilkentCourse(LoginRequiredMixin, View):
 
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
-        unapproved_courses = UserCourse.objects.filter(course__approved__exact=False, course__is_rejected__exact=False)
+        unapproved_unmerged_courses = UserCourse.objects.filter(course__approved__exact=False, course__is_rejected__exact=False,
+                                                       course__is_merged__exact=False)
+        # get unapproved merged courses
+        unapproved_merged_courses = {user_course.course.merged_course for user_course in
+                                     UserCourse.objects.filter(course__is_merged__exact=True,
+                                                              course__merged_course__approved__exact=False,
+                                                              course__merged_course__is_rejected__exact=False
+                                                              )}
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
@@ -214,7 +221,8 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
             redirect("accounts/profile")
 
         else:
-            context = {'coordinator': coordinator, 'unapproved_courses': unapproved_courses}
+            context = {'coordinator': coordinator, 'unapproved_unmerged_courses': unapproved_unmerged_courses,
+                       'unapproved_merged_courses': unapproved_merged_courses}
             return render(request, 'courses/waiting_courses.html', context)
 
 
@@ -232,6 +240,7 @@ class ApproveCoursesView(LoginRequiredMixin, View):
             if course is not None:
                 if course.is_merged:
                     course.merged_course.approved = True
+                    course.merged_course.save()
                 else:
                     course.approved = True
                 course.save()
@@ -256,6 +265,7 @@ class RejectCourseView(LoginRequiredMixin, View):
             if course is not None:
                 if course.is_merged:
                     course.merged_course.is_rejected = True
+                    course.merged_course.save()
                 else:
                     course.is_rejected = True
                 course.save()
