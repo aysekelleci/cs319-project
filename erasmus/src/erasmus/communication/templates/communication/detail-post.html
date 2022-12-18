@@ -20,56 +20,38 @@
                 <div class="forum-title">
                      <a href="student_profile.html"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
                     <div style="width: 95%;">
-                        <p > user: data and time</p>
-                        <h2 style="background-color: rgb(225, 184, 156);">
-                            Lorem ipsum dolor sit asaaaaaaaaaaaaaaaaaaa
-                            met consectetur adipisicing elit.scceeeeeeeeeeeeeeeeeeeeeeeeee
+                        <p > {{post.user.name}}: {{post.date}}</p>
+                        <h2>
+                            {{post.topic}}
                         </h2>
-                        <p> explantion of post</p>
+                        <p> {{post.text}}</p>
                     </div>
-                    <div ><button class="reply-btn-on-heading" onclick="openTextFielToReply()">
+                    <div ><button class="reply-btn-on-heading" onclick="openTextFieldToReply()">
                              <img src="../../static/respond_icon.png" alt="open" class = "reply-icon" >
                         </button>
                     </div>
                 </div>
-
-                <!-- Replies table-->
-                <div class="forum-reply-content">
+                <div class="forum-reply-content" id="forum-reply-content">
                     <div id="reply-container">
                         <input type="text" name="Reply" id="reply-to-post">
-                        <input type="submit" value="Reply" id="text-reply-btn">
-                       <!-- <input type="button" value="Cancel" id="text-cancel-reply-btn">-->
+                        <input type="submit" value="Reply" id="text-reply-btn" >
                     </div>
-
-                    <tr class="reply-row">
-                        <div class="single-reply-content">
-                            <a href="student_profile.html"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
-                            <div class = "single-reply-text-content">
-                               <p > user: data and time</p>
-                                <h3> agfnae</h3>
-                            </div>
-                        </div>
-
-                    </tr>
-
-                    <tr class="reply-row">
-                        <div class="single-reply-content">
-                            <a href="student_profile.html"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
-                            <div class = "single-reply-text-content">
-                            <p > user: data and time</p>
-                                ibus, nam officiafffffffffffffffııııııııııııııdaaaaaaaaaaaaaaa999999999
-                                    90wwwwwwwwwwwwwwwwdjjjjjjjjjjdwwıoğğğğğğğaaaaaaaaaaaa
-                            </div>
-
-                            <div class = "post-date">
-                                7/8/1899
-                            </div>
-                            <div class = "post-hour">
-                                12:36:45
-                            </div>
-                        </div>
-                    </tr>
                 </div>
+
+                <tr >
+                        <div class="single-reply-content">
+                            <a href="student_profile.html">
+                                <img src="../../static/user.png" alt="user" class="reply-user-photo">
+                            </a>
+                            <div class = "single-reply-text-content">
+                                <p > user: response.date</p>
+                            </div>
+
+                        </div>
+                </tr>
+
+
+
 
             </div>
 
@@ -78,25 +60,25 @@
 
 <script>
 
-let i =0;
-let j =0;
 function openReplies() {
 
-    if( i % 2== 1)
-        document.getElementById("reply-visbility").style.display = "none";
-    else
-        document.getElementById("reply-visbility").style.display = "block";
+    element = document.getElementById("reply-visbility");
+    hidden = element.getAttribute("hidden");
 
-    i++;
+    if( hidden )
+        element.removeAttribute("hidden");
+    else
+        element.setAttribute("hidden", "hidden");
+
 }
-function openTextFielToReply() {
+function openTextFieldToReply() {
+    element = document.getElementById("forum-reply-content");
+    hidden = element.getAttribute("hidden");
 
-    if( j % 2== 1)
-        document.getElementById("reply-container").style.display = "none";
+    if( hidden )
+        element.removeAttribute("hidden");
     else
-        document.getElementById("reply-container").style.display = "flex";
-
-    j++;
+        element.setAttribute("hidden", "hidden");
 
 }
 
