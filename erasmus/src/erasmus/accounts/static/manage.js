@@ -111,7 +111,7 @@ function filterToDo(inputID, listID) {
 
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < row.length; i++) {
-    toDoName = row[i].getElementsByTagName("td")[1];
+    toDoName = row[i].getElementsByTagName("td")[0];
     if (toDoName) {
       toDoTxtValue = toDoName.textContent || toDoName.innerText;
       if (toDoTxtValue.toUpperCase().indexOf(filter) > -1) {
