@@ -41,7 +41,7 @@
                         {% csrf_token %}
                         {{response_form|crispy}}
 
-                        <button class="btn btn-primary my-4" type="submit">Submit</button>
+                        <button style="width: 80px; height: 40px;" class="btn btn-primary my-4" type="submit">Submit</button>
 
                     </div>
                 </div>
@@ -62,10 +62,13 @@
                             </div>
                         </div>
                         {% if forum_user.user.name == response.user.name %}
-                        <a href="../../delete-response/{{response.pk}}">
-                            <input type="submit" value="delete" style="width: 100px; height:40px; background-color:red;">
-                        </a>
-                        {%endif%}
+                        <div>
+
+                            <a href="../../delete-response/{{response.pk}}">
+                                <input type="submit" value="delete" style="width: 100px; height:40px; background-color:red;">
+                            </a>
+                            {%endif%}
+                        </div>
                     </div>
                 </tr>
                 {%endfor%}
