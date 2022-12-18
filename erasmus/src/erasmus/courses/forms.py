@@ -11,13 +11,14 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         # fields = ('product_text', 'product_description')
-        fields = ('course_name', 'code', 'course_credit', 'bilkent_equivalent')
+        fields = ('course_name', 'code', 'course_credit', 'bilkent_equivalent', 'syllabus')
 
 
 class BilkentCourseForm(forms.ModelForm):
     class Meta:
         model = BilkentCourse
         fields = '__all__'
+
 
 class DocumentForm(forms.ModelForm):
     class Meta:

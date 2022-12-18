@@ -135,6 +135,8 @@ class StudentProfilesView(LoginRequiredMixin, View):
         if erasmus_user is not None:
             visitor = Student.objects.filter(user=erasmus_user).first()
             if visitor is not None:
+                if visitor.pk == student.pk:
+                    return redirect("/profile/")
                 context = {'visitor': visitor, 'student': student}
                 return render(request, 'accounts/student_profile.html', context)
 
