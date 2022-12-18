@@ -70,18 +70,32 @@
                     <td>{{course.course_credit}}</td>
 
                     {% if courseList.0 is course %}
-                    <td rowspan="2">{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
-                    <td rowspan="2">{{course.bilkent_equivalent.course_credit}}</td>
-                    <td rowspan="2">NULL</td>
-                    {% if course.approved %}
+
+                    {% if courseKey.bilkent_equivalent.course_type == MUST_COURSE %}
+                    <td rowspan="2">{{courseKey.bilkent_equivalent.course_code}}: {{courseKey.bilkent_equivalent.course_name}}</td>
+                    <td rowspan="2">{{courseKey.bilkent_equivalent.course_credit}}</td>
+                    {% else %}
+                    <td rowspan="2">{{courseKey.bilkent_equivalent.elective_group_name}}</td>
+                    <td rowspan="2">{{courseKey.bilkent_equivalent.course_credit}}</td>
+                    {% endif %}
+
+                    {% if courseKey.bilkent_equivalent.course_type == ELECTIVE_COURSE %}
+                    <td rowspan="2">{{courseKey.bilkent_equivalent.course_code}}: {{courseKey.bilkent_equivalent.course_name}}</td>
+                    {% else %}
+                    <td rowspan="2"></td>
+                    {% endif %}
+
+                    {% if courseKey.approved %}
                     <td rowspan="2">Approved</td>
-                    {% elif course.is_rejected %}
+                    {% elif courseKey.is_rejected %}
                     <td rowspan="2">Rejected</td>
                     {% else %}
                     <td rowspan="2">Waiting For Approval</td>
+
                     {% endif %}
+
                     <td rowspan="2">
-                        <a class="button" href="/remove-from-courses/{{course.pk}}">Remove</a>
+                        <a class="button" href="/remove-from-courses/{{courseKey.pk}}">Remove</a>
                     </td>
                     {% endif %}
                 </tr>
