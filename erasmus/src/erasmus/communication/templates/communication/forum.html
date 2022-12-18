@@ -39,9 +39,9 @@
                         {% for post in posts %}
                         <tr>
                            <td class="forum-title" style="text-align: left"><a href="../../post-detail/{{post.pk}}"> {{post.topic}} </a></td>
-                            <td class="forum-initiatier"><a href="../../profile/{{post.user.pk}}"> {{post.user.name}}</a></td>
-                            <td class="forum-answers"><a href="../../post-detail/{{post.pk}}">  {{post.date}} </a></td>
-                            <td class="forum-answers"><a href="../../post-detail/{{post.pk}}">{{post.number_of_responses}}</a></td>
+                            <td class="forum-initiatier"> {{post.user.name}} </td>
+                            <td class="forum-answers">{{post.date}} </td>
+                            <td class="forum-answers">{{post.number_of_responses}}</td>
                              <th class="sorttable_nosort">
                                  {% if  post.user.name == forum_user.user.name %}
                                  <a href="../../delete-post/{{post.pk}}"> <button type="reset" > delete</button></a>
