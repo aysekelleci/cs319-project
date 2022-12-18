@@ -22,7 +22,7 @@ class BilkentCourseForm(forms.ModelForm):
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ('document_name', 'document', 'is_signed', 'document_type')
+        fields = ('document_name', 'document', 'document_type')
         labels = {
             'document_type': _('Document Type'),
             'document_name': _('Document Name'),
