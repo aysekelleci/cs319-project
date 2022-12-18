@@ -23,7 +23,7 @@ class University(models.Model):
     highest_grade = models.CharField(max_length=20)
     passing_grade = models.CharField(max_length=20)
     inverted_scale = models.BooleanField(default=False)
-    department = models.CharField(max_length=200) # fixme supposed to be a list of strings
+    department = models.CharField(max_length=200)
 
     def __str__(self):
         return '{}'.format(self.university_name)
@@ -37,14 +37,14 @@ class BilkentCourse(models.Model):
     course_coordinator_name = models.CharField(blank=True, max_length=100)
 
 class MergedCourse(models.Model):
-    bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, blank=True, null=True)
+    bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, null=True)
 
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
     code = models.CharField(max_length=20, default="")
     course_credit = models.FloatField()
     university = models.ForeignKey(University, on_delete=models.CASCADE, null=True, related_name='courses')
-    bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, blank=True, null=True)
+    bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, null=True)
     approved = models.BooleanField(default=False)
     merged_course = models.ForeignKey(MergedCourse, on_delete=models.SET_NULL, blank=True, null=True)
     is_merged = models.BooleanField(default=False)
