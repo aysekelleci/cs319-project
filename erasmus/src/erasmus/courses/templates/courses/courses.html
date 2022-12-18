@@ -13,7 +13,7 @@
             <table class="sortable" id="taken_courses_table" style="table-layout:fixed; width: 100%">
                 <thead>
                 <tr>
-                    <th style="width:6%" class="sorttable_nosort">Count</th>
+                    <th style="width:4%" class="sorttable_nosort"></th>
                     <th style="width:10%">Course Code</th>
                     <th style="width:20%">Course Name</th>
                     <th style="width:7%">Credits</th>
@@ -23,7 +23,7 @@
                     <th style="width:7%">Credits</th>
                     <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
                     <th style="width:10%">Status</th>
-                    <th style="width:10%" class="sorttable_nosort">Operation</th>
+                    <th style="width:12%" class="sorttable_nosort">Operation</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -115,9 +115,9 @@
 
         <h2>Add Course</h2>
         <div class="buttons">
-
             <button type="button" onclick="toggleButtons(this, 1)" id="1">Add Pre-Approved Course</button>
             <button type="button" onclick="location.href = '../../add-unapproved-course/'">Add New Course</button>
+            <button type="button" onclick="location.href = '../../add-bilkent-course/'">Add Bilkent Equivalent Course</button>
             <button type="button" onclick="location.href = '../../create-document/'">Create Document</button>
         </div>
 
