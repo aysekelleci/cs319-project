@@ -23,4 +23,9 @@ class DocumentForm(forms.ModelForm):
         model = Document
         fields = ('document_name', 'document', 'is_signed', 'document_type')
 
+class CoordinatorDocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('document_name', 'document', 'document_type', 'user')
+
 

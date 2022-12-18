@@ -69,7 +69,7 @@ class Document(models.Model):
     document = models.FileField(upload_to=STATIC_DOCUMENTS_FOLDER)
     date = models.DateTimeField(auto_now_add=True)
     is_signed = models.BooleanField(default=False) # whether student signed
-    # is_signed_coordinator = models.BooleanField(default=False)
+    is_signed_coordinator = models.BooleanField(default=False)
     user = models.ForeignKey('accounts.Student', on_delete=models.CASCADE, related_name='documents', default=1)
     document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPE_CHOICES, default=4)
 

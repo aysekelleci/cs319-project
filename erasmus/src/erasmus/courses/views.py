@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files import File
-from courses.forms import CourseForm, DocumentForm
+from courses.forms import CourseForm, DocumentForm, CoordinatorDocumentForm
 from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
 
@@ -270,42 +270,56 @@ class UploadDocumentView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         student = None
-        document_form = DocumentForm()
+        coordinator = None
+        document_form = None
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        if erasmus_user is not None:
+        if Student.objects.filter(user=erasmus_user).exists():
             student = Student.objects.filter(user=erasmus_user).first()
-        if student is None:
+            document_form = DocumentForm()
+        elif Coordinator.objects.filter(user=erasmus_user).exists():
+            coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+            document_form = CoordinatorDocumentForm()
+        else:
             redirect("/login")
 
-        context = {'student': student, 'document_form': document_form}
+        context = {'student': student, 'coordinator': coordinator, 'document_form': document_form}
         return render(request, 'courses/upload-documents.html', context)
 
     def post(self, request):
         student = None
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        if erasmus_user is not None:
+        if Student.objects.filter(user=erasmus_user).exists():
             student = Student.objects.filter(user=erasmus_user).first()
-        if student is None:
-            redirect("/login")
-
-        else:
             document_form = DocumentForm(request.POST, request.FILES)
 
             if document_form.is_valid():
                 new_document = document_form.save(commit=False)
                 new_document.user = student
-
                 # Save the document to the database
                 new_document.save()
-
+                messages.success(request, "Document is added")
+                return redirect("/documents")
             else:
-                messages.info(request, "Comment form is not valid")
-                return redirect("/courses")
+                messages.error(request, "Document form is not valid")
+                return redirect("/documents")
 
-            messages.info(request, "Document is added")
+        elif Coordinator.objects.filter(user=erasmus_user).exists():
+            coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+            document_form = CoordinatorDocumentForm(request.POST, request.FILES)
 
-            return redirect("/documents")
+            if document_form.is_valid():
+                new_document = document_form.save(commit=False)
+                new_document.is_signed_coordinator = True
+                # Save the document to the database
+                new_document.save()
+                messages.success(request, "Document is added")
+                return redirect("/documents")
+            else:
+                messages.error(request, "Document form is not valid")
+                return redirect("/documents")
+        else:
+            redirect("/login")
 class DownloadDocument(View):
     def get(self, request, document_id):
         document = get_object_or_404(Document, pk=document_id)

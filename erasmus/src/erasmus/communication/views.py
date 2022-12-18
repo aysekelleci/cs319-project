@@ -259,13 +259,17 @@ class PostDetailView(LoginRequiredMixin, View):
         user = request.user
         forum_user = get_forum_user(user)
 
-        post = get_object_or_404(Post, pk=post_id)
+        post = Post.objects.filter(pk=post_id).first()
+        responses = None
+        if post.exists():
+            responses = Response.objects.filter(post=post)
 
         new_response = None
 
         response_form = ResponseForm()
 
-        context = {'forum_user': forum_user, 'response_form': response_form, 'new_response': new_response, 'post': post}
+        context = {'forum_user': forum_user, 'response_form': response_form, 'new_response': new_response, 'post': post,
+                   'responses': responses}
 
         return render(request, 'communication/detail-post.html', context)
 
