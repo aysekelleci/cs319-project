@@ -169,7 +169,7 @@ class FlagNotificationView(LoginRequiredMixin, View):
         return redirect("/notification")
 
 #######################################################################################################################
-# Forum part
+# Forum Views
 
 
 class ForumView(LoginRequiredMixin, View):

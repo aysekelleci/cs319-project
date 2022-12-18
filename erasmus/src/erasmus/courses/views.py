@@ -31,6 +31,9 @@ def download(request, path):
             return response
     raise Http404
 
+#######################################################################################################################
+# Course views
+
 class CourseView(LoginRequiredMixin,View):
     def get(self, request):
         student = None
@@ -39,6 +42,7 @@ class CourseView(LoginRequiredMixin,View):
         approved_merged_course_dict = None
         user_unmerged_courses = None
         user_merged_course_dict = None
+        rejected_courses = None
         erasmus_user = ErasmusUser.objects.get(user=user)
         if Coordinator.objects.filter(user=erasmus_user).first():
             user_type = "Coordinator"
@@ -148,82 +152,10 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
             new_user_course = UserCourse(course=new_course, user=student)
             new_user_course.save()
 
-            # add a todo item for the coordinator to evaluate the unapproved course
-            coordinator_todo = ToDo(header=f"Evaluate new unapproved course of {erasmus_user.name}", user=student.coordinator.user,
-                                    link="waiting-courses/")
-            coordinator_todo.save()
-
         else:
             messages.info(request, "Course Form is not valid")
             return redirect("add_unapproved_course")
         return redirect("/courses")
-
-
-class DocumentView(LoginRequiredMixin, View):
-    def get(self, request):
-        documents = Document.objects.all().order_by('-date')
-        user = request.user
-
-        context = {'documents': documents}
-        return render(request, 'courses/documents.html', context)
-
-
-class UploadDocumentView(LoginRequiredMixin, View):
-    def get(self, request):
-        user = request.user
-        student = None
-        document_form = DocumentForm()
-        erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        if erasmus_user is not None:
-            student = Student.objects.filter(user=erasmus_user).first()
-        if student is None:
-            redirect("/login")
-
-        context = {'student': student, 'document_form': document_form}
-        return render(request, 'courses/upload-documents.html', context)
-
-    def post(self, request):
-        student = None
-        user = request.user
-        erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        if erasmus_user is not None:
-            student = Student.objects.filter(user=erasmus_user).first()
-        if student is None:
-            redirect("/login")
-
-        else:
-            document_form = DocumentForm(request.POST, request.FILES)
-
-            if document_form.is_valid():
-                new_document = document_form.save(commit=False)
-                new_document.user = student
-
-                # Save the document to the database
-                new_document.save()
-
-            else:
-                messages.info(request, "Comment form is not valid")
-                return redirect("/courses")
-
-            messages.info(request, "Document is added")
-
-            return redirect("/documents")
-class DownloadDocument(View):
-    def get(self, request, document_id):
-        document = get_object_or_404(Document, pk=document_id)
-
-
-class DeleteDocumentView(LoginRequiredMixin, View):
-    def get(self, request, document_id):
-        user = request.user
-        erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        if erasmus_user is not None:
-            student = Student.objects.filter(user=erasmus_user).first()
-            document = get_object_or_404(Document, pk=document_id, user=student)
-
-            document.delete()
-
-        return redirect("/documents")
 
 
 
@@ -311,6 +243,75 @@ class MergeCourseView(LoginRequiredMixin, View):
             messages.error(request, "You need to choose at least two courses to merge.")
             return redirect("/courses")
 
+#######################################################################################################################
+# Document  views
+
+class DocumentView(LoginRequiredMixin, View):
+    def get(self, request):
+        documents = Document.objects.all().order_by('-date')
+        user = request.user
+
+        context = {'documents': documents}
+        return render(request, 'courses/documents.html', context)
+
+
+class UploadDocumentView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        student = None
+        document_form = DocumentForm()
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+        if student is None:
+            redirect("/login")
+
+        context = {'student': student, 'document_form': document_form}
+        return render(request, 'courses/upload-documents.html', context)
+
+    def post(self, request):
+        student = None
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+        if student is None:
+            redirect("/login")
+
+        else:
+            document_form = DocumentForm(request.POST, request.FILES)
+
+            if document_form.is_valid():
+                new_document = document_form.save(commit=False)
+                new_document.user = student
+
+                # Save the document to the database
+                new_document.save()
+
+            else:
+                messages.info(request, "Comment form is not valid")
+                return redirect("/courses")
+
+            messages.info(request, "Document is added")
+
+            return redirect("/documents")
+class DownloadDocument(View):
+    def get(self, request, document_id):
+        document = get_object_or_404(Document, pk=document_id)
+
+
+class DeleteDocumentView(LoginRequiredMixin, View):
+    def get(self, request, document_id):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        if erasmus_user is not None:
+            student = Student.objects.filter(user=erasmus_user).first()
+            document = get_object_or_404(Document, pk=document_id, user=student)
+
+            document.delete()
+
+        return redirect("/documents")
+
 
 class CreateDocumentView(LoginRequiredMixin, View, ABC):
     @abstractmethod
@@ -320,6 +321,10 @@ class CreateDocumentView(LoginRequiredMixin, View, ABC):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         student = Student.objects.filter(user=erasmus_user).first()
+
+        if not student.university.exists():
+            messages.error(request, "You need to be placed in a university to generate documents.")
+            return redirect("/courses")
 
         document_name, date, document_type = self.fill_necessary_information(student)
 
