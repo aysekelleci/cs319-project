@@ -230,7 +230,7 @@ class DeletePostView(LoginRequiredMixin, View):
 
         forum_user = get_forum_user(user)
 
-        post = get_object_or_404(Post, pk=post_id, user=forum_user)  # Check whether given course object exists
+        post = get_object_or_404(Post, pk=post_id, user=forum_user.user)  # Check whether given course object exists
 
         post.delete()
 

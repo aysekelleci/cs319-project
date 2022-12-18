@@ -8,7 +8,7 @@
     display: flex;
     height: auto;
     width: 98.5%;
-
+    background-color: #d9b778;
     text-align: left;
     padding-top: 15px;
 
@@ -32,7 +32,7 @@
 
 .single-reply-content{
     display: flex;
-    background-color: #e36a6a;
+    background-color: rgba(0, 255, 255, 0.11);
     height: auto;
     width: 98.5%;
 }
