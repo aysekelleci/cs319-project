@@ -23,7 +23,8 @@
                     </tr>
                 </thead>
                 <tbody>
-               {% for user_course in unapproved_merged_courses %}
+                {% if unapproved_merged_courses %}
+                {% for user_course in unapproved_merged_courses %}
                 <tr>
                     <td><a>{{user_course.user.user.name}}</a></td>
                     <td><a>{{user_course.user.university}}</a></td>
@@ -43,6 +44,11 @@
                     <td><a href="/reject-course/{{user_course.course.pk}}"><i class="fa fa-times"></i></a></td>
                 </tr>
                 {%endfor%}
+                {% else %}
+                <tr>
+                    <td colspan="6">No waiting courses yet</td>
+                </tr>
+                {% endif %}
                 </tbody>
             </table>
         </div>
