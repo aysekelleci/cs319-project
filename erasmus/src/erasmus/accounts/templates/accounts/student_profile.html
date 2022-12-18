@@ -18,8 +18,8 @@
 <div class="page_content">
     <div class="student-info">
         <div>
-            <h2>Student's Files</h2>
-            <table id="user-info-table">
+            <h2>Student's Info</h2>
+            <table id="user-info-table" style="width: 100%">
                 <tr>
                     <td>E-mail:</td>
                     <td>{{student.user.email}}</td>
@@ -45,7 +45,7 @@
         <div>
             <div>
                 <h2>Student's Files</h2>
-                <table class="file-table">
+                <table class="file-table" style="width: 100%">
                     <thead>
                     <tr>
                         <th style="width:65px" id="count"></th>
@@ -73,7 +73,7 @@
             </div>
             <div>
                 <h2>Student's Courses</h2>
-                <table class="course-table">
+                <table class="course-table" style="width: 100%">
                     <thead>
                     <tr>
                     <th style="width:6%" class="sorttable_nosort">Count</th>
@@ -115,7 +115,14 @@
                     {% elif course.course.is_rejected %}
                     <td>Rejected</td>
                     {% else %}
-                    <td>Waiting For Approval</td>
+                    <td>
+                        Waiting For Approval
+                        <div style="display: flex; gap: 10px;">
+                            <a class="button" href="/approve-course/{{course.course.pk}}">Approve</a>
+                            <a class="button" href="/reject-course/{{course.course.pk}}">Reject</a>
+                         </div>
+                    </td>
+
                     {% endif %}
                     </tr>
                     {%endfor%}
