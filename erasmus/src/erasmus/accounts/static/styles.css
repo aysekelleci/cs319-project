@@ -294,7 +294,7 @@ input[type=url], input[type=text] {
 }
 
 .navbar_wrapper .main_content .page_content ol .faq-buttons {
-  /*display: none;*/
+  display: none;
   margin: -45px 0;
   position: absolute;
 }
@@ -317,4 +317,8 @@ input[type=url], input[type=text] {
 
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
   content: " \25B4\25BE"
+}
+
+textarea {
+    width: 100%;
 }
