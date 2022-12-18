@@ -3,7 +3,7 @@
 {% block header_content %}
 <div class="header">Files
     <div class="header_buttons">
-        <button type="button" onclick="location.href = '../../upload-documents'">Add a New File</button>
+        <button type="button" onclick="location.href = '../../upload-documents/0/0'">Add a New File</button>
     </div>
 </div>
 {% endblock %}
@@ -35,7 +35,7 @@
                     <td style="width:350px;">
                         <button href="#" type="button">View</button>
                         <a class="button" href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
-                        <a class="button" href="/delete-document/{{ document.pk}}">Delete</a>
+                        <a class="button" href="/delete-document/{{document.pk}}">Delete</a>
                     </td>
                 </tr>
                 {%endfor%}
