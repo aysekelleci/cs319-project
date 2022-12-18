@@ -61,11 +61,11 @@ class CourseView(LoginRequiredMixin,View):
             approved_merged_course_dict = getMergedCoursesDict(_approved_courses, _approved_merged_courses)
             approved_unmerged_courses = [course for course in _approved_courses if course.is_merged is False]
 
-            _courses_user = [user_course.course for user_course in UserCourse.objects.filter(user=student)]
-            total_ects_credit = sum([course.course_credit for course in _courses_user])
-            _merged_courses = {course.merged_course for course in _courses_user if course.is_merged is True}
-            user_merged_course_dict = getMergedCoursesDict(_courses_user, _merged_courses)
-            user_unmerged_courses = [course for course in _courses_user if course.is_merged is False]
+            _user_courses = UserCourse.objects.filter(user=student)
+            total_ects_credit = sum([course.course.course_credit for course in _user_courses])
+            _merged_courses = {course.course.merged_course for course in _user_courses if course.is_merged is True}
+            user_merged_course_dict = getMergedCoursesDict(_user_courses, _merged_courses)
+            user_unmerged_courses = [user_course for user_course in _user_courses if user_course.course.is_merged is False]
 
             rejected_courses = Course.objects.filter(university=student.university, is_rejected=True)
         else:
@@ -78,13 +78,13 @@ class CourseView(LoginRequiredMixin,View):
                    'ELECTIVE_COURSE': ELECTIVE_COURSE}
 
         return render(request, 'courses/courses.html', context)
-def getMergedCoursesDict(courses, merged_courses):
+def getMergedCoursesDict(user_courses, merged_courses):
     merged_course_dict = {}
     for merged_course in merged_courses:
         one_merged_course_contents = []  # each list contains the courses composing one merged course
-        for course in courses:
-            if ( course.is_merged and (course.merged_course.pk is merged_course.pk) ):
-                one_merged_course_contents.append(course)
+        for user_course in user_courses:
+            if (user_course.course.is_merged and (user_course.course.merged_course.pk is merged_course.pk) ):
+                one_merged_course_contents.append(user_course)
         merged_course_dict[merged_course] = one_merged_course_contents
     return merged_course_dict
 

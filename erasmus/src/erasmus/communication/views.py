@@ -254,7 +254,7 @@ class DeleteResponseView(LoginRequiredMixin, View):
         response.delete()
 
         messages.success(request, "Response is deleted")
-        return redirect("/faq")
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 class PostDetailView(LoginRequiredMixin, View):
@@ -276,10 +276,11 @@ class PostDetailView(LoginRequiredMixin, View):
 
         return render(request, 'communication/detail-post.html', context)
 
-    def post(self, request):
+    def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
         user = request.user
         forum_user = get_forum_user(user)
+        new_response = None
 
         response_form = ResponseForm(data=request.POST)
 
@@ -290,7 +291,7 @@ class PostDetailView(LoginRequiredMixin, View):
         if response_form.is_valid():
             new_response = response_form.save(commit=False)
             new_response.post = post
-            new_response.user = forum_user
+            new_response.user = forum_user.user
 
             # Save the response to the database
             new_response.save()
@@ -302,7 +303,7 @@ class PostDetailView(LoginRequiredMixin, View):
             return render(request, 'communication/detail-post.html', context)
 
         messages.success(request, " Response is added")
-        return render(request, 'communication/detail-post.html', context)
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 

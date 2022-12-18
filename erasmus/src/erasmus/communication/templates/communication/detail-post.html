@@ -38,10 +38,11 @@
                 </div>
                 <div class="forum-reply-content" id="forum-reply-content">
                     <div id="reply-container">
-                        {% csrf_token %}
-                        {{response_form|crispy}}
-
-                        <button style="width: 80px; height: 40px;" class="btn btn-primary my-4" type="submit">Submit</button>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{response_form|crispy}}
+                            <button style="width: 80px; height: 40px;" class="btn btn-primary my-4" type="submit">Submit</button>
+                        </form>
 
                     </div>
                 </div>
