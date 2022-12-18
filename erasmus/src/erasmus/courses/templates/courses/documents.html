@@ -26,6 +26,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% if documents %}
                 {% for document in documents %}
                 <tr>
                     <td style="width:65px" id="count"></td>
@@ -41,6 +42,11 @@
                     </td>
                 </tr>
                 {%endfor%}
+                {% else %}
+                <tr>
+                    <td colspan="7">No files yet</td>
+                </tr>
+                {% endif %}
                 </tbody>
             </table>
         </div>
