@@ -377,7 +377,7 @@ class UploadDocumentView(LoginRequiredMixin, View):
                 new_document = document_form.save(commit=False)
                 new_document.is_signed_coordinator = True # It is assumed that the coordinator would only add signed documents
                 if from_student_profile:
-                    new_document.user = Student.objects.filter(user=erasmus_user).first()
+                    new_document.user = Student.objects.filter(pk=viewed_student_id).first()
                 # Save the document to the database
                 new_document.save()
                 messages.success(request, "Document is added")
