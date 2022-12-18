@@ -60,6 +60,7 @@ class CourseView(LoginRequiredMixin,View):
             approved_unmerged_courses = [course for course in _approved_courses if course.is_merged is False]
 
             _courses_user = [user_course.course for user_course in UserCourse.objects.filter(user=student)]
+            #total_ects_credit
             _merged_courses = {course.merged_course for course in _courses_user if course.is_merged is True}
             user_merged_course_dict = getMergedCoursesDict(_courses_user, _merged_courses)
             user_unmerged_courses = [course for course in _courses_user if course.is_merged is False]
@@ -208,18 +209,15 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
         unapproved_unmerged_courses = UserCourse.objects.filter(course__approved__exact=False, course__is_rejected__exact=False,
                                                        course__is_merged__exact=False)
-        # get unapproved merged courses
-        unapproved_merged_courses = {user_course.course.merged_course for user_course in
-                                     UserCourse.objects.filter(course__is_merged__exact=True,
-                                                              course__merged_course__approved__exact=False,
-                                                              course__merged_course__is_rejected__exact=False
-                                                              )}
+        unapproved_merged_courses = UserCourse.objects.all().distinct("course__merged_course")
+
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
-        if coordinator is None:
-            redirect("accounts/profile")
 
+        if coordinator is None:
+            messages.error(request, "Only the coordinator can see waiting approvals.")
+            redirect("accounts/profile")
         else:
             context = {'coordinator': coordinator, 'unapproved_unmerged_courses': unapproved_unmerged_courses,
                        'unapproved_merged_courses': unapproved_merged_courses}

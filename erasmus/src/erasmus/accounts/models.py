@@ -41,7 +41,7 @@ class Student(models.Model):
     status_visibility = models.BooleanField(default=True)
 
     def __str__(self):
-        return '{}'.format(self.user.user.username)
+        return '{}'.format(self.user.name)
 
 
 class BoardMember(models.Model):
