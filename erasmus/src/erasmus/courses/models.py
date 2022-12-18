@@ -44,6 +44,8 @@ class BilkentCourse(models.Model):
 
 
 class MergedCourse(models.Model):
+    approved = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
     bilkent_equivalent = models.ForeignKey(BilkentCourse, on_delete=models.SET_NULL, null=True)
 
 class Course(models.Model):
