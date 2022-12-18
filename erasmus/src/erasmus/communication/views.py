@@ -180,7 +180,7 @@ class ForumView(LoginRequiredMixin, View):
         forum_user = get_forum_user(user)
         new_response = None
         response = ResponseForm()
-        posts = Post.objects.all
+        posts = Post.objects.all().order_by('-date').values()
         context = {'forum_user': forum_user, 'posts': posts, 'new_response': new_response}
         return render(request, 'communication/forum.html', context)
 
@@ -258,7 +258,7 @@ class PostDetailView(LoginRequiredMixin, View):
         user = request.user
         forum_user = get_forum_user(user)
 
-        post = get_object_or_404(Post, post_id)
+        post = get_object_or_404(Post, pk=post_id)
 
         new_response = None
 
@@ -269,7 +269,7 @@ class PostDetailView(LoginRequiredMixin, View):
         return render(request, 'communication/detail-post.html', context)
 
     def post(self, request):
-        post = get_object_or_404(Post, post_id)
+        post = get_object_or_404(Post, pk=post_id)
         user = request.user
         forum_user = get_forum_user(user)
 

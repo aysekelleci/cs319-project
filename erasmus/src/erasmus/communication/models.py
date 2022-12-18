@@ -37,6 +37,9 @@ class Post(models.Model):
     topic = models.CharField(max_length=50)
     text = models.TextField()
 
+    def getResponseCount(self):
+        return len(self.responses)
+
 
 class Response(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='responses')

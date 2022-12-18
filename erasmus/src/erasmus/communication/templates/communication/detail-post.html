@@ -1,0 +1,105 @@
+ {% extends 'accounts/navbar.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'detail-post.css' %}">
+{% endblock %}
+
+{% block header_content %}
+
+{% endblock %}
+{% block page_content %}
+<div class="page_content">
+
+            <div class="heading" >
+                <h1 class="head"> Replies </h1>
+            </div>
+
+            <div class="bottom-forum" >
+                <div class="forum-title">
+                     <a href="student_profile.html"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
+                    <div style="width: 95%;">
+                        <p > user: data and time</p>
+                        <h2 style="background-color: rgb(225, 184, 156);">
+                            Lorem ipsum dolor sit asaaaaaaaaaaaaaaaaaaa
+                            met consectetur adipisicing elit.scceeeeeeeeeeeeeeeeeeeeeeeeee
+                        </h2>
+                        <p> explantion of post</p>
+                    </div>
+                    <div ><button class="reply-btn-on-heading" onclick="openTextFielToReply()">
+                             <img src="../../static/respond_icon.png" alt="open" class = "reply-icon" >
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Replies table-->
+                <div class="forum-reply-content">
+                    <div id="reply-container">
+                        <input type="text" name="Reply" id="reply-to-post">
+                        <input type="submit" value="Reply" id="text-reply-btn">
+                       <!-- <input type="button" value="Cancel" id="text-cancel-reply-btn">-->
+                    </div>
+
+                    <tr class="reply-row">
+                        <div class="single-reply-content">
+                            <a href="student_profile.html"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
+                            <div class = "single-reply-text-content">
+                               <p > user: data and time</p>
+                                <h3> agfnae</h3>
+                            </div>
+                        </div>
+
+                    </tr>
+
+                    <tr class="reply-row">
+                        <div class="single-reply-content">
+                            <a href="student_profile.html"><img src="../../static/user.png" alt="user" class="reply-user-photo"></a>
+                            <div class = "single-reply-text-content">
+                            <p > user: data and time</p>
+                                ibus, nam officiafffffffffffffffııııııııııııııdaaaaaaaaaaaaaaa999999999
+                                    90wwwwwwwwwwwwwwwwdjjjjjjjjjjdwwıoğğğğğğğaaaaaaaaaaaa
+                            </div>
+
+                            <div class = "post-date">
+                                7/8/1899
+                            </div>
+                            <div class = "post-hour">
+                                12:36:45
+                            </div>
+                        </div>
+                    </tr>
+                </div>
+
+            </div>
+
+
+</div>
+
+<script>
+
+let i =0;
+let j =0;
+function openReplies() {
+
+    if( i % 2== 1)
+        document.getElementById("reply-visbility").style.display = "none";
+    else
+        document.getElementById("reply-visbility").style.display = "block";
+
+    i++;
+}
+function openTextFielToReply() {
+
+    if( j % 2== 1)
+        document.getElementById("reply-container").style.display = "none";
+    else
+        document.getElementById("reply-container").style.display = "flex";
+
+    j++;
+
+}
+
+
+</script>
+{% endblock %}

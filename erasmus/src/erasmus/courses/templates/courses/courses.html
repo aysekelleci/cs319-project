@@ -13,7 +13,7 @@
             <table class="sortable" id="taken_courses_table" style="table-layout:fixed; width: 100%">
                 <thead>
                 <tr>
-                    <th style="width:6%">Count</th>
+                    <th style="width:6%" class="sorttable_nosort">Count</th>
                     <th style="width:10%">Course Code</th>
                     <th style="width:20%">Course Name</th>
                     <th style="width:7%">Credits</th>
@@ -23,7 +23,7 @@
                     <th style="width:7%">Credits</th>
                     <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
                     <th style="width:10%">Status</th>
-                    <th style="width:10%">Operation</th>
+                    <th style="width:10%" class="sorttable_nosort">Operation</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -100,9 +100,15 @@
             <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for courses..">
             <div style="height:300px;overflow:auto;">
                 <table class="sortable" id="filtered_list" style="width:100%;">
+
                     <thead>
+                        <th class="sorttable_nosort"></th>
+                        <th colspan="3" class="sorttable_nosort">University Course</th>
+                        <th colspan="2" class="sorttable_nosort">Bilkent Equivalent</th>
+                        <th class="sorttable_nosort"></th>
+                        <th class="sorttable_nosort"></th>
                     <tr>
-                        <th style="width:6%">Count</th>
+                        <th style="width:6%" class="sorttable_nosort">Count</th>
                         <th style="width:10%">Course Code</th>
                         <th style="width:20%">Course Name</th>
                         <th style="width:7%">Credits</th>
@@ -111,7 +117,7 @@
                         </th>
                         <th style="width:7%">Credits</th>
                         <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
-                        <th style="width:10%">Operation</th>
+                        <th style="width:10%" class="sorttable_nosort">Operation</th>
                     </tr>
                     </thead>
                     <tbody>

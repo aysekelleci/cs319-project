@@ -1,4 +1,4 @@
- {% extends 'accounts/navbar.html' %}
+{% extends 'accounts/navbar.html' %}
 {% load static %}
 
 {% block stylesheet %}
@@ -51,12 +51,12 @@
                         <!-- Forum  posts part-->
                         {% for post in posts %}
                         <tr>
-                           <td class="forum-title" style="text-align: left"><a href="forum_post.html"> {{post.topic}} </a></td>
-                            <td class="forum-initiatier"><a href="forum_post.html"> {{post.user.name}}</a></td>
-                            <td class="forum-answers"><a href="forum_post.html">  {{post.date}} </a></td>
-                            <td class="forum-answers"><a href="forum_post.html">9</a></td>
+                           <td class="forum-title" style="text-align: left"><a href="../../detailed-post"> {{post.topic}} </a></td>
+                            <td class="forum-initiatier"><a href="../../detailed-post"> {{post.user.name}}</a></td>
+                            <td class="forum-answers"><a href="../../detailed-post">  {{post.date}} </a></td>
+                            <td class="forum-answers"><a href="../../detailed-post">9</a></td>
                              <th>
-                                 {% if  post.user.name == forum_user.name %}
+                                 {% if  post.user.name == forum_user.user.name %}
                                  <button type="reset" > delete</button>
                                  {% endif %}
                              </th>
