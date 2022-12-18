@@ -109,15 +109,13 @@
                 <table class="course-table" style="width: 100%">
                     <thead>
                     <tr>
-                        <th style="width:6%" class="sorttable_nosort">Count</th>
-                        <th style="width:10%">Course Code</th>
-                        <th style="width:20%">Course Name</th>
+                        <th style="width:4%" class="sorttable_nosort"></th>
+                        <th style="width:10%">{{student.university}} Course Code</th>
+                        <th style="width:20%">{{student.university}} Course Name</th>
                         <th style="width:7%">Credits</th>
-                        <th style="width:20%">Course Code and Name for a Required Course,
-                        Elective Group Name for an Elective Requirement
-                        </th>
+                        <th style="width:20%">Bilkent University Equivalent Course Type</th>
                         <th style="width:7%">Credits</th>
-                        <th style="width:20%">Elective Requirement Exemptions only: Course code(s) of directly equivalent course(s), if any **</th>
+                        <th style="width:20%">Bilkent University Equivalent Course Code and Name</th>
                         <th style="width:10%">Status</th>
                     </tr>
                     </thead>
@@ -183,9 +181,9 @@
                     <td rowspan="2"></td>
                     {% endif %}
 
-                    {% if course.approved %}
+                    {% if courseKey.approved %}
                     <td rowspan="2">Approved</td>
-                    {% elif course.is_rejected %}
+                    {% elif courseKey.is_rejected %}
                     <td rowspan="2">Rejected</td>
                     {% else %}
                     <td rowspan="2">

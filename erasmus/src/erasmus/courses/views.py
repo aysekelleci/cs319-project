@@ -206,7 +206,14 @@ class AddBilkentCourse(LoginRequiredMixin, View):
 
 class GetWaitingCoursesView(LoginRequiredMixin, View):
     def get(self, request):
-        unapproved_courses = UserCourse.objects.filter(course__approved__exact=False, course__is_rejected__exact=False)
+        unapproved_unmerged_courses = UserCourse.objects.filter(course__approved__exact=False, course__is_rejected__exact=False,
+                                                       course__is_merged__exact=False)
+        # get unapproved merged courses
+        unapproved_merged_courses = {user_course.course.merged_course for user_course in
+                                     UserCourse.objects.filter(course__is_merged__exact=True,
+                                                              course__merged_course__approved__exact=False,
+                                                              course__merged_course__is_rejected__exact=False
+                                                              )}
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
@@ -214,7 +221,8 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
             redirect("accounts/profile")
 
         else:
-            context = {'coordinator': coordinator, 'unapproved_courses': unapproved_courses}
+            context = {'coordinator': coordinator, 'unapproved_unmerged_courses': unapproved_unmerged_courses,
+                       'unapproved_merged_courses': unapproved_merged_courses}
             return render(request, 'courses/waiting_courses.html', context)
 
 
@@ -232,6 +240,7 @@ class ApproveCoursesView(LoginRequiredMixin, View):
             if course is not None:
                 if course.is_merged:
                     course.merged_course.approved = True
+                    course.merged_course.save()
                 else:
                     course.approved = True
                 course.save()
@@ -256,6 +265,7 @@ class RejectCourseView(LoginRequiredMixin, View):
             if course is not None:
                 if course.is_merged:
                     course.merged_course.is_rejected = True
+                    course.merged_course.save()
                 else:
                     course.is_rejected = True
                 course.save()
@@ -367,7 +377,7 @@ class UploadDocumentView(LoginRequiredMixin, View):
                 new_document = document_form.save(commit=False)
                 new_document.is_signed_coordinator = True # It is assumed that the coordinator would only add signed documents
                 if from_student_profile:
-                    new_document.user = Student.objects.filter(user=erasmus_user).first()
+                    new_document.user = Student.objects.filter(pk=viewed_student_id).first()
                 # Save the document to the database
                 new_document.save()
                 messages.success(request, "Document is added")
@@ -470,15 +480,19 @@ class CreatePreApprovalView(CreateDocumentView):
 
 class CreateLearningAgreementView(CreateDocumentView):
     def fill_necessary_information(self, student):
-        document = docx.api.Document('courses/static/Learning_Agreement.docx')
+        document = docx.api.Document('courses/static/learning.docx')
 
         student_info_table = document.tables[0]
         host_uni_tableB = document.tables[1]
 
         student_info_table.cell(1, 1).text = student.user.name.split()[:-1]  # name
-        student_info_table.cell(1, 3).text = str(student.user.bilkent_id)  # bilkent id number
-        student_info_table.cell(1, 0).text = student.user.name.split()[-1]  # surname
-        student_info_table.cell(3, 3).text = student.user.department  # department
+    #    student_info_table.cell(1, 3).text = str(student.user.bilkent_id)  # bilkent id number
+     #   student_info_table.cell(1, 0).text = student.user.name.split()[-1]  # surname
+      #  student_info_table.cell(3, 3).text = student.user.department  # department
+
+        for x in range(6):
+            for y in range(9):
+                student_info_table.cell( x, y).text = str( x) + ", " + str( y)
 
 
         document_name = STATIC_DOCUMENTS_FOLDER + 'learning_agreement_form.docx'
