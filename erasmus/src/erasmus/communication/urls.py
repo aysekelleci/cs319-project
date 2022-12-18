@@ -15,6 +15,7 @@ urlpatterns = [
          name="flag-notification"),
     path('add-post/', views.AddPostView.as_view(), name="add-post"),
     path('delete-post/<int:post_id>', views.DeletePostView.as_view(), name="delete-post"),
+    path('post-detail/<int:post_id>', views.PostDetailView.as_view(), name="post-detail"),
 
     path('', include('accounts.urls')),
 ]

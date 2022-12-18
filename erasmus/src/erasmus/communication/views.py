@@ -5,7 +5,7 @@ from .models import Question, Notification, Post, Response, Forum
 from django.views import View
 from accounts.models import ErasmusUser, Coordinator, Student
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import QuestionForm, PostForm
+from .forms import QuestionForm, PostForm, ResponseForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404, render
@@ -167,18 +167,18 @@ class FlagNotificationView(LoginRequiredMixin, View):
         notification.save()  # update the todo object
         return redirect("/notification")
 
+#######################################################################################################################
+# Forum part
+
 
 class ForumView(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
-        erasmus_user = ErasmusUser.objects.filter(user=user).first()
-        if erasmus_user is not None:
-            forum_user = Coordinator.objects.filter(user=erasmus_user).first()  # get coordinator
-            if forum_user is None:
-                forum_user = Coordinator.objects.filter(user=erasmus_user).first()  # get student
-
+        forum_user = get_forum_user(user)
+        new_response = None
+        response = ResponseForm()
         posts = Post.objects.all
-        context = {'forum_user': forum_user, 'posts': posts}
+        context = {'forum_user': forum_user, 'posts': posts, 'new_response': new_response}
         return render(request, 'communication/forum.html', context)
 
 
@@ -248,7 +248,73 @@ class DeleteResponseView(LoginRequiredMixin, View):
 
         messages.success(request, "Response is deleted")
         return redirect("/faq")
-        
+
+
+class PostDetailView(LoginRequiredMixin, View):
+    def get(self, request, post_id):
+        user = request.user
+        forum_user = get_forum_user(user)
+
+        post = get_object_or_404(Post, post_id)
+
+        new_response = None
+
+        response_form = ResponseForm()
+
+        context = {'forum_user': forum_user, 'response_form': response_form, 'new_response': new_response, 'post': post}
+
+        return render(request, 'communication/detail-post.html', context)
+
+    def post(self, request):
+        post = get_object_or_404(Post, post_id)
+        user = request.user
+        forum_user = get_forum_user(user)
+
+        response_form = ResponseForm(data=request.POST)
+
+        if forum_user is None:
+            # messsages.error(request, 'user does not exist in erasmus user')
+            return redirect("/accounts/profile")
+
+        if response_form.is_valid():
+            new_response = response_form.save(commit=False)
+            new_response.post = post
+            new_response.user = forum_user
+
+            # Save the response to the database
+            new_response.save()
+
+        else:
+            messages.error(request, "Response Form is not valid")
+            context = {'forum_user': forum_user, 'response_form': response_form, 'new_response': new_response,
+                       'post': post}
+            return render(request, 'communication/detail-post.html', context)
+
+        messages.success(request, " Response is added")
+        return render(request, 'communication/detail-post.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
