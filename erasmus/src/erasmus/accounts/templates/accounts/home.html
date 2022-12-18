@@ -37,13 +37,13 @@
                             Due Date: {{flaggedToDo.due_date}}<br>
                         </td>
                         <td>
-                            <a href='/flag-todo/{{flaggedToDo.pk}}/0/'><i class="fa fa-flag fa-xs"></i></a>
+                            <a href='/flag-todo/{{flaggedToDo.pk}}/0/'><img src="../../static/filled-flag-icon.png" alt="Unflag"  width="15" height="15"></a>
                         </td>
                         <td>
-                            <a href='/delete-todo/{{flaggedToDo.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
+                            <a href='/delete-todo/{{flaggedToDo.pk}}/'><img src="../../static/trash-icon.png" alt="Delete"  width="15" height="15"></a>
                         </td>
                         <td>
-                            <a href='/todo-state/{{flaggedToDo.pk}}/1/'><i class="fa fa-check fa-xs"></i></a>
+                            <a href='/todo-state/{{flaggedToDo.pk}}/1/'><img src="../../static/check-icon.png" alt="Mark as done"  width="15" height="15"></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -55,13 +55,13 @@
                             Due Date: {{toDo.due_date}}<br>
                         </td>
                         <td>
-                            <a href='/flag-todo/{{toDo.pk}}/1/'><i class="far fa-flag fa-xs"></i></a>
+                            <a href='/flag-todo/{{toDo.pk}}/1/'><img src="../../static/flag-icon.png" alt="Flag"  width="15" height="15"></a>
                         </td>
                         <td>
-                            <a href='/delete-todo/{{toDo.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
+                            <a href='/delete-todo/{{toDo.pk}}/'><img src="../../static/trash-icon.png" alt="Delete"  width="15" height="15"></a>
                         </td>
                         <td>
-                            <a href='/todo-state/{{toDo.pk}}/1/'><i class="	fa fa-check fa-xs"></i></a>
+                            <a href='/todo-state/{{toDo.pk}}/1/'><img src="../../static/check-icon.png" alt="Mark as done"  width="15" height="15"></a>
                         </td>
                     </tr>
                     {%endfor%}
@@ -83,10 +83,10 @@
                                 Due Date: {{done.due_date}}<br>
                             </td>
                             <td>
-                                <a href='/delete-todo/{{done.pk}}/'><i class="fa fa-trash fa-xs"></i></a>
+                                <a href='/delete-todo/{{done.pk}}/'><img src="../../static/trash-icon.png" alt="Delete"  width="15" height="15"></a>
                             </td>
                             <td>
-                                <a href='/todo-state/{{done.pk}}/0/'><i class="	fa fa-times fa-xs"></i></a>
+                                <a href='/todo-state/{{done.pk}}/0/'><img src="../../static/undo-icon.png" alt="Flag"  width="15" height="15"></a>
                             </td>
                         </tr>
                         {%endfor%}
