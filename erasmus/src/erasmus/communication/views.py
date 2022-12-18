@@ -209,6 +209,9 @@ class AddPostView(LoginRequiredMixin, View):
             return redirect("/forum")
 
         if post_form.is_valid():
+            if Forum.objects.filter().first() is None:
+                forum = Forum()
+                forum.save()
             new_post = post_form.save(commit=False)
             new_post.forum = forum
             new_post.user = forum_user
