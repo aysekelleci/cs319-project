@@ -102,30 +102,25 @@ function storageAvailable(type) {
 }
 
 function filterToDo(inputID, listID) {
-  // Declare variables
-  var input, filter, table, row, toDoName, i, toDoTxtValue;
-  input = document.getElementById(inputID);
-  filter = input.value.toUpperCase();
-  table = document.getElementById(listID);
-  row = table.getElementsByTagName("tr");
+    // Declare variables
+    var input, filter, table, row, toDoName, i, toDoTxtValue;
+    input = document.getElementById(inputID);
+    filter = input.value.toUpperCase();
+    table = document.getElementById(listID);
+    row = table.getElementsByTagName("tr");
 
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < row.length; i++) {
-    toDoName = row[i].getElementsByTagName("td")[0];
-    if (toDoName) {
-      toDoTxtValue = toDoName.textContent || toDoName.innerText;
-      if (toDoTxtValue.toUpperCase().indexOf(filter) > -1) {
-        row[i].style.display = "";
-      } else {
-        row[i].style.display = "none";
-      }
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < row.length; i++) {
+        toDoName = row[i].getElementsByTagName("td")[0];
+        if (toDoName) {
+            toDoTxtValue = toDoName.textContent || toDoName.innerText;
+            if (toDoTxtValue.toUpperCase().indexOf(filter) > -1) {
+                row[i].style.display = "";
+            } else {
+                row[i].style.display = "none";
+            }
+        }
     }
-  }
-}
-
-function popUp(message)
-{
-    alert(message);
 }
 
 
