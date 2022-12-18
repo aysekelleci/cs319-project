@@ -156,17 +156,12 @@ class AddUnapprovedCourse(LoginRequiredMixin, View):
         else:
             messages.info(request, "Course Form is not valid")
             return redirect("add_unapproved_course")
-
-        return render(request,
-                      'courses/add_unapproved_course.html',
-                      {'new_course': new_course,
-                       'course_form': course_form,
-                       'username': username})
+        return redirect("/courses")
 
 
 class DocumentView(LoginRequiredMixin, View):
     def get(self, request):
-        documents = Document.objects.all()
+        documents = Document.objects.all().order_by('-date').values()
         user = request.user
 
         context = {'documents': documents}
@@ -211,9 +206,8 @@ class UploadDocumentView(LoginRequiredMixin, View):
                 return redirect("/courses")
 
             messages.info(request, "Document is added")
-            context = {'student': student, 'document_form': document_form, 'new_document': new_document}
-            return render(request, 'courses/upload-documents.html', context)
 
+            return redirect("/documents")
 class DownloadDocument(View):
     def get(self, request, document_id):
         document = get_object_or_404(Document, pk=document_id)
