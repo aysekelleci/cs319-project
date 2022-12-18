@@ -16,6 +16,7 @@ urlpatterns = [
     path('todo-state/<int:todo_id>/<int:is_done>/', views.UpdateToDoStateView.as_view(),  name="todo-state"),
     path('flag-todo/<int:todo_id>/<int:is_flagged>/', views.FlagToDoView.as_view(),  name="flag-todo"),
     path('profile/', views.ProfileView.as_view(), name="profile"),
+    path('student-list/', views.StudentListView.as_view(), name= "student-list"),
     path('settings/password/', auth_views.PasswordChangeView.as_view(template_name='accounts/password_change.html',
                                                                      success_url='done'), name='password_change'),
     path('settings/password/done/', auth_views.PasswordChangeDoneView.as_view(template_name='accounts/password_change.html'),
