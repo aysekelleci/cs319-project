@@ -12,3 +12,10 @@ class ToDoForm(forms.ModelForm):
         fields = ('header', 'body', 'due_date')
 
 
+class PhoneForm(forms.ModelForm):
+    class Meta:
+        model = ErasmusUser
+        fields = ('phone',)
+
+
+
