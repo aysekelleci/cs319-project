@@ -480,15 +480,19 @@ class CreatePreApprovalView(CreateDocumentView):
 
 class CreateLearningAgreementView(CreateDocumentView):
     def fill_necessary_information(self, student):
-        document = docx.api.Document('courses/static/Learning_Agreement.docx')
+        document = docx.api.Document('courses/static/learning.docx')
 
         student_info_table = document.tables[0]
         host_uni_tableB = document.tables[1]
 
         student_info_table.cell(1, 1).text = student.user.name.split()[:-1]  # name
-        student_info_table.cell(1, 3).text = str(student.user.bilkent_id)  # bilkent id number
-        student_info_table.cell(1, 0).text = student.user.name.split()[-1]  # surname
-        student_info_table.cell(3, 3).text = student.user.department  # department
+    #    student_info_table.cell(1, 3).text = str(student.user.bilkent_id)  # bilkent id number
+     #   student_info_table.cell(1, 0).text = student.user.name.split()[-1]  # surname
+      #  student_info_table.cell(3, 3).text = student.user.department  # department
+
+        for x in range(6):
+            for y in range(9):
+                student_info_table.cell( x, y).text = str( x) + ", " + str( y)
 
 
         document_name = STATIC_DOCUMENTS_FOLDER + 'learning_agreement_form.docx'
