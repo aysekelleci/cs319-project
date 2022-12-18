@@ -177,9 +177,8 @@ class ForumView(LoginRequiredMixin, View):
         forum_user = get_forum_user(user)
         new_response = None
         response = ResponseForm()
-        posts = Post.objects.all.order_by('-date').values()
-        response_count = [len(post.responses) for post in posts]
-        context = {'forum_user': forum_user, 'posts': posts, 'new_response': new_response, "response_count": response_count}
+        posts = Post.objects.all().order_by('-date').values()
+        context = {'forum_user': forum_user, 'posts': posts, 'new_response': new_response}
         return render(request, 'communication/forum.html', context)
 
 
