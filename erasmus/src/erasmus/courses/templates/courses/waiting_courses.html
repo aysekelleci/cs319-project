@@ -47,7 +47,7 @@
                 {% for student in unapproved_final_list_students %}
                 <tr>
                     <td><a>{{student.user.name}}</a></td>
-                    <td><a>{{student.user.university}}</a></td>
+                    <td><a>{{student.university}}</a></td>
                     <td><a>Final course list waiting for approval</a></td>
                     <td><a href="../../profile/{{student.user.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
                     <td><a href="/approve-course-list/{{student.pk}}"><i class="fa fa-check"></i></a></td>
