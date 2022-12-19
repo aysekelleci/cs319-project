@@ -299,7 +299,7 @@ class SubmitCourseListView(LoginRequiredMixin, View):
                 return redirect('/courses')
 
         # update student's status
-        student.final_list_submitted = False
+        student.final_list_submitted = True
         student.status = Status.WAIT_FINAL_LIST_APPROVAL
         student.save()
 
