@@ -193,5 +193,35 @@ function mergeCourses()
 
     console.log(loc);
     window.location.href = loc;
+}
+
+function compareFiles()
+{
+    var loc = "../../compare-documents";
+    var checkboxes = document.getElementsByClassName('file-selection');
+    var selected = [];
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            selected.push(checkboxes[i].id);
+        }
+    }
+
+    if (selected.length == 2)
+    {
+        var student1 = selected[0].substring(0, selected[0].indexOf("/"));
+        var student2 = selected[1].substring(0, selected[1].indexOf("/"));
+
+
+        if (student1 == student2)
+        {
+            loc += "/" + student1;
+            loc += "/" + selected[0].substring(selected[0].indexOf("/") + 1 , selected[0].length);
+            loc += "/" + selected[1].substring(selected[1].indexOf("/") + 1, selected[1].length);
+            console.log(loc);
+            window.location.href = loc;
+
+        }
+    }
 
 }
