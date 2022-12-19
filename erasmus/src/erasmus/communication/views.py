@@ -143,8 +143,8 @@ class NotificationView(LoginRequiredMixin, View):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
 
-        unflagged_notifications = Notification.objects.filter(user=erasmus_user, is_flagged=False)
-        flagged_notifications = Notification.objects.filter(user=erasmus_user, is_flagged=True)
+        unflagged_notifications = Notification.objects.filter(user=erasmus_user, is_flagged=False).order_by('-date')
+        flagged_notifications = Notification.objects.filter(user=erasmus_user, is_flagged=True).order_by('-date')
 
         context = {'user': erasmus_user, 'unflagged_notifications': unflagged_notifications,
                    "flagged_notifications": flagged_notifications}
