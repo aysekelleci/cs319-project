@@ -25,7 +25,7 @@
             {% for student in students_of_coordinator %}
             <tr>
                 <td>{{student.user.name}}</td>
-                <td>{{student.status.value}}</td>
+                <td>{{student.status}}</td>
                 <td>{{student.university}}</td>
                 <td>{{student.coordinator.user.name}}</td>
                 <td><a href="../../profile/{{student.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
@@ -35,7 +35,7 @@
             {% for student in other_students %}
             <tr>
                 <td>{{student.user.name}}</td>
-                <td>{{student.status.name}}</td>
+                <td>{{student.status}}</td>
                 <td>{{student.university}}</td>
                 <td>{{student.coordinator.user.name}}</td>
                 <td><a href="../../profile/{{student.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
