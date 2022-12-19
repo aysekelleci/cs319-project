@@ -15,7 +15,8 @@ from courses.forms import CourseForm, DocumentForm, CoordinatorDocumentForm, Bil
 
 from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
-from accounts.models import Status
+from accounts.models import INITIAL, PLACED, NO_PLACEMENT, CHOOSING_COURSES, WAIT_COURSE_APPROVAL, WAIT_FINAL_LIST_APPROVAL,\
+    FINAL_LIST_APPROVED, WAIT_PRE_APPROVAL_FORM, IN_MOBILITY, FINISHED_MOBILITY
 from communication.models import Notification
 
 import os
@@ -270,7 +271,7 @@ class SubmitCourseView(LoginRequiredMixin, View):
             user_course.save()
 
         # update student's status
-        student.status = Status.WAIT_COURSE_APPROVAL
+        student.status = WAIT_COURSE_APPROVAL
         student.save()
 
         # send notification and todo to the coordinator fixme does the link work?
@@ -300,7 +301,7 @@ class SubmitCourseListView(LoginRequiredMixin, View):
 
         # update student's status
         student.final_list_submitted = True
-        student.status = Status.WAIT_FINAL_LIST_APPROVAL
+        student.status = WAIT_FINAL_LIST_APPROVAL
         student.save()
 
         sendNotification(header=f"{erasmus_user.name} submitted their final course list for your approval.",
@@ -389,7 +390,7 @@ class ApproveFinalListView(LoginRequiredMixin,View):
 
         # update student's status
         student.final_list_approved = True
-        student.status = Status.FINAL_LIST_APPROVED
+        student.status = FINAL_LIST_APPROVED
         student.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
@@ -423,7 +424,7 @@ class RejectFinalListView(LoginRequiredMixin, View):
 
         # change student's status
         student.final_list_submitted = False
-        student.status = Status.CHOOSING_COURSES
+        student.status = CHOOSING_COURSES
         student.save()
 
         # fixme send notification to the student
@@ -587,7 +588,7 @@ class CreateDocumentView(LoginRequiredMixin, View, ABC):
             new_pre_approval.document = File(f, name=os.path.basename(f.name))
             new_pre_approval.save()
             messages.success(request, "Document is generated")
-            student.status = Status.WAIT_PRE_APPROVAL_FORM
+            student.status = WAIT_PRE_APPROVAL_FORM
             student.save()
 
         return redirect("/courses")
