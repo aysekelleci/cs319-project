@@ -712,10 +712,13 @@ class CompareDocuments(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
         if coordinator is None:
-            messages.error(request, 'you are not allowed to compare documents')
-            redirect('/documents')
+            student_request = Student.objects.filter(user=erasmus_user).first()
 
         student = get_object_or_404(Student, pk=student_id)
+        if student.user.name != student.user.name:
+            messages.error(request, 'you are not allowed to compare documents')
+            return redirect('/documents')
+
         document1 = get_object_or_404(Document, pk=doc1_id)
         document2 = get_object_or_404(Document, pk=doc2_id)
 
@@ -732,7 +735,7 @@ class CompareDocuments(LoginRequiredMixin, View):
         doc2.compare(doc1, "user", date.today())
 
         if (doc2.revisions.count > 0):
-            document_name = STATIC_DOCUMENTS_FOLDER + 'compared4.docx'
+            document_name = STATIC_DOCUMENTS_FOLDER + 'compared.docx'
             doc2.save(document_name)
             new_document_name = document1.document_name + 'compared' #date ve doc_type da ekle
             with open(document_name, 'rb') as f:
