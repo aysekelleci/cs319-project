@@ -417,7 +417,7 @@ class RejectFinalListView(LoginRequiredMixin, View):
         # check if the user courses are all approved (merged or unmerged)
         for user_course in user_courses:
             if (user_course.course.is_merged and not user_course.course.merged_course.approved) or (
-                    not user_course.approved):
+                    not user_course.course.approved):
                 messages.error(request, "All courses should be approved first to evaluate the final list.")
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
