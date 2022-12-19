@@ -684,3 +684,43 @@ class CompareDocument(View):
         messages.success("Documents are compared successfully!!")
         return redirect('/documents')
 
+
+class CompareDocuments(LoginRequiredMixin, View):
+    def get(self, request, student_id, doc1_id, doc2_id):
+        user = request.user
+        erasmus_user = ErasmusUser.objects.filter(user=user).first()
+        coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        if coordinator is None:
+            messages.error(request, 'you are not allowed to compare documents')
+            redirect('/documents')
+
+        student = get_object_or_404(Student, pk=student_id)
+        document1 = get_object_or_404(Document, pk=doc1_id)
+        document2 = get_object_or_404(Document, pk=doc2_id)
+
+        print(document1.user.user.name)
+        print(document2.user.user.name)
+        if document1.user.user.name != document2.user.user.name:
+            messages.error(request, "You can only compare documents which belongs to same user")
+            return redirect('/documents')
+
+        doc1 = aw.Document(document1.document.path)
+
+        doc2 = aw.Document(document2.document.path)
+
+        doc2.compare(doc1, "user", date.today())
+
+        if (doc2.revisions.count > 0):
+            document_name = STATIC_DOCUMENTS_FOLDER + 'compared4.docx'
+            doc2.save(document_name)
+            new_document_name = document1.document_name + 'compared' #date ve doc_type da ekle
+            with open(document_name, 'rb') as f:
+                new_document = Document(document_name=new_document_name, user=student, document_type=document1.document_type)
+                new_document.document = File(f, name=os.path.basename(f.name))
+                new_document.save()
+            messages.success(request, "Documents are compared")
+            return redirect('/documents')
+
+        else:
+            print("Documents are equal")
+            return redirect('/documents')

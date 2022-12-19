@@ -29,6 +29,8 @@ urlpatterns = [
     path('create-document/', views.CreatePreApprovalView.as_view(), name="create-document"),
     path('delete-document/<int:document_id>', views.DeleteDocumentView.as_view(), name="delete-document"),
     path('compare-document/', views.CompareDocument.as_view(), name="compare-document"),
+    path('compare-documents/<int:student_id>/<int:doc1_id>/<int:doc2_id>', views.CompareDocuments.as_view(),
+         name="compare-documents"),
     path('submit-course/<int:course_id>', views.SubmitCourseView.as_view(), name="submit-course"),
     path('submit-course-list/', views.SubmitCourseListView.as_view(), name="submit-course-list"),
     path('approve-course-list/<int:student_id>', views.ApproveFinalListView.as_view(), name="approve-course-list"),
