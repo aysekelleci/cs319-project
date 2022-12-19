@@ -16,11 +16,12 @@ WAIT_COURSE_APPROVAL = "Waiting for the course approval"
 WAIT_FINAL_LIST_APPROVAL = "Waiting for the final course list approval"
 FINAL_LIST_APPROVED =  "Final course list is approved, generate pre-approval form"
 WAIT_PRE_APPROVAL_FORM = "Waiting for the pre-approval form to be signed"
+WAIT_MOBILITY = "Waiting for the mobility period"
 IN_MOBILITY = "In mobility period"
 FINISHED_MOBILITY = "Finished mobility period"
 
 status_list = [INITIAL, PLACED, NO_PLACEMENT, CHOOSING_COURSES, WAIT_COURSE_APPROVAL, WAIT_FINAL_LIST_APPROVAL,
-               FINAL_LIST_APPROVED, WAIT_PRE_APPROVAL_FORM, IN_MOBILITY, FINISHED_MOBILITY]
+               FINAL_LIST_APPROVED, WAIT_PRE_APPROVAL_FORM, WAIT_MOBILITY, IN_MOBILITY, FINISHED_MOBILITY]
 
 STATUS_TYPE_CHOICES = [(status, status) for status in status_list]
 
