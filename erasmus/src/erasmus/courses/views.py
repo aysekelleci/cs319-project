@@ -293,7 +293,8 @@ class SubmitCourseListView(LoginRequiredMixin, View):
 
         # check if the user courses are all approved (merged or unmerged)
         for user_course in user_courses:
-            if (user_course.course.is_merged and not user_course.course.merged_course.approved) or (not user_course.course.approved):
+            if (user_course.course.is_merged and not user_course.course.merged_course.approved) \
+                    or (not user_course.course.is_merged and not user_course.course.approved):
                 messages.error(request, "You can only submit the final list only if all the courses are approved.")
                 return redirect('/courses')
 
