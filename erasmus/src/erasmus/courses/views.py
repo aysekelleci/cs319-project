@@ -215,8 +215,21 @@ class AddBilkentCourse(LoginRequiredMixin, View):
 
         bilkent_course_form = BilkentCourseForm(data=request.POST)
         if bilkent_course_form.is_valid():
-            # Create course object but don't save to database yet
             new_course = bilkent_course_form.save(commit=False)
+            if new_course.course_type == MUST_COURSE:
+                if new_course.course_name == '' or  new_course.course_code == '':
+                    context = {'erasmus_user': erasmus_user, 'bilkent_course_form': bilkent_course_form,
+                               'new_course': new_course}
+                    messages.error(request, 'You must write course name and course code for must courses')
+                    return render(request, 'courses/add_bilkent_course.html', context)
+            # Create course object but don't save to database yet
+            if new_course.course_type == ELECTIVE_COURSE:
+                if new_course.elective_group_name == '':
+                    context = {'erasmus_user': erasmus_user, 'bilkent_course_form': bilkent_course_form,
+                               'new_course': new_course}
+                    messages.error(request, 'You must select elective group name for elective courses')
+                    return render(request, 'courses/add_bilkent_course.html', context)
+
             # Save the course to the database
             new_course.save()
         else:
