@@ -30,8 +30,8 @@
                     <td><a>{{user_course.user.university}}</a></td>
                     <td><a>Merged course waiting for approval</a></td>
                     <td><a href="../../profile/{{user_course.user.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
-                    <td><a href="/approve-course/{{user_course.course.pk}}"><i class="fa fa-check"></i></a></td>
-                    <td><a href="/reject-course/{{user_course.course.pk}}"><i class="fa fa-times"></i></a></td>
+                    <td><a href="/approve-course/{{user_course.course.pk}}"><img src="../../static/check-icon.png" alt="Approve"  width="15" height="15"></a></td>
+                    <td><a href="/reject-course/{{user_course.course.pk}}"><img src="../../static/cross-icon.png" alt="Approve"  width="13" height="13"></a></td>
                 </tr>
                 {%endfor%}
                 {% for user_course in unapproved_unmerged_courses %}
@@ -40,8 +40,8 @@
                     <td><a>{{user_course.user.university}}</a></td>
                     <td><a>{{user_course.course.course_name}} waiting for approval</a></td>
                     <td><a href="../../profile/{{user_course.user.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
-                    <td><a href="/approve-course/{{user_course.course.pk}}"><i class="fa fa-check"></i></a></td>
-                    <td><a href="/reject-course/{{user_course.course.pk}}"><i class="fa fa-times"></i></a></td>
+                    <td><a href="/approve-course/{{user_course.course.pk}}"><img src="../../static/check-icon.png" alt="Approve"  width="15" height="15"></a></td>
+                    <td><a href="/reject-course/{{user_course.course.pk}}"><img src="../../static/cross-icon.png" alt="Approve"  width="13" height="13"></a></td>
                 </tr>
                 {%endfor%}
                 {% for student in unapproved_final_list_students %}
@@ -50,8 +50,8 @@
                     <td><a>{{student.university}}</a></td>
                     <td><a>Final course list waiting for approval</a></td>
                     <td><a href="../../profile/{{student.pk}}"><i class="fas fa-external-link-alt"></i></a></td>
-                    <td><a href="/approve-course-list/{{student.pk}}"><i class="fa fa-check"></i></a></td>
-                    <td><a href="/approve-course-list/{{student.pk}}"><i class="fa fa-times"></i></a></td>
+                    <td><a href="/approve-course-list/{{student.pk}}"><img src="../../static/check-icon.png" alt="Approve"  width="15" height="15"></a></td>
+                    <td><a href="/approve-course-list/{{student.pk}}"><img src="../../static/cross-icon.png" alt="Approve"  width="13" height="13"></a></td>
                 </tr>
                 {%endfor%}
                 {% else %}
