@@ -92,6 +92,12 @@
         <div >
             <div style="border-bottom: 1px solid #e0e4e8; padding-bottom: 10px;">
                 <h2>Student's Courses</h2>
+                {% if student.final_list_approved %}
+                <div class="info-message" style="background-color: #fcf8e3; border: 1px solid #faeed2; display: flex">
+                <div style="font-weight: bold; color: #8d6d3b;">Info:</div>
+                <div style="color: #8d6d3b;">This student's course are finalized.</div>
+                </div>
+                {% endif %}
                 <table class="course-table" style="width: 100%">
                     <thead>
                     <tr>
@@ -195,7 +201,7 @@
                         {%endfor%}
                     </tbody>
                 </table>
-                {% if student.final_list_submitted %}
+                {% if student.final_list_submitted and not student.final_list_approved %}
                 <div style="padding: 0; display: flex; justify-content: right;">
                     <a style="margin-right: 20px; margin-left: auto;" class="final-list" href="../../approve-course-list/{{student.pk}}">Approve Final List</a>
                     <a style="background-color: #db1430;" class="final-list" href="../../reject-course-list/{{student.pk}}">Reject Final List</a>
