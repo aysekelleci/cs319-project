@@ -634,7 +634,13 @@ class CreatePreApprovalView(CreateDocumentView):
 
         courses = UserCourse.objects.filter(user=student)
 
-        for i, user_course in enumerate(courses):
+        unmerged_courses = UserCourse.objects.filter(user=student, course__is_merged__exact = False)
+        _user_courses = UserCourse.objects.filter(user=student)
+        _merged_courses = {course.course.merged_course for course in _user_courses if course.course.is_merged is True}
+        user_merged_course_dict = getMergedCoursesDict(_user_courses, _merged_courses)
+
+
+        for i, user_course in enumerate(unmerged_courses):
             course = user_course.course
             bilkent_equivalent = course.bilkent_equivalent
             courses_table.cell(2 + i, 1).text = course.code  # course code
@@ -649,6 +655,29 @@ class CreatePreApprovalView(CreateDocumentView):
                 courses_table.cell(2 + i, 5).text = str(bilkent_equivalent.course_credit)  # bilkent course credit
                 if bilkent_equivalent.course_type == ELECTIVE_COURSE:  # bilkent elective course code
                     courses_table.cell(2 + i, 6).text = bilkent_equivalent.course_code
+
+        for merged_course, course_list in user_merged_course_dict.items():
+            for i, user_course in enumerate(course_list):
+                j = i + len(unmerged_courses)
+                course = user_course.course
+                bilkent_equivalent = course.bilkent_equivalent
+                courses_table.cell(2 + j, 1).text = course.code  # course code
+                courses_table.cell(2 + j, 2).text = course.course_name  # course name
+                courses_table.cell(2 + j, 3).text = str(course.course_credit)  # course credit
+                if bilkent_equivalent is not None:
+                    if bilkent_equivalent.course_type == MUST_COURSE:  # bilkent course name
+                        courses_table.cell(2 + j, 4).text = bilkent_equivalent.course_code + " " + \
+                                                            bilkent_equivalent.course_name
+                    elif bilkent_equivalent.course_type == ELECTIVE_COURSE:
+                        courses_table.cell(2 + j, 4).text = bilkent_equivalent.elective_group_name
+                    courses_table.cell(2 + j, 5).text = str(bilkent_equivalent.course_credit)  # bilkent course credit
+                    if bilkent_equivalent.course_type == ELECTIVE_COURSE:  # bilkent elective course code
+                        courses_table.cell(2 + j, 6).text = bilkent_equivalent.course_code
+                if i is not len(course_list)-1:
+                    courses_table.cell(2+j, 4).merge(courses_table.cell(3+j, 4))
+                    courses_table.cell(2 + j, 5).merge(courses_table.cell(3 + j, 5))
+                    courses_table.cell(2 + j, 6).merge(courses_table.cell(3 + j, 6))
+
 
         coordinator_table.cell(1, 1).text = student.coordinator.user.name  # coordinator name
 
