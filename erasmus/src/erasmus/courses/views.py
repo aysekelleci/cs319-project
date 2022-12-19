@@ -595,10 +595,6 @@ class CreateDocumentView(LoginRequiredMixin, View, ABC):
             messages.error(request, "You need to be placed in a university to generate documents.")
             return redirect("/courses")
 
-        if not student.final_list_approved:
-            messages.error(request, "Your final course list must be approved before you can generate documents.")
-            return redirect("/courses")
-
         document_name, date, document_type = self.fill_necessary_information(student)
 
         with open(document_name, 'rb') as f:
