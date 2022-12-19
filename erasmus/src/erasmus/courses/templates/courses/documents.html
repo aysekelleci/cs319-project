@@ -49,9 +49,11 @@
                 {% endif %}
                 </tbody>
             </table>
+            {% if documents %}
             <div style="padding: 0; display: flex; justify-content: right;">
                     <a style="margin-right: 20px; margin-left: auto;" class="compare-file" onclick="compareFiles()" href="#">Compare</a>
             </div>
+        {% endif %}
         </div>
 </div>
 {% endblock %}
