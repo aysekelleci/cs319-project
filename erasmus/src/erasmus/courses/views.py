@@ -16,11 +16,21 @@ from courses.forms import CourseForm, DocumentForm, CoordinatorDocumentForm, Bil
 from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
 from accounts.models import Status
+from communication.models import Notification
 
 import os
 from django.conf import settings
 from django.http import HttpResponse, Http404
 from abc import ABC, abstractmethod
+
+def sendNotification(header, user, link=""):
+    new_notif = Notification(header=header, link=link, user=user) # user: erasmus_user
+    new_notif.save()
+
+def sendTodo(header, user, body='', link=''):
+    new_todo = ToDo(header=header, body=body, link=link, user=user)
+    new_todo.save()
+
 
 def download(request, path):
     # get the download path
@@ -261,8 +271,15 @@ class SubmitCourseView(LoginRequiredMixin, View):
 
         # update student's status
         student.status = Status.WAIT_COURSE_APPROVAL
+        student.save()
 
-        # fixme send notification and todo to the coordinator
+        # send notification and todo to the coordinator fixme does the link work?
+        # send notification and todo to the coordinator
+        sendNotification(header=f"{erasmus_user.name} submitted a course for your approval.",
+                         user=student.coordinator.user)
+        sendTodo(header=f"Approve {erasmus_user.name}'s submitted course.", user=student.coordinator.user)
+
+
         messages.success(request, "Course submitted for approval.")
         return redirect('/courses')
 
@@ -281,9 +298,15 @@ class SubmitCourseListView(LoginRequiredMixin, View):
                 return redirect('/courses')
 
         # update student's status
+        student.final_list_submitted = False
         student.status = Status.WAIT_FINAL_LIST_APPROVAL
+        student.save()
 
-        # fixme send notification and todo to the coordinator
+        sendNotification(header=f"{erasmus_user.name} submitted their final course list for your approval.",
+                         link=f"/profile/{student.pk}",
+                         user=student.coordinator.user)
+        sendTodo(header=f"Approve {erasmus_user.name}'s final course list.", user=student.coordinator.user)
+
         messages.success(request, "Final list submitted.")
         return redirect('/courses')
 
@@ -396,6 +419,11 @@ class RejectFinalListView(LoginRequiredMixin, View):
                     not user_course.approved):
                 messages.error(request, "All courses should be approved first to evaluate the final list.")
                 return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+        # change student's status
+        student.final_list_submitted = False
+        student.status = Status.CHOOSING_COURSES
+        student.save()
 
         # fixme send notification to the student
 

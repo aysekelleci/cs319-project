@@ -67,7 +67,7 @@ class AddToDoView(LoginRequiredMixin, View):
                 new_todo.save()
 
         context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
-        messages.success(request, "Todo was added successfully")
+        messages.success(request, "Todo item added successfully")
         return redirect('/accounts/profile')
 
 class DeleteToDoView(LoginRequiredMixin,View):
@@ -78,7 +78,7 @@ class DeleteToDoView(LoginRequiredMixin,View):
             todo_item = None
         if todo_item is not None:
             todo_item.delete()
-            messages.info(request, "This todo removed from the list.")
+            messages.info(request, "Todo item removed from the list.")
             return redirect("/accounts/profile")
 
 

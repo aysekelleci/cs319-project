@@ -55,6 +55,7 @@ class Student(models.Model):
     phone_visibility = models.BooleanField(default=True)
     mobility_visiblity = models.BooleanField(default=True)
     status_visibility = models.BooleanField(default=True)
+    final_list_submitted = models.BooleanField(default=False)
     final_list_approved = models.BooleanField(default=False)
 
     def __str__(self):

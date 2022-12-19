@@ -21,7 +21,9 @@
                     <th style="width:7%">Credits</th>
                     <th style="width:20%">Course Code and Name</th>
                     <th style="width:10%">Status</th>
+                    {% if not student.final_list_approved %}
                     <th style="width:12%" class="sorttable_nosort">Operation</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -55,11 +57,12 @@
                         <a class="button" style="display: flex"href="/submit-course/{{user_course.course.pk}}">Submit for Approval</a>
                         {% endif %}
                     </td>
-
+                    {% if not student.final_list_approved %}
                     <td>
                         <a class="button" href="/remove-from-courses/{{user_course.course.pk}}">Remove</a>
                         <input type="checkbox" class="merge-course-selection" id="{{user_course.course.pk}}">
                     </td>
+                    {% endif %}
                 </tr>
                 {%endfor%}
                 {% for courseKey, courseList in user_merged_course_dict.items %}
@@ -96,10 +99,11 @@
                         {% endif %}
                     </td>
 
-
+                    {% if not student.final_list_approved %}
                     <td rowspan="2">
                         <a class="button" href="/remove-from-courses/{{courseKey.pk}}">Remove</a>
                     </td>
+                    {% endif %}
                     {% endif %}
                 </tr>
                 {% endfor %}
@@ -108,7 +112,9 @@
                 <tfoot>
                 <tr>
                     <td colspan="8">ECTS Total: {{total_ects_credit}}</td>
+                    {% if not student.final_list_approved %}
                     <td><a class="button" onclick="mergeCourses()" href="#">Merge</a></td>
+                    {% endif %}
                 </tr>
                 </tfoot>
                 {% else %}
@@ -118,13 +124,18 @@
                 {% endif %}
             </table>
         </div>
+        {% if not student.final_list_approved %}
         <div style="padding: 0; display: flex; justify-content: right;">
             <a style="margin-right: 20px; margin-left: auto;" class="final-list" href="../../submit-course-list/">Submit Final List</a>
         </div>
+        {% endif %}
     </div>
+
+
     <div class="add_course">
 
         <h2>Add Course</h2>
+        {% if not student.final_list_approved %}
         <div class="buttons">
             <button type="button" onclick="toggleButtons(this, 1)" id="1">Add Pre-Approved Course</button>
             <button type="button" onclick="location.href = '../../add-unapproved-course/'">Add New Course</button>
@@ -208,7 +219,15 @@
                 </table>
             </div>
         </div>
+        {% else %}
+        <div class="info-message" style="background-color: #fcf8e3; border: 1px solid #faeed2; display: flex">
+                <div style="font-weight: bold; color: #8d6d3b;">Info:</div>
+                <div style="color: #8d6d3b;">Your courses are approved. You cannot add any courses.</div>
+            </div>
+        {% endif %}
     </div>
+
+
 </div>
 {% endblock %}
 
