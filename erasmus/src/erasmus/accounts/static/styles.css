@@ -208,7 +208,7 @@ a[class="button"] {
   border-radius: 3px;
 }
 
-.final-list {
+.final-list, .compare-file {
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
