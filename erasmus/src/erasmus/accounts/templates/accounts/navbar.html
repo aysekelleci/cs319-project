@@ -22,20 +22,20 @@
     <div class="sidebar">
         {% block sidebar %}
         <ul>
-            <li id="1-holder"><a id="1" href="../../accounts/profile/" onclick="clicked(this)"><i class="fas fa-home"></i>Home</a></li>
-            <li id="2-holder"><a id="2" href="../../notification" onclick="clicked(this)"><i class="fas fa-bell"></i>Notifications</a></li>
+            <li id="1-holder"><a id="1" href="../../accounts/profile/" onclick="clicked(this)"><img src="../../static/home-icon.png" alt="Unflag"  width="18" height="18"> Home</a></li>
+            <li id="2-holder"><a id="2" href="../../notification" onclick="clicked(this)"><img src="../../static/bell-icon.png" alt="Unflag"  width="18" height="18"> Notifications</a></li>
 
             {% if not user_type == "Coordinator" and not user_type == "BoardMember" %}
-            <li id="3-holder"><a id="3" href="../../courses" onclick="clicked(this)"><i class="fas fa-book"></i>Add Courses</a></li>
+            <li id="3-holder"><a id="3" href="../../courses" onclick="clicked(this)"><img src="../../static/book-icon.png" alt="Unflag"  width="18" height="18"> Add Courses</a></li>
             {%endif%}
             {% if not user_type == "Student" %}
-            <li id="4-holder"><a id="4" href="../../student-list" onclick="clicked(this)"><i class="fas fa-address-card"></i>Student List</a></li>
-            <li id="5-holder"><a id="5" href="../../waiting-courses" onclick="clicked(this)"><i class="fas fa-address-card"></i>Waiting Approvals</a></li>
+            <li id="4-holder"><a id="4" href="../../student-list" onclick="clicked(this)"><img src="../../static/student-icon.png" alt="Unflag"  width="18" height="18"> Student List</a></li>
+            <li id="5-holder"><a id="5" href="../../waiting-courses" onclick="clicked(this)"><img src="../../static/waiting-app-icon.png" alt="Unflag"  width="18" height="18"> Waiting Approvals</a></li>
             {%endif%}
 
-            <li id="6-holder"><a id="6" href="../../documents" onclick="clicked(this)"><i class="fas fa-project-diagram"></i>Files</a></li>
-            <li id="8-holder"><a id="8" href="../../forum" onclick="clicked(this)"><i class="fas fa-map-pin"></i>Forum</a></li>
-			<li id="9-holder"><a id="9" href="../../faq" onclick="clicked(this)"><i class="fas fa-question-circle"></i>FAQ</a></li>
+            <li id="6-holder"><a id="6" href="../../documents" onclick="clicked(this)"><img src="../../static/folder-icon.png" alt="Unflag"  width="18" height="18"> Files</a></li>
+            <li id="8-holder"><a id="8" href="../../forum" onclick="clicked(this)"><img src="../../static/forum-icon.png" alt="Unflag"  width="18" height="18"> Forum</a></li>
+			<li id="9-holder"><a id="9" href="../../faq" onclick="clicked(this)"><img src="../../static/faq-icon.png" alt="Unflag"  width="22" height="22"> FAQ</a></li>
         </ul>
         {% endblock %}
     </div>
