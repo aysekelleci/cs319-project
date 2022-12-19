@@ -14,12 +14,12 @@
                 <thead>
                 <tr>
                     <th style="width:4%" class="sorttable_nosort"></th>
-                    <th style="width:10%">Course Code</th>
-                    <th style="width:20%">Course Name</th>
+                    <th style="width:10%">{{student.university}} Course Code</th>
+                    <th style="width:20%">{{student.university}} Course Name</th>
                     <th style="width:7%">Credits</th>
-                    <th style="width:20%">Course Type</th>
+                    <th style="width:20%">Bilkent University Equivalent Course Type</th>
                     <th style="width:7%">Credits</th>
-                    <th style="width:20%">Course Code and Name</th>
+                    <th style="width:20%">Bilkent University Equivalent Course Code and Name</th>
                     <th style="width:10%">Status</th>
                     {% if not student.final_list_approved %}
                     <th style="width:12%" class="sorttable_nosort">Operation</th>
@@ -148,7 +148,7 @@
 
         <div hidden="hidden" id="toggle-element-1">
             <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for courses..">
-            <div style="height:300px;overflow:auto;">
+            <div>
                 <table class="sortable" id="filtered_list" style="width:100%;">
 
                     <thead>
@@ -180,7 +180,7 @@
                         {% else %}
                         <td>{{course.bilkent_equivalent.elective_group_name}}</td>
                         <td>{{course.bilkent_equivalent.course_credit}}</td>
-                        <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+                        <td></td>
                         {% endif %}
 
                         <td><a class="button" href="/add-to-courses/{{course.pk}}">Add</a></td>

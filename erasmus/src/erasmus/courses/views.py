@@ -16,7 +16,7 @@ from courses.forms import CourseForm, DocumentForm, CoordinatorDocumentForm, Bil
 from .models import Course, Document, MergedCourse, MUST_COURSE, ELECTIVE_COURSE, PREAPPROVAL_FORM, STATIC_DOCUMENTS_FOLDER
 from accounts.models import UserCourse, Student, ErasmusUser, Coordinator, ToDo, BoardMember
 from accounts.models import INITIAL, PLACED, NO_PLACEMENT, CHOOSING_COURSES, WAIT_COURSE_APPROVAL, WAIT_FINAL_LIST_APPROVAL,\
-    FINAL_LIST_APPROVED, WAIT_PRE_APPROVAL_FORM, IN_MOBILITY, FINISHED_MOBILITY
+    FINAL_LIST_APPROVED, WAIT_PRE_APPROVAL_FORM, WAIT_MOBILITY, IN_MOBILITY, FINISHED_MOBILITY
 from communication.models import Notification
 
 import os
@@ -556,6 +556,7 @@ class UploadDocumentView(LoginRequiredMixin, View):
                 # Save the document to the database
                 new_document.save()
                 messages.success(request, "Document is added")
+                new_document.student.status = WAIT_MOBILITY
                 return redirect("/documents")
             else:
                 messages.error(request, "Document form is not valid")
@@ -636,7 +637,7 @@ class CreatePreApprovalView(CreateDocumentView):
         for i, user_course in enumerate(courses):
             course = user_course.course
             bilkent_equivalent = course.bilkent_equivalent
-            #courses_table.cell(2 + i, 1).text = course.code  # course code
+            courses_table.cell(2 + i, 1).text = course.code  # course code
             courses_table.cell(2 + i, 2).text = course.course_name  # course name
             courses_table.cell(2 + i, 3).text = str(course.course_credit)  # course credit
             if bilkent_equivalent is not None:
@@ -647,7 +648,7 @@ class CreatePreApprovalView(CreateDocumentView):
                     courses_table.cell(2 + i, 4).text = bilkent_equivalent.elective_group_name
                 courses_table.cell(2 + i, 5).text = str(bilkent_equivalent.course_credit)  # bilkent course credit
                 if bilkent_equivalent.course_type == ELECTIVE_COURSE:  # bilkent elective course code
-                    courses_table.cell(2 + i, 6).text = bilkent_equivalent.code
+                    courses_table.cell(2 + i, 6).text = bilkent_equivalent.course_code
 
         coordinator_table.cell(1, 1).text = student.coordinator.user.name  # coordinator name
 
