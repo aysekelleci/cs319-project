@@ -29,7 +29,7 @@ class ErasmusUser(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     bilkent_id = models.IntegerField()
-    phone = models.IntegerField(default="", blank=True) # fixit charfield olsun
+    phone = models.CharField(default="", blank=True, max_length=100) # fixit charfield olsun
     department = models.CharField(max_length=100, default="Computer Engineering")
 
     def __str__(self):
