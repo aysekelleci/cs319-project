@@ -148,7 +148,7 @@
 
         <div hidden="hidden" id="toggle-element-1">
             <input type="text" id="filter_input" onkeyup="filterTable()" style="width:100%" placeholder="Search for courses..">
-            <div style="height:300px;overflow:auto;">
+            <div>
                 <table class="sortable" id="filtered_list" style="width:100%;">
 
                     <thead>
@@ -180,7 +180,7 @@
                         {% else %}
                         <td>{{course.bilkent_equivalent.elective_group_name}}</td>
                         <td>{{course.bilkent_equivalent.course_credit}}</td>
-                        <td>{{course.bilkent_equivalent.course_code}}: {{course.bilkent_equivalent.course_name}}</td>
+                        <td></td>
                         {% endif %}
 
                         <td><a class="button" href="/add-to-courses/{{course.pk}}">Add</a></td>
