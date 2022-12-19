@@ -145,8 +145,8 @@
                                 <div style="display: block; align: center; padding: 0">
                                     {% if not course.approved and not course.is_rejected %}
                                         <div style="display: flex; padding: 0">
-                                            <a class="button" href="/approve-course/{{course.pk}}">Approve</a>
-                                            <a class="button" href="/reject-course/{{course.pk}}">Reject</a>
+                                            <a class="button" href="/approve-course/{{student.pk}}/{{course.pk}}">Approve</a>
+                                            <a class="button" href="/reject-course/{{student.pk}}/{{course.pk}}">Reject</a>
                                         </div>
                                     {% endif %}
                                     {% if course.syllabus %}
@@ -191,8 +191,8 @@
                     <td rowspan="2">
                         Waiting For Approval
                         <div style="display: flex; gap: 10px;">
-                            <a class="button" href="/approve-course/{{course.pk}}">Approve</a>
-                           <a class="button" href="/reject-course/{{course.pk}}">Reject</a>
+                            <a class="button" href="/approve-course/{{studenk.pk}}/{{course.pk}}">Approve</a>
+                           <a class="button" href="/reject-course/{{studenk.pk}}/{{course.pk}}">Reject</a>
                         </div></td>
                     {% endif %}
                     {% endif %}

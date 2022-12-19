@@ -135,11 +135,13 @@
     <div class="add_course">
 
         <h2>Add Course</h2>
-        {% if not student.final_list_approved %}
+
         <div class="buttons">
+            {% if not student.final_list_approved %}
             <button type="button" onclick="toggleButtons(this, 1)" id="1">Add Pre-Approved Course</button>
             <button type="button" onclick="location.href = '../../add-unapproved-course/'">Add New Course</button>
             <button type="button" onclick="location.href = '../../add-bilkent-course/'">Add Bilkent Equivalent Course</button>
+            {% endif %}
             <button type="button" onclick="location.href = '../../create-document/'">Create Document</button>
         </div>
 
@@ -219,7 +221,7 @@
                 </table>
             </div>
         </div>
-        {% else %}
+        {% if student.final_list_approved %}
         <div class="info-message" style="background-color: #fcf8e3; border: 1px solid #faeed2; display: flex">
                 <div style="font-weight: bold; color: #8d6d3b;">Info:</div>
                 <div style="color: #8d6d3b;">Your courses are approved. You cannot add any courses.</div>

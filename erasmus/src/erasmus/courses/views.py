@@ -239,7 +239,7 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
                                                              course__merged_course__submitted__exact=True,
                                                              course__is_merged__exact=True).distinct("course__merged_course")
 
-        unapproved_final_list_students = Student.objects.all().filter(status__exact=Status.WAIT_FINAL_LIST_APPROVAL)
+        unapproved_final_list_students = Student.objects.all().filter(status__exact=WAIT_FINAL_LIST_APPROVAL)
 
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
@@ -313,11 +313,11 @@ class SubmitCourseListView(LoginRequiredMixin, View):
         return redirect('/courses')
 
 class ApproveCoursesView(LoginRequiredMixin, View):
-    def get(self, request, course_id):
-        unapproved_courses = Course.objects.filter(approved=False)
+    def get(self, request, course_id, student_id):
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        student = Student.objects.filter(pk=student_id).first()
         if coordinator is None:
             messages.error(request, "Only coordinators can evaluate courses.")
             return redirect("accounts/profile")
@@ -331,6 +331,8 @@ class ApproveCoursesView(LoginRequiredMixin, View):
                     course.approved = True
                 course.save()
                 messages.success(request, "Course approved.")
+                sendNotification(header=f"{coordinator.user.name} approved your course.",
+                                 user=student.user)
             else:
                 messages.error(request, "This is not a course.")
 
@@ -338,11 +340,12 @@ class ApproveCoursesView(LoginRequiredMixin, View):
 
 
 class RejectCourseView(LoginRequiredMixin, View):
-    def get(self, request, course_id):
+    def get(self, request, course_id, student_id):
         unapproved_courses = Course.objects.filter(approved=False)
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         coordinator = Coordinator.objects.filter(user=erasmus_user).first()
+        student = Student.objects.filter(pk=student_id).first()
         if coordinator is None:
             messages.error(request, "Only coordinators can evaluate courses.")
             return redirect('accounts/profile')
@@ -356,6 +359,8 @@ class RejectCourseView(LoginRequiredMixin, View):
                     course.is_rejected = True
                 course.save()
                 messages.success(request, "Course rejected.")
+                sendNotification(header=f"{coordinator.user.name} rejected your course.",
+                                 user=student.user)
             else:
                 messages.error(request, "This is not a course.")
 
