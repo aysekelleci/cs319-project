@@ -239,7 +239,7 @@ class GetWaitingCoursesView(LoginRequiredMixin, View):
                                                              course__merged_course__submitted__exact=True,
                                                              course__is_merged__exact=True).distinct("course__merged_course")
 
-        unapproved_final_list_students = Student.objects.all().filter(status__exact=Status.WAIT_FINAL_LIST_APPROVAL)
+        unapproved_final_list_students = Student.objects.all().filter(status__exact=WAIT_FINAL_LIST_APPROVAL)
 
         user = request.user
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
