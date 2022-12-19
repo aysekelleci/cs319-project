@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% if unapproved_merged_courses %}
+                {% if unapproved_merged_courses or  unapproved_unmerged_courses or unapproved_final_list_students%}
                 {% for user_course in unapproved_merged_courses %}
                 <tr>
                     <td><a>{{user_course.user.user.name}}</a></td>
@@ -44,12 +44,6 @@
                     <td><a href="/reject-course/{{user_course.course.pk}}"><i class="fa fa-times"></i></a></td>
                 </tr>
                 {%endfor%}
-                {% else %}
-                <tr>
-                    <td colspan="6">No waiting courses yet</td>
-                </tr>
-                {% endif %}
-
                 {% for student in unapproved_final_list_students %}
                 <tr>
                     <td><a>{{student.user.name}}</a></td>
@@ -60,6 +54,11 @@
                     <td><a href="/approve-course-list/{{student.pk}}"><i class="fa fa-times"></i></a></td>
                 </tr>
                 {%endfor%}
+                {% else %}
+                <tr>
+                    <td colspan="6">No waiting courses yet</td>
+                </tr>
+                {% endif %}
                 </tbody>
             </table>
         </div>
