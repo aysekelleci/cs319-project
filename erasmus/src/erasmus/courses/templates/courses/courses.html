@@ -95,13 +95,13 @@
                         {% elif courseKey.submitted %}
                         Waiting for Approval
                         {% else %}
-                        <a class="button" style="display: flex"href="/submit-course/{{courseKey.pk}}">Submit for Approval</a>
+                        <a class="button" style="display: flex"href="/submit-course/{{user_course.course.pk}}">Submit for Approval</a>
                         {% endif %}
                     </td>
 
                     {% if not student.final_list_approved %}
                     <td rowspan="2">
-                        <a class="button" href="/remove-from-courses/{{courseKey.pk}}">Remove</a>
+                        <a class="button" href="/remove-from-courses/{{user_course.course.pk}}">Remove</a>
                     </td>
                     {% endif %}
                     {% endif %}
