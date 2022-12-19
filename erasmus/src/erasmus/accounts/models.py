@@ -7,21 +7,22 @@ from django.utils import timezone
 from courses.models import Course, University
 
 
-from enum import Enum
 
-class Status(Enum):
-    INITIAL = "Account created"
-    PLACED = "Placement done"
-    NO_PLACEMENT = "No placement"
-    CHOOSING_COURSES = "Choosing courses"
-    WAIT_COURSE_APPROVAL = "Waiting for the course approval"
-    WAIT_FINAL_LIST_APPROVAL = "Waiting for the final course list approval"
-    FINAL_LIST_APPROVED =  "Final course list is approved, generate pre-approval form"
-    WAIT_PRE_APPROVAL_FORM = "Waiting for the pre-approval form to be signed"
-    IN_MOBILITY = "In mobility period"
-    FINISHED_MOBILITY = "Finished mobility period"
+INITIAL = "Account created"
+PLACED = "Placement done"
+NO_PLACEMENT = "No placement"
+CHOOSING_COURSES = "Choosing courses"
+WAIT_COURSE_APPROVAL = "Waiting for the course approval"
+WAIT_FINAL_LIST_APPROVAL = "Waiting for the final course list approval"
+FINAL_LIST_APPROVED =  "Final course list is approved, generate pre-approval form"
+WAIT_PRE_APPROVAL_FORM = "Waiting for the pre-approval form to be signed"
+IN_MOBILITY = "In mobility period"
+FINISHED_MOBILITY = "Finished mobility period"
 
-STATUS_TYPE_CHOICES = [(status.value, status.value) for status in Status]
+status_list = [INITIAL, PLACED, NO_PLACEMENT, CHOOSING_COURSES, WAIT_COURSE_APPROVAL, WAIT_FINAL_LIST_APPROVAL,
+               FINAL_LIST_APPROVED, WAIT_PRE_APPROVAL_FORM, IN_MOBILITY, FINISHED_MOBILITY]
+
+STATUS_TYPE_CHOICES = [(status, status) for status in status_list]
 
 class ErasmusUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='erasmus_user')
