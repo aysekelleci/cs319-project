@@ -87,7 +87,7 @@
                     {% endif %}
 
 
-                    <td rowspan="2">
+                    <td rowspan="{{courseList|length}}">
                         {% if courseKey.approved %}
                         Approved
                         {% elif courseKey.is_rejected %}

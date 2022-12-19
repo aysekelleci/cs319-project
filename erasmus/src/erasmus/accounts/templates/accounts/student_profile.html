@@ -192,8 +192,8 @@
                     <td rowspan="2">Waiting For Approval</td>
                     {% endif %}
 
-                            <td style="padding: 0">
-                                <div style=" align: center; padding: 0">
+                            <td rowspan="{{courseList|length}}"style="padding: 0">
+                                <div style=" display: block; align: center; padding: 0">
                                     {% if not courseKey.approved and not courseKey.is_rejected %}
                                     <div style="display: flex; padding: 0">
                                         <a class="button" href="/approve-course/{{student.pk}}/{{course.pk}}">Approve</a>
