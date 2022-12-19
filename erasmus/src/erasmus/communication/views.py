@@ -292,6 +292,10 @@ class PostDetailView(LoginRequiredMixin, View):
             new_response = response_form.save(commit=False)
             new_response.post = post
             new_response.user = forum_user.user
+            # send a notification to post's original poster
+            if forum_user.user.user.pk is not user.pk:
+                new_notif = Notification(header=f"{forum_user.user.name} responded to your post, {post.topic}", user =forum_user.user)
+                new_notif.save()
 
             # Save the response to the database
             new_response.save()

@@ -29,15 +29,16 @@
                 {% if documents %}
                 {% for document in documents %}
                 <tr>
-                    <td style="width:65px" id="count"></td>
-                    <td style="width:150px">{{document.document_type}}</td>
-                    <td style="width:175px">{{document.document_name}}</td>
-                    <td style="width:175px">{{document.is_signed_coordinator}}</td>
-                    <td style="width:200px">{{document.date}}</td>
-                    <td style="width:175px">{{document.get_file_format}}</td>
-                    <td style="width:350px;">
+                    <td style="width:6%" id="count"></td>
+                    <td style="width:17%">{{document.document_type}}</td>
+                    <td style="width:15%">{{document.document_name}}</td>
+                    <td style="width:15%">{{document.is_signed_coordinator}}</td>
+                    <td style="width:15%">{{document.date}}</td>
+                    <td style="width:12%">{{document.get_file_format}}</td>
+                    <td>
                         <a class="button" href="{{document.document.url}}" download="{{document.document.url}}">Download</a>
                         <a class="button" href="/delete-document/{{document.pk}}">Delete</a>
+                        <input type="checkbox" class="file-selection" id="{{document.user.pk}}/{{document.pk}}">
                     </td>
                 </tr>
                 {%endfor%}
@@ -48,6 +49,9 @@
                 {% endif %}
                 </tbody>
             </table>
+            <div style="padding: 0; display: flex; justify-content: right;">
+                    <a style="margin-right: 20px; margin-left: auto;" class="compare-file" onclick="compareFiles()" href="#">Compare</a>
+            </div>
         </div>
 </div>
 {% endblock %}
