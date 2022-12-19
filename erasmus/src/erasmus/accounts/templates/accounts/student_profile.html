@@ -143,9 +143,11 @@
                                             <a class="button" href="/reject-course/{{course.pk}}">Reject</a>
                                         </div>
                                     {% endif %}
+                                    {% if course.syllabus %}
                                     <div style="display: flex;";>
-                                        <a class="button" href="/reject-course/{{course.pk}}">View Syllabus</a>
+                                        <a class="button" href="course.syllabus">View Syllabus</a>
                                     </div>
+                                    {% endif %}
 
                             </div></td>
                         </tr>
