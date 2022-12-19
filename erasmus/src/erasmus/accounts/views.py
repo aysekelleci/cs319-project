@@ -65,10 +65,14 @@ class AddToDoView(LoginRequiredMixin, View):
                 new_todo = todo_form.save(commit=False)
                 new_todo.user = erasmus_user
                 new_todo.save()
+                messages.success(request, "Todo item added successfully")
+                return redirect('/accounts/profile')
 
-        context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
-        messages.success(request, "Todo item added successfully")
-        return redirect('/accounts/profile')
+            else:
+                messages.error(request, 'to do form is not valid')
+                context = {'user': erasmus_user, 'todo_form': todo_form, 'new_todo' : new_todo}
+                return render(request, 'accounts/add-todo.html', context)
+
 
 class DeleteToDoView(LoginRequiredMixin,View):
     def get(self, request, todo_id):

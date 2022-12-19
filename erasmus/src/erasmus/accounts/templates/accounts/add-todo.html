@@ -38,7 +38,7 @@ input {
 <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{todo_form|crispy}}
-        <p>date should be in the form of dd/mm/yyyy</p>
+        <p>date should be in the form of mm/dd/yyyy</p>
         <button class="btn btn-primary my-4" type="submit">Submit</button>
 </form>
 </div>
