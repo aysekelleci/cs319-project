@@ -399,7 +399,6 @@ class ApproveFinalListView(LoginRequiredMixin,View):
             return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
         # check if the user courses are all approved (merged or unmerged)
-        # fixme ask the team
         for user_course in user_courses:
             if (user_course.course.is_merged and not user_course.course.merged_course.approved) or (
             not user_course.course.approved):
@@ -410,6 +409,8 @@ class ApproveFinalListView(LoginRequiredMixin,View):
         student.final_list_approved = True
         student.status = FINAL_LIST_APPROVED
         student.save()
+        sendNotification(header=f"{coordinator.user.name} approved your course list.",
+                         user=student.user)
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
@@ -445,7 +446,8 @@ class RejectFinalListView(LoginRequiredMixin, View):
         student.status = CHOOSING_COURSES
         student.save()
 
-        # fixme send notification to the student
+        sendNotification(header=f"{coordinator.user.name} rejected your course list.",
+                         user=student.user)
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 class MergeCourseView(LoginRequiredMixin, View):
@@ -607,6 +609,10 @@ class CreateDocumentView(LoginRequiredMixin, View, ABC):
             new_pre_approval.save()
             messages.success(request, "Document is generated")
             student.status = WAIT_PRE_APPROVAL_FORM
+            # send notification and todo to the coordinator
+            sendNotification(header=f"{student.user.name} created a {document_type}.",
+                             user=student.user)
+            sendTodo(header=f"Sign {student.user.name}'s {document_type}.", user=student.coordinator.user)
             student.save()
 
         return redirect("/courses")
