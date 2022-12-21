@@ -95,13 +95,13 @@
                         {% elif courseKey.submitted %}
                         Waiting for Approval
                         {% else %}
-                        <a class="button" style="display: flex"href="/submit-course/{{courseKey.pk}}">Submit for Approval</a>
+                        <a class="button" style="display: flex"href="/submit-course/{{user_course.course.pk}}">Submit for Approval</a>
                         {% endif %}
                     </td>
 
                     {% if not student.final_list_approved %}
                     <td rowspan="2">
-                        <a class="button" href="/remove-from-courses/{{courseKey.pk}}">Remove</a>
+                        <a class="button" href="/remove-from-courses/{{user_course.course.pk}}">Remove</a>
                     </td>
                     {% endif %}
                     {% endif %}
@@ -135,7 +135,7 @@
     <div class="add_course">
 
         <h2>Add Course</h2>
-
+        {% if not student.final_list_approved %}
         <div class="buttons">
             {% if not student.final_list_approved %}
             <button type="button" onclick="toggleButtons(this, 1)" id="1">Add Pre-Approved Course</button>
@@ -221,7 +221,7 @@
                 </table>
             </div>
         </div>
-        {% if student.final_list_approved %}
+        {% elif student.final_list_approved %}
         <div class="info-message" style="background-color: #fcf8e3; border: 1px solid #faeed2; display: flex">
                 <div style="font-weight: bold; color: #8d6d3b;">Info:</div>
                 <div style="color: #8d6d3b;">Your courses are approved. You cannot add any courses.</div>
