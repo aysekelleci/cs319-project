@@ -151,7 +151,7 @@
                                         </div>
                                     {% endif %}
                                     {% if course.syllabus %}
-                                    <div style="display: flex;";>
+                                    <div style="display: flex;">
                                         <a class="button" href="//{{course.syllabus}}">View Syllabus</a>
                                     </div>
                                     {% endif %}
@@ -189,13 +189,23 @@
                     {% elif courseKey.is_rejected %}
                     <td rowspan="2">Rejected</td>
                     {% else %}
-                    <td rowspan="2">
-                        Waiting For Approval
-                        <div style="display: flex; gap: 10px;">
-                            <a class="button" href="/approve-course/{{course.pk}}/{{student.pk}}">Approve</a>
-                           <a class="button" href="/reject-course/{{course.pk}}/{{student.pk}}">Reject</a>
-                        </div></td>
+                    <td rowspan="2">Waiting For Approval</td>
                     {% endif %}
+                            <td rowspan="{{courseList|length}}" style="padding: 0">
+                                <div style="display: block; align: center; padding: 0">
+                                    {% if not courseKey.approved and not courseKey.is_rejected %}
+                                        <div style="display: flex; gap: 10px;">
+                                            <a class="button" href="/approve-course/{{course.pk}}/{{student.pk}}">Approve</a>
+                                            <a class="button" href="/reject-course/{{course.pk}}/{{student.pk}}">Reject</a>
+                                        </div></td>
+                                    {% endif %}
+
+                            </div></td>
+
+
+
+
+
                     {% endif %}
                 </tr>
                         {%endfor%}
