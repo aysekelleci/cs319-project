@@ -32,10 +32,17 @@
             <div>
                 <input type="text" id="filter_input" onkeyup="filterToDo('filter_input', 'filtered_list')" style="width:100%" placeholder="Search for To Do">
                 <table id="filtered_list" style="width:100%">
+                    <thead>
+                    <tr>
+                    <th style="width:70%">Information</th>
+                    <th style="width:30%" colspan="3">Operations</th>
+                    </tr>
+                    </thead>
                     <tbody>
+                    {% if unflagged_todo or flagged_todo %}
                     {% for flaggedToDo in flagged_todo %}
                     <tr bgcolor= "#FFBAAB">
-                        <td style="width:100%">
+                        <td>
                             <a href="../../courses">{{flaggedToDo.header}}</a><br>
                             Explanation: {{flaggedToDo.body}}<br>
                             Due Date: {{flaggedToDo.due_date}}<br>
@@ -69,6 +76,9 @@
                         </td>
                     </tr>
                     {%endfor%}
+                    {% else %}
+                    <tr><td colspan="2">No to-do items yet</td></td></tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
@@ -78,10 +88,17 @@
             <div>
                 <input type="text" id="filter_input2" onkeyup="filterToDo('filter_input2', 'filtered_list2')" style="width:100%" placeholder="Search for Done">
                 <table id="filtered_list2" style="width:100%">
+                    <thead>
+                    <tr>
+                    <th style="width:80%">Information</th>
+                    <th style="width:20%" colspan="3">Operations</th>
+                    </tr>
+                    </thead>
                     <tbody>
+                    {% if done %}
                         {% for done in done %}
                         <tr>
-                            <td style="width:100%">
+                            <td>
                                 <a href=#>{{done.header}}</a><br>
                                 Explanation: {{done.body}}<br>
                                 Due Date: {{done.due_date}}<br>
@@ -94,6 +111,9 @@
                             </td>
                         </tr>
                         {%endfor%}
+                    {% else %}
+                    <tr><td colspan="2">No done items yet</td></td></tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
