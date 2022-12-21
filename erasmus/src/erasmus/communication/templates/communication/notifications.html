@@ -17,8 +17,11 @@
             <table id="filtered_list" style="width:100%">
                 <thead>
                     <td style="width: 10%"><a>Date</a></td>
+                    <td style="width: 85%"><a>Subject</a></td>
+                    <td colspan="2" style="width: 5%"><a>Operations</a></td>
                 </thead>
                 <tbody>
+                {% if flagged_notifications or unflagged_notifications %}
                 {% for notif in flagged_notifications %}
                 <tr bgcolor= "#FFBAAB">
                     <td style="width: 10%"><a>{{notif.date}}</a></td>
@@ -43,6 +46,11 @@
                     </td>
                 </tr>
                 {%endfor%}
+                {% else %}
+                <tr>
+                    <td colspan="3">No notifications yet</td>
+                </tr>
+                {% endif %}
                 </tbody>
             </table>
         </div>

@@ -273,7 +273,7 @@ class SubmitCourseView(LoginRequiredMixin, View):
         erasmus_user = ErasmusUser.objects.filter(user=user).first()
         student = Student.objects.filter(user=erasmus_user).first()
 
-        user_course = UserCourse.objects.filter(course__pk__exact=course_id).first()
+        user_course = UserCourse.objects.filter(course__pk__exact=course_id, user=student).first()
 
         # update user course's submitted status
         if user_course.course.is_merged:
