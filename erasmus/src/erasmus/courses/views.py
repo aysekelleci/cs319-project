@@ -736,6 +736,7 @@ class CompareDocument(View):
         return redirect('/documents')
 
 
+# compare two documents to see the differences
 class CompareDocuments(LoginRequiredMixin, View):
     def get(self, request, student_id, doc1_id, doc2_id):
         user = request.user
@@ -758,16 +759,22 @@ class CompareDocuments(LoginRequiredMixin, View):
             messages.error(request, "You can only compare documents which belongs to same user")
             return redirect('/documents')
 
+        if document1.document_type != document2.document_type:
+            messages.error(request, "You can only compare documents having same document type")
+            return redirect('/documents')
+
         doc1 = aw.Document(document1.document.path)
 
         doc2 = aw.Document(document2.document.path)
 
         doc2.compare(doc1, "user", date.today())
 
-        if (doc2.revisions.count > 0):
+        if doc2.revisions.count > 0:
             document_name = STATIC_DOCUMENTS_FOLDER + 'compared.docx'
             doc2.save(document_name)
-            new_document_name = document1.document_name + 'compared' #date ve doc_type da ekle
+            new_document_name = 'Compared ' + document1.document_type + ' ' + document1.user.user.name + str(document1.date.strftime('%m/%d/%Y %H:%M'))\
+                                + ' and ' + str(document2.date.strftime('%m/%d/%Y %H:%M'))
+
             with open(document_name, 'rb') as f:
                 new_document = Document(document_name=new_document_name, user=student, document_type=document1.document_type)
                 new_document.document = File(f, name=os.path.basename(f.name))
@@ -778,3 +785,5 @@ class CompareDocuments(LoginRequiredMixin, View):
         else:
             print("Documents are equal")
             return redirect('/documents')
+
+
