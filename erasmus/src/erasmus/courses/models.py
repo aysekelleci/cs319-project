@@ -75,7 +75,7 @@ DOCUMENT_TYPE_CHOICES = (
 
 
 class Document(models.Model):
-    document_name = models.CharField(max_length=50)
+    document_name = models.CharField(max_length=500)
     document = models.FileField(upload_to=STATIC_DOCUMENTS_FOLDER)
     date = models.DateTimeField(auto_now_add=True)
     is_signed = models.BooleanField(default=False) # whether student signed
